@@ -226,28 +226,26 @@
 
 <!-- ADMIN APP -->
 <div id="adminApp">
-    <!-- Sidebar -->
     <div class="sidebar">
         <div class="sidebar-logo">
             <div class="logo-text">RS</div>
             <div class="logo-sub">A D M I N</div>
         </div>
         <nav class="sidebar-nav">
-            <div class="nav-item active" onclick="showPanel('dashboard')"><i class="fas fa-chart-line"></i> ড্যাশবোর্ড</div>
-            <div class="nav-item" onclick="showPanel('addProduct')"><i class="fas fa-plus-circle"></i> পণ্য যোগ করুন</div>
-            <div class="nav-item" onclick="showPanel('products')"><i class="fas fa-box"></i> পণ্য তালিকা</div>
-            <div class="nav-item" onclick="showPanel('orders')"><i class="fas fa-shopping-bag"></i> অর্ডার</div>
-            <div class="nav-item" onclick="showPanel('messages')"><i class="fas fa-envelope"></i> বার্তা</div>
-            <div class="nav-item" onclick="showPanel('settings')"><i class="fas fa-cog"></i> সেটিংস</div>
-            <div class="nav-item" onclick="showPanel('payment')"><i class="fas fa-mobile-alt"></i> পেমেন্ট</div>
-            <div class="nav-item" onclick="showPanel('password')"><i class="fas fa-lock"></i> পাসওয়ার্ড</div>
+            <div class="nav-item active" onclick="showPanel('dashboard', this)"><i class="fas fa-chart-line"></i> ড্যাশবোর্ড</div>
+            <div class="nav-item" onclick="showPanel('addProduct', this)"><i class="fas fa-plus-circle"></i> পণ্য যোগ করুন</div>
+            <div class="nav-item" onclick="showPanel('products', this)"><i class="fas fa-box"></i> পণ্য তালিকা</div>
+            <div class="nav-item" onclick="showPanel('orders', this)"><i class="fas fa-shopping-bag"></i> অর্ডার</div>
+            <div class="nav-item" onclick="showPanel('messages', this)"><i class="fas fa-envelope"></i> বার্তা</div>
+            <div class="nav-item" onclick="showPanel('settings', this)"><i class="fas fa-cog"></i> সেটিংস</div>
+            <div class="nav-item" onclick="showPanel('payment', this)"><i class="fas fa-mobile-alt"></i> পেমেন্ট</div>
+            <div class="nav-item" onclick="showPanel('password', this)"><i class="fas fa-lock"></i> পাসওয়ার্ড</div>
         </nav>
         <div class="sidebar-footer">
             <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> লগআউট</button>
         </div>
     </div>
 
-    <!-- Main Content -->
     <div class="main-content">
 
         <!-- Dashboard -->
@@ -318,7 +316,7 @@
         <div class="panel" id="panel-products">
             <div class="page-header">
                 <div class="page-title">পণ্য তালিকা</div>
-                <button class="btn btn-gold" onclick="showPanel('addProduct')"><i class="fas fa-plus"></i> নতুন পণ্য</button>
+                <button class="btn btn-gold" onclick="showPanel('addProduct', null)"><i class="fas fa-plus"></i> নতুন পণ্য</button>
             </div>
             <div class="card">
                 <div class="table-wrap">
@@ -367,7 +365,7 @@
                     <div class="settings-title">ডেলিভারি সেটিংস</div>
                     <div class="form-grid">
                         <div class="form-field"><label>ডেলিভারি চার্জ (৳)</label><input type="number" id="deliveryCharge" value="60"></div>
-                        <div class="form-field"><label>ডেলিভারি সময়</label><input type="text" id="deliveryTime" value="3-5 কার্যদিবস"></div>
+                        <div class="form-field"><label>ডেলিভারি সময়</label><input type="text" id="deliveryTime" value="৩-৫ কার্যদিবস"></div>
                         <div class="form-field full"><label>রিটার্ন পলিসি</label><input type="text" id="returnPolicy" value="৭ দিনের মধ্যে রিটার্ন করা যাবে"></div>
                     </div>
                 </div>
@@ -431,10 +429,10 @@
 <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js';
     import { getAuth, signInWithEmailAndPassword, signOut, updatePassword, reauthenticateWithCredential, EmailAuthProvider } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js';
-    import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, getDoc, setDoc, orderBy, query } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js';
+    import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, getDoc, setDoc } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js';
 
     const firebaseConfig = {
-        apiKey: "AIzaSyAszNu3DWs2bCej1GXxnQeXr9y1DR1FyuD",
+        apiKey: "AIzaSyAerNu3OWe2bCejiGXxnQeXr9yiDR1FysU",
         authDomain: "sojib-shop.firebaseapp.com",
         projectId: "sojib-shop",
         storageBucket: "sojib-shop.firebasestorage.app",
@@ -494,11 +492,11 @@
     }
 
     // ===== PANEL SWITCH =====
-    window.showPanel = function(name) {
+    window.showPanel = function(name, el) {
         document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
         document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
         document.getElementById('panel-' + name).classList.add('active');
-        event.currentTarget.classList.add('active');
+        if (el) el.classList.add('active');
     }
 
     // ===== CLOCK =====
@@ -520,7 +518,12 @@
         orders.forEach(d => {
             const o = d.data();
             if (o.status === 'pending') pending++;
-            recentHTML += `<tr><td>#${d.id.slice(-6)}</td><td>${o.name||''}</td><td>৳${o.total||0}</td><td><span class="badge badge-orange">${o.status||'pending'}</span></td></tr>`;
+            recentHTML += `<tr>
+                <td>#${d.id.slice(-6)}</td>
+                <td>${o.name||''}</td>
+                <td>৳${o.total||0}</td>
+                <td><span class="badge badge-orange">${o.status||'pending'}</span></td>
+            </tr>`;
         });
         document.getElementById('pendingOrders').textContent = pending;
         document.getElementById('newMessages').textContent = messages.size;
@@ -645,15 +648,15 @@
         const snap = await getDoc(doc(db, 'orders', id));
         const o = snap.data();
         document.getElementById('orderModalContent').innerHTML = `
-            <p><strong>নাম:</strong> ${o.name}</p>
-            <p><strong>ফোন:</strong> ${o.phone}</p>
-            <p><strong>ঠিকানা:</strong> ${o.address}</p>
-            <p><strong>পেমেন্ট:</strong> ${o.payment}</p>
-            <p><strong>মোট:</strong> ৳${o.total}</p>
-            <p><strong>নোট:</strong> ${o.note||'—'}</p>
-            <div style="margin-top:16px">
-                <label style="color:var(--text2);font-size:0.85rem">স্ট্যাটাস পরিবর্তন করুন</label>
-                <select id="orderStatusSelect" style="width:100%;padding:10px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);margin-top:8px">
+            <p style="margin-bottom:8px"><strong>নাম:</strong> ${o.name}</p>
+            <p style="margin-bottom:8px"><strong>ফোন:</strong> ${o.phone}</p>
+            <p style="margin-bottom:8px"><strong>ঠিকানা:</strong> ${o.address}</p>
+            <p style="margin-bottom:8px"><strong>পেমেন্ট:</strong> ${o.payment}</p>
+            <p style="margin-bottom:8px"><strong>মোট:</strong> ৳${o.total}</p>
+            <p style="margin-bottom:16px"><strong>নোট:</strong> ${o.note||'—'}</p>
+            <div>
+                <label style="color:var(--text2);font-size:0.85rem;display:block;margin-bottom:8px">স্ট্যাটাস পরিবর্তন করুন</label>
+                <select id="orderStatusSelect" style="width:100%;padding:10px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:inherit">
                     <option value="pending" ${o.status==='pending'?'selected':''}>Pending</option>
                     <option value="processing" ${o.status==='processing'?'selected':''}>Processing</option>
                     <option value="shipped" ${o.status==='shipped'?'selected':''}>Shipped</option>
@@ -752,7 +755,7 @@
     }
     window.showToast = showToast;
 
-    // Enter key for login
+    // Enter key login
     document.getElementById('loginPassword').addEventListener('keypress', e => {
         if (e.key === 'Enter') login();
     });

@@ -7,7 +7,7 @@
 window.addEventListener('load', () => {
   const loader = document.getElementById('loader');
   setTimeout(() => {
-    loader.classList.add('hide');
+    if (loader) loader.classList.add('hide');
     document.body.style.overflow = 'auto';
     initAnimations();
   }, 2500);
@@ -19,14 +19,41 @@ const cursor         = document.getElementById('cursor');
 const cursorFollower = document.getElementById('cursorFollower');
 
 if (cursor && cursorFollower) {
+  /* Hide default cursor only on desktop */
+  if (window.innerWidth > 768) {
+    document.body.style.cursor = 'none';
+    document.querySelectorAll('a, button, input, select, textarea').forEach(el => {
+      el.style.cursor = 'none';
+    });
+  }
+
   let mouseX = 0, mouseY = 0;
   let followerX = 0, followerY = 0;
+  let cursorVisible = false;
 
   document.addEventListener('mousemove', e => {
     mouseX = e.clientX;
     mouseY = e.clientY;
     cursor.style.left = mouseX + 'px';
     cursor.style.top  = mouseY + 'px';
+
+    if (!cursorVisible) {
+      cursor.style.opacity = '1';
+      cursorFollower.style.opacity = '1';
+      cursorVisible = true;
+    }
+  });
+
+  document.addEventListener('mouseleave', () => {
+    cursor.style.opacity = '0';
+    cursorFollower.style.opacity = '0';
+    cursorVisible = false;
+  });
+
+  document.addEventListener('mouseenter', () => {
+    cursor.style.opacity = '1';
+    cursorFollower.style.opacity = '1';
+    cursorVisible = true;
   });
 
   /* Smooth follower */
@@ -41,7 +68,7 @@ if (cursor && cursorFollower) {
 
   /* Hover effect on interactive elements */
   document.querySelectorAll(
-    'a, button, .product-card, .cat-card, .why-card, .t-dot'
+    'a, button, .product-card, .cat-card, .why-card, .t-dot, input, select, textarea'
   ).forEach(el => {
     el.addEventListener('mouseenter', () => {
       cursor.classList.add('hover');
@@ -52,6 +79,13 @@ if (cursor && cursorFollower) {
       cursorFollower.classList.remove('hover');
     });
   });
+
+  /* Mobile: hide custom cursor completely */
+  if (window.innerWidth <= 768) {
+    cursor.style.display = 'none';
+    cursorFollower.style.display = 'none';
+    document.body.style.cursor = 'auto';
+  }
 }
 
 /* ══ NAVBAR SCROLL ══ */
@@ -76,7 +110,6 @@ if (hamburger && navLinks) {
     navLinks.classList.toggle('open');
   });
 
-  /* Close on link click */
   navLinks.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => {
       hamburger.classList.remove('open');
@@ -84,7 +117,6 @@ if (hamburger && navLinks) {
     });
   });
 
-  /* Close on outside click */
   document.addEventListener('click', e => {
     if (!navbar.contains(e.target)) {
       hamburger.classList.remove('open');
@@ -157,12 +189,10 @@ function initScrollAnimations() {
     });
   }, { threshold: 0.15 });
 
-  /* Observe why cards */
   document.querySelectorAll('.why-card').forEach(el => {
     observer.observe(el);
   });
 
-  /* AOS-like effect for cat cards */
   const aosObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -174,13 +204,12 @@ function initScrollAnimations() {
   }, { threshold: 0.1 });
 
   document.querySelectorAll('[data-aos]').forEach(el => {
-    el.style.opacity   = '0';
-    el.style.transform = 'translateY(40px)';
+    el.style.opacity    = '0';
+    el.style.transform  = 'translateY(40px)';
     el.style.transition = 'all 0.7s cubic-bezier(0.25,0.46,0.45,0.94)';
     aosObserver.observe(el);
   });
 
-  /* Counter trigger */
   const heroObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -201,14 +230,10 @@ let slideInterval;
 function goSlide(index) {
   const cards = document.querySelectorAll('.testimonial-card');
   const dots  = document.querySelectorAll('.t-dot');
-
   if (!cards.length) return;
-
   cards[currentSlide].classList.remove('active');
   dots[currentSlide].classList.remove('active');
-
   currentSlide = index;
-
   cards[currentSlide].classList.add('active');
   dots[currentSlide].classList.add('active');
 }
@@ -216,6 +241,7 @@ function goSlide(index) {
 function autoSlide() {
   slideInterval = setInterval(() => {
     const cards = document.querySelectorAll('.testimonial-card');
+    if (!cards.length) return;
     const next  = (currentSlide + 1) % cards.length;
     goSlide(next);
   }, 4000);
@@ -247,13 +273,11 @@ function updateCartCount() {
 window.addToCart = function(id, name, price, image) {
   const cart     = getCart();
   const existing = cart.find(item => item.id === id);
-
   if (existing) {
     existing.qty += 1;
   } else {
     cart.push({ id, name, price, image, qty: 1 });
   }
-
   saveCart(cart);
   showToast(`"${name}" added to cart!`);
 };
@@ -275,16 +299,13 @@ window.updateQty = function(id, qty) {
 
 /* ══ TOAST NOTIFICATION ══ */
 function showToast(message, type = 'success') {
-  /* Remove existing toast */
   const existing = document.querySelector('.toast');
   if (existing) existing.remove();
 
   const toast = document.createElement('div');
   toast.className = 'toast';
   toast.innerHTML = `
-    <i class="fas ${type === 'success'
-      ? 'fa-check-circle'
-      : 'fa-exclamation-circle'}"></i>
+    <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
     <span>${message}</span>
   `;
 
@@ -293,15 +314,11 @@ function showToast(message, type = 'success') {
     bottom: 30px;
     left: 50%;
     transform: translateX(-50%) translateY(100px);
-    background: ${type === 'success'
-      ? 'linear-gradient(135deg,#1a1a1a,#0f0f0f)'
-      : '#2a0a0a'};
+    background: ${type === 'success' ? 'linear-gradient(135deg,#1a1a1a,#0f0f0f)' : '#2a0a0a'};
     color: #fff;
     padding: 14px 24px;
     border-radius: 8px;
-    border: 1px solid ${type === 'success'
-      ? 'rgba(201,168,76,0.3)'
-      : 'rgba(255,80,80,0.3)'};
+    border: 1px solid ${type === 'success' ? 'rgba(201,168,76,0.3)' : 'rgba(255,80,80,0.3)'};
     font-size: 13px;
     font-weight: 600;
     letter-spacing: 0.5px;
@@ -314,9 +331,7 @@ function showToast(message, type = 'success') {
     white-space: nowrap;
   `;
 
-  toast.querySelector('i').style.color =
-    type === 'success' ? '#c9a84c' : '#ff5050';
-
+  toast.querySelector('i').style.color = type === 'success' ? '#c9a84c' : '#ff5050';
   document.body.appendChild(toast);
 
   requestAnimationFrame(() => {
@@ -331,7 +346,6 @@ function showToast(message, type = 'success') {
   }, 3000);
 }
 
-/* Make showToast global */
 window.showToast = showToast;
 
 /* ══ SMOOTH PAGE TRANSITIONS ══ */
@@ -361,15 +375,14 @@ function initPageTransitions() {
 
     link.addEventListener('click', e => {
       e.preventDefault();
-      overlay.style.opacity        = '1';
-      overlay.style.pointerEvents  = 'all';
+      overlay.style.opacity       = '1';
+      overlay.style.pointerEvents = 'all';
       setTimeout(() => {
         window.location.href = href;
       }, 400);
     });
   });
 
-  /* Fade in on load */
   overlay.style.opacity       = '1';
   overlay.style.pointerEvents = 'none';
   setTimeout(() => {
@@ -380,13 +393,11 @@ function initPageTransitions() {
 /* ══ PARALLAX EFFECT ══ */
 function initParallax() {
   window.addEventListener('scroll', () => {
-    const scrollY  = window.scrollY;
-    const heroEl   = document.querySelector('.hero-content');
+    const scrollY = window.scrollY;
+    const heroEl  = document.querySelector('.hero-content');
     if (heroEl) {
-      heroEl.style.transform =
-        `translateY(${scrollY * 0.3}px)`;
-      heroEl.style.opacity   =
-        Math.max(0, 1 - scrollY / 600);
+      heroEl.style.transform = `translateY(${scrollY * 0.3}px)`;
+      heroEl.style.opacity   = Math.max(0, 1 - scrollY / 600);
     }
   });
 }
@@ -415,5 +426,4 @@ function initAnimations() {
   updateCartCount();
 }
 
-/* ══ EXPOSE goSlide GLOBALLY ══ */
 window.goSlide = goSlide;

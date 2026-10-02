@@ -1,842 +1,365 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Cart — RS SHOP</title>
-  <link rel="stylesheet" href="style.css"/>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Raleway:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-  <style>
-    /* ── PAGE HERO ── */
-    .page-hero {
-      min-height: 280px;
-      background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 50%, #0f0f0f 100%);
-      display: flex; align-items: center; justify-content: center;
-      text-align: center; position: relative; overflow: hidden;
-      border-bottom: 1px solid rgba(201,168,76,0.15);
-    }
-    .page-hero::before {
-      content:''; position:absolute; inset:0;
-      background: radial-gradient(ellipse at center, rgba(201,168,76,0.08) 0%, transparent 70%);
-    }
-    .page-hero-content { position:relative; z-index:1; }
-    .page-hero h1 {
-      font-family:'Cinzel',serif; font-size:clamp(2rem,5vw,3.5rem);
-      font-weight:900; color:#c9a84c; letter-spacing:4px; margin-bottom:12px;
-    }
-    .breadcrumb {
-      display:flex; align-items:center; justify-content:center; gap:10px;
-      font-size:13px; color:#888; letter-spacing:1px;
-    }
-    .breadcrumb a { color:#888; transition:.3s; }
-    .breadcrumb a:hover { color:#c9a84c; }
-    .breadcrumb span { color:#c9a84c; }
-
-    /* ── CART LAYOUT ── */
-    .cart-section { padding: 80px 0; min-height: 60vh; }
-    .cart-layout {
-      display: grid; grid-template-columns: 1fr 380px; gap: 40px; align-items: start;
-    }
-
-    /* ── CART ITEMS ── */
-    .cart-items-wrap { display: flex; flex-direction: column; gap: 0; }
-    .cart-header {
-      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 50px;
-      gap: 16px; padding: 16px 20px;
-      background: rgba(201,168,76,0.05);
-      border: 1px solid rgba(201,168,76,0.15);
-      border-radius: 8px 8px 0 0;
-      font-size: 11px; font-weight: 700; letter-spacing: 2px;
-      color: #c9a84c; text-transform: uppercase;
-    }
-    .cart-item {
-      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 50px;
-      gap: 16px; padding: 20px; align-items: center;
-      background: rgba(255,255,255,0.02);
-      border: 1px solid rgba(201,168,76,0.08);
-      border-top: none;
-      transition: background .3s;
-    }
-    .cart-item:hover { background: rgba(255,255,255,0.04); }
-    .cart-item:last-child { border-radius: 0 0 8px 8px; }
-
-    .cart-product { display: flex; align-items: center; gap: 16px; }
-    .cart-img {
-      width: 80px; height: 80px; object-fit: cover;
-      border-radius: 6px; border: 1px solid rgba(201,168,76,0.2);
-      background: #1a1a1a;
-    }
-    .cart-img-placeholder {
-      width: 80px; height: 80px; border-radius: 6px;
-      background: linear-gradient(135deg,#1a1a1a,#2a2a2a);
-      border: 1px solid rgba(201,168,76,0.2);
-      display: flex; align-items: center; justify-content: center;
-      color: #444; font-size: 24px; flex-shrink: 0;
-    }
-    .cart-info { flex: 1; }
-    .cart-info .cat { font-size:10px; letter-spacing:2px; color:#c9a84c; font-weight:700; margin-bottom:4px; }
-    .cart-info .name { font-size:15px; font-weight:600; color:#e8e8e8; margin-bottom:4px; line-height:1.3; }
-    .cart-info .variant { font-size:11px; color:#666; }
-
-    .cart-price { font-size:15px; font-weight:700; color:#c9a84c; }
-
-    .qty-control {
-      display: flex; align-items: center; gap: 0;
-      border: 1px solid rgba(201,168,76,0.3); border-radius: 6px;
-      overflow: hidden; width: fit-content;
-    }
-    .qty-btn {
-      width: 32px; height: 32px; background: rgba(201,168,76,0.08);
-      border: none; color: #c9a84c; font-size: 16px; cursor: pointer;
-      transition: background .2s; display: flex; align-items: center; justify-content: center;
-    }
-    .qty-btn:hover { background: rgba(201,168,76,0.2); }
-    .qty-input {
-      width: 40px; height: 32px; text-align: center;
-      background: transparent; border: none; border-left: 1px solid rgba(201,168,76,0.2);
-      border-right: 1px solid rgba(201,168,76,0.2);
-      color: #e8e8e8; font-size: 14px; font-weight: 600;
-    }
-    .qty-input:focus { outline: none; }
-
-    .cart-subtotal { font-size:15px; font-weight:700; color:#e8e8e8; }
-    .remove-btn {
-      width: 36px; height: 36px; background: rgba(255,80,80,0.08);
-      border: 1px solid rgba(255,80,80,0.2); border-radius: 6px;
-      color: #ff5050; font-size: 14px; cursor: pointer;
-      transition: all .3s; display: flex; align-items: center; justify-content: center;
-    }
-    .remove-btn:hover { background: rgba(255,80,80,0.2); transform: scale(1.1); }
-
-    /* Empty Cart */
-    .empty-cart {
-      text-align: center; padding: 80px 20px;
-      border: 1px solid rgba(201,168,76,0.1);
-      border-radius: 12px; background: rgba(255,255,255,0.02);
-    }
-    .empty-cart i { font-size: 64px; color: #333; margin-bottom: 20px; }
-    .empty-cart h3 { font-family:'Cinzel',serif; font-size:22px; color:#666; margin-bottom:12px; }
-    .empty-cart p { color:#555; margin-bottom:30px; }
-    .btn-shop {
-      display: inline-flex; align-items: center; gap: 10px;
-      padding: 14px 32px; background: linear-gradient(135deg,#8a6a20,#c9a84c);
-      color: #000; font-weight: 700; font-size: 13px;
-      letter-spacing: 2px; border-radius: 4px; text-transform: uppercase;
-      transition: all .3s;
-    }
-    .btn-shop:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(201,168,76,0.3); }
-
-    /* Clear cart button */
-    .cart-actions {
-      display: flex; justify-content: space-between; align-items: center;
-      margin-top: 20px;
-    }
-    .btn-clear {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 10px 22px; background: transparent;
-      border: 1px solid rgba(255,80,80,0.3); color: #ff5050;
-      font-size: 12px; font-weight: 700; letter-spacing: 2px;
-      border-radius: 4px; cursor: pointer; text-transform: uppercase;
-      transition: all .3s;
-    }
-    .btn-clear:hover { background: rgba(255,80,80,0.1); border-color: #ff5050; }
-    .btn-continue {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 10px 22px; background: transparent;
-      border: 1px solid rgba(201,168,76,0.3); color: #c9a84c;
-      font-size: 12px; font-weight: 700; letter-spacing: 2px;
-      border-radius: 4px; cursor: pointer; text-transform: uppercase;
-      transition: all .3s; text-decoration: none;
-    }
-    .btn-continue:hover { background: rgba(201,168,76,0.1); border-color: #c9a84c; }
-
-    /* ── ORDER SUMMARY ── */
-    .order-summary {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(201,168,76,0.15);
-      border-radius: 12px; padding: 32px; position: sticky; top: 100px;
-    }
-    .summary-title {
-      font-family:'Cinzel',serif; font-size:18px; font-weight:700;
-      color:#c9a84c; letter-spacing:2px; margin-bottom:28px;
-      padding-bottom:16px; border-bottom:1px solid rgba(201,168,76,0.15);
-    }
-    .summary-row {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.04);
-    }
-    .summary-row .label { font-size:13px; color:#888; }
-    .summary-row .value { font-size:14px; font-weight:600; color:#e8e8e8; }
-    .summary-row.discount .value { color: #4caf50; }
-    .summary-row.total {
-      padding-top: 20px; border-bottom: none; margin-top: 8px;
-    }
-    .summary-row.total .label {
-      font-family:'Cinzel',serif; font-size:15px; font-weight:700; color:#c9a84c;
-    }
-    .summary-row.total .value {
-      font-family:'Cinzel',serif; font-size:22px; font-weight:900; color:#c9a84c;
-    }
-
-    /* Coupon */
-    .coupon-wrap { margin: 24px 0; }
-    .coupon-wrap label { font-size:11px; letter-spacing:2px; color:#888; display:block; margin-bottom:10px; font-weight:700; }
-    .coupon-input-row { display:flex; gap:8px; }
-    .coupon-input {
-      flex:1; padding:12px 16px; background:rgba(255,255,255,0.04);
-      border:1px solid rgba(201,168,76,0.2); border-radius:6px;
-      color:#e8e8e8; font-size:13px; outline:none; transition:.3s;
-    }
-    .coupon-input:focus { border-color:#c9a84c; }
-    .coupon-input::placeholder { color:#444; }
-    .btn-coupon {
-      padding:12px 18px; background:rgba(201,168,76,0.15);
-      border:1px solid rgba(201,168,76,0.3); color:#c9a84c;
-      font-size:12px; font-weight:700; letter-spacing:1px;
-      border-radius:6px; cursor:pointer; transition:all .3s;
-    }
-    .btn-coupon:hover { background:rgba(201,168,76,0.25); }
-
-    /* Checkout buttons */
-    .btn-whatsapp-order {
-      width:100%; padding:16px; margin-top:8px;
-      background:linear-gradient(135deg,#25D366,#128C7E);
-      color:#fff; font-size:14px; font-weight:700; letter-spacing:1px;
-      border:none; border-radius:8px; cursor:pointer;
-      display:flex; align-items:center; justify-content:center; gap:10px;
-      transition:all .3s; text-decoration:none;
-    }
-    .btn-whatsapp-order:hover { transform:translateY(-2px); box-shadow:0 10px 30px rgba(37,211,102,0.3); }
-    .btn-checkout {
-      width:100%; padding:16px; margin-top:12px;
-      background:linear-gradient(135deg,#8a6a20,#c9a84c,#f0d080);
-      color:#000; font-family:'Cinzel',serif; font-size:14px; font-weight:900;
-      letter-spacing:2px; border:none; border-radius:8px; cursor:pointer;
-      transition:all .3s; text-transform:uppercase;
-    }
-    .btn-checkout:hover { transform:translateY(-2px); box-shadow:0 10px 30px rgba(201,168,76,0.4); }
-
-    /* Payment icons */
-    .payment-icons {
-      display:flex; align-items:center; justify-content:center; gap:10px;
-      margin-top:20px; padding-top:20px;
-      border-top:1px solid rgba(201,168,76,0.1);
-    }
-    .payment-icons span { font-size:10px; letter-spacing:1px; color:#555; margin-right:6px; }
-    .pay-badge {
-      padding:5px 10px; border-radius:4px; font-size:11px;
-      font-weight:800; letter-spacing:1px; border:1px solid rgba(255,255,255,0.1);
-    }
-    .pay-badge.bkash  { background:rgba(226,0,116,0.15); color:#e20074; border-color:rgba(226,0,116,0.3); }
-    .pay-badge.nagad  { background:rgba(231,81,19,0.15); color:#e75113; border-color:rgba(231,81,19,0.3); }
-    .pay-badge.rocket { background:rgba(138,43,226,0.15); color:#8a2be2; border-color:rgba(138,43,226,0.3); }
-    .pay-badge.cod    { background:rgba(76,175,80,0.15); color:#4caf50; border-color:rgba(76,175,80,0.3); }
-
-    /* ── CHECKOUT MODAL ── */
-    .modal-overlay {
-      position:fixed; inset:0; background:rgba(0,0,0,0.85);
-      backdrop-filter:blur(8px); z-index:2000;
-      display:flex; align-items:center; justify-content:center;
-      opacity:0; visibility:hidden; transition:all .4s;
-    }
-    .modal-overlay.open { opacity:1; visibility:visible; }
-    .modal-box {
-      background:#111; border:1px solid rgba(201,168,76,0.2);
-      border-radius:12px; padding:40px; width:90%; max-width:560px;
-      max-height:90vh; overflow-y:auto;
-      transform:translateY(30px); transition:transform .4s;
-    }
-    .modal-overlay.open .modal-box { transform:translateY(0); }
-    .modal-title {
-      font-family:'Cinzel',serif; font-size:22px; font-weight:700;
-      color:#c9a84c; letter-spacing:2px; margin-bottom:6px;
-    }
-    .modal-subtitle { font-size:13px; color:#666; margin-bottom:30px; }
-    .form-group { margin-bottom:20px; }
-    .form-group label {
-      display:block; font-size:11px; font-weight:700;
-      letter-spacing:2px; color:#888; margin-bottom:8px;
-    }
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-      width:100%; padding:14px 16px;
-      background:rgba(255,255,255,0.04);
-      border:1px solid rgba(201,168,76,0.2); border-radius:6px;
-      color:#e8e8e8; font-size:14px; font-family:'Raleway',sans-serif;
-      outline:none; transition:.3s;
-    }
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus { border-color:#c9a84c; background:rgba(201,168,76,0.04); }
-    .form-group select option { background:#111; color:#e8e8e8; }
-    .form-group textarea { resize:vertical; min-height:80px; }
-    .modal-order-summary {
-      background:rgba(255,255,255,0.03); border:1px solid rgba(201,168,76,0.1);
-      border-radius:8px; padding:16px; margin-bottom:24px;
-    }
-    .modal-order-summary h4 {
-      font-size:11px; letter-spacing:2px; color:#c9a84c;
-      font-weight:700; margin-bottom:12px;
-    }
-    .modal-order-item {
-      display:flex; justify-content:space-between;
-      font-size:13px; color:#aaa; padding:4px 0;
-    }
-    .modal-order-item strong { color:#e8e8e8; }
-    .modal-total-row {
-      display:flex; justify-content:space-between;
-      padding-top:12px; margin-top:8px;
-      border-top:1px solid rgba(201,168,76,0.1);
-      font-weight:700; color:#c9a84c;
-    }
-    .btn-place-order {
-      width:100%; padding:16px;
-      background:linear-gradient(135deg,#8a6a20,#c9a84c,#f0d080);
-      color:#000; font-family:'Cinzel',serif; font-size:15px; font-weight:900;
-      letter-spacing:2px; border:none; border-radius:8px; cursor:pointer;
-      transition:all .3s; text-transform:uppercase; margin-top:8px;
-    }
-    .btn-place-order:hover { transform:translateY(-2px); box-shadow:0 10px 30px rgba(201,168,76,0.4); }
-    .btn-modal-close {
-      width:100%; padding:12px;
-      background:transparent; border:1px solid rgba(255,255,255,0.1);
-      color:#666; font-size:13px; border-radius:8px;
-      cursor:pointer; margin-top:12px; transition:.3s;
-    }
-    .btn-modal-close:hover { border-color:#888; color:#aaa; }
-
-    /* Responsive */
-    @media(max-width:900px){
-      .cart-layout { grid-template-columns:1fr; }
-      .order-summary { position:static; }
-    }
-    @media(max-width:600px){
-      .cart-header { display:none; }
-      .cart-item {
-        grid-template-columns:1fr; gap:12px;
-        padding:16px; border-radius:8px; border:1px solid rgba(201,168,76,0.1);
-        margin-bottom:12px;
-      }
-      .cart-item { border-top:1px solid rgba(201,168,76,0.1); }
-      .cart-items-wrap { gap:0; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart — RS SHOP</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .page-hero { background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%); padding: 120px 0 60px; text-align: center; border-bottom: 1px solid rgba(201,168,76,0.2); }
+        .page-hero h1 { font-family: 'Cinzel', serif; font-size: 2.5rem; color: #C9A84C; margin-bottom: 12px; }
+        .breadcrumb { color: #666; font-size: 0.9rem; }
+        .breadcrumb a { color: #C9A84C; text-decoration: none; }
+        .cart-section { padding: 60px 0; background: #0a0a0a; min-height: 60vh; }
+        .cart-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: grid; grid-template-columns: 1fr 380px; gap: 32px; }
+        .cart-items-wrap { background: #111; border: 1px solid rgba(201,168,76,0.2); border-radius: 16px; padding: 24px; }
+        .cart-title { font-family: 'Cinzel', serif; font-size: 1.3rem; color: #C9A84C; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid rgba(201,168,76,0.2); }
+        .cart-item { display: grid; grid-template-columns: 80px 1fr auto; gap: 16px; align-items: center; padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .cart-item-img { width: 80px; height: 80px; object-fit: cover; border-radius: 8px; background: #1a1a1a; display: flex; align-items: center; justify-content: center; color: #555; font-size: 1.5rem; }
+        .cart-item-img img { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; }
+        .item-category { font-size: 0.75rem; color: #C9A84C; text-transform: uppercase; letter-spacing: 1px; }
+        .item-name { font-size: 1rem; font-weight: 600; color: #e0e0e0; margin: 4px 0; }
+        .item-sku { font-size: 0.8rem; color: #666; }
+        .item-price { font-size: 0.95rem; color: #C9A84C; font-weight: 600; margin-top: 4px; }
+        .qty-controls { display: flex; align-items: center; gap: 12px; margin-top: 8px; }
+        .qty-btn { width: 28px; height: 28px; border: 1px solid rgba(201,168,76,0.4); background: transparent; color: #C9A84C; border-radius: 4px; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; }
+        .qty-btn:hover { background: rgba(201,168,76,0.1); }
+        .qty-num { color: #e0e0e0; font-size: 0.95rem; min-width: 24px; text-align: center; }
+        .item-subtotal { font-size: 1rem; font-weight: 700; color: #f0c040; white-space: nowrap; }
+        .remove-btn { background: none; border: none; color: #ff4757; cursor: pointer; font-size: 1.1rem; padding: 4px; transition: transform 0.2s; }
+        .remove-btn:hover { transform: scale(1.2); }
+        .item-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+        .clear-btn { margin-top: 16px; background: rgba(255,71,87,0.1); border: 1px solid rgba(255,71,87,0.3); color: #ff4757; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-family: inherit; transition: all 0.3s; }
+        .clear-btn:hover { background: rgba(255,71,87,0.2); }
+        .empty-cart { text-align: center; padding: 60px 20px; color: #555; }
+        .empty-cart i { font-size: 4rem; margin-bottom: 16px; display: block; }
+        .empty-cart p { font-size: 1.1rem; margin-bottom: 20px; }
+        .empty-cart a { color: #C9A84C; text-decoration: none; border: 1px solid #C9A84C; padding: 10px 24px; border-radius: 8px; }
+        .order-summary { background: #111; border: 1px solid rgba(201,168,76,0.2); border-radius: 16px; padding: 24px; height: fit-content; position: sticky; top: 100px; }
+        .summary-title { font-family: 'Cinzel', serif; font-size: 1.2rem; color: #C9A84C; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid rgba(201,168,76,0.2); }
+        .summary-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; color: #aaa; font-size: 0.95rem; }
+        .summary-row.total { border-top: 1px solid rgba(201,168,76,0.3); margin-top: 8px; padding-top: 16px; color: #e0e0e0; font-size: 1.1rem; font-weight: 700; }
+        .summary-row.total span:last-child { color: #C9A84C; font-size: 1.3rem; }
+        .discount-row { color: #2ed573 !important; }
+        .coupon-wrap { margin: 20px 0; }
+        .coupon-input { display: flex; gap: 8px; }
+        .coupon-input input { flex: 1; padding: 10px 14px; background: #1a1a1a; border: 1px solid rgba(201,168,76,0.3); border-radius: 8px; color: #e0e0e0; font-size: 0.9rem; outline: none; font-family: inherit; }
+        .coupon-input button { padding: 10px 16px; background: rgba(201,168,76,0.15); border: 1px solid rgba(201,168,76,0.4); color: #C9A84C; border-radius: 8px; cursor: pointer; font-size: 0.85rem; font-family: inherit; white-space: nowrap; }
+        .coupon-msg { font-size: 0.82rem; margin-top: 6px; }
+        .coupon-msg.ok { color: #2ed573; }
+        .coupon-msg.err { color: #ff4757; }
+        .whatsapp-btn { width: 100%; padding: 14px; background: #25d366; border: none; border-radius: 10px; color: #fff; font-size: 1rem; font-weight: 700; cursor: pointer; font-family: inherit; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; gap: 8px; transition: opacity 0.3s; }
+        .whatsapp-btn:hover { opacity: 0.9; }
+        .checkout-btn { width: 100%; padding: 14px; background: linear-gradient(135deg, #C9A84C, #f0c040); border: none; border-radius: 10px; color: #000; font-size: 1rem; font-weight: 700; cursor: pointer; font-family: inherit; display: flex; align-items: center; justify-content: center; gap: 8px; transition: opacity 0.3s; }
+        .checkout-btn:hover { opacity: 0.9; }
+        .payment-badges { display: flex; gap: 8px; margin-top: 16px; justify-content: center; flex-wrap: wrap; }
+        .payment-badge { padding: 6px 12px; border-radius: 6px; font-size: 0.78rem; font-weight: 700; }
+        .badge-bkash { background: rgba(230,0,115,0.15); color: #e60073; border: 1px solid rgba(230,0,115,0.3); }
+        .badge-nagad { background: rgba(255,90,0,0.15); color: #ff5a00; border: 1px solid rgba(255,90,0,0.3); }
+        .badge-rocket { background: rgba(130,50,200,0.15); color: #8232c8; border: 1px solid rgba(130,50,200,0.3); }
+        .badge-cod { background: rgba(46,213,115,0.15); color: #2ed573; border: 1px solid rgba(46,213,115,0.3); }
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
+        .modal-overlay.open { display: flex; }
+        .modal { background: #111; border: 1px solid rgba(201,168,76,0.3); border-radius: 16px; padding: 32px; width: 100%; max-width: 520px; max-height: 90vh; overflow-y: auto; }
+        .modal-title { font-family: 'Cinzel', serif; font-size: 1.3rem; color: #C9A84C; margin-bottom: 20px; }
+        .modal-summary { background: #1a1a1a; border-radius: 10px; padding: 16px; margin-bottom: 20px; }
+        .modal-summary-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 0.9rem; color: #aaa; }
+        .modal-summary-row.total { color: #C9A84C; font-weight: 700; font-size: 1rem; border-top: 1px solid rgba(201,168,76,0.2); margin-top: 6px; padding-top: 10px; }
+        .form-field { margin-bottom: 16px; }
+        .form-field label { display: block; font-size: 0.85rem; color: #999; margin-bottom: 6px; }
+        .form-field input, .form-field select, .form-field textarea { width: 100%; padding: 12px 14px; background: #1a1a1a; border: 1px solid rgba(201,168,76,0.2); border-radius: 8px; color: #e0e0e0; font-size: 0.95rem; font-family: inherit; outline: none; }
+        .form-field input:focus, .form-field select:focus, .form-field textarea:focus { border-color: #C9A84C; }
+        .form-field textarea { resize: vertical; min-height: 80px; }
+        .modal-btns { display: flex; gap: 12px; margin-top: 20px; }
+        .confirm-btn { flex: 1; padding: 14px; background: linear-gradient(135deg, #C9A84C, #f0c040); border: none; border-radius: 10px; color: #000; font-size: 1rem; font-weight: 700; cursor: pointer; font-family: inherit; }
+        .cancel-btn { padding: 14px 20px; background: rgba(255,71,87,0.1); border: 1px solid rgba(255,71,87,0.3); border-radius: 10px; color: #ff4757; cursor: pointer; font-family: inherit; font-size: 0.95rem; }
+        @media(max-width:768px) { .cart-container { grid-template-columns: 1fr; } .order-summary { position: static; } }
+    </style>
 </head>
 <body>
+<div id="loader" class="loader"><div class="loader-inner"><div class="loader-logo">RS</div><div class="loader-bar"><div class="loader-progress"></div></div></div></div>
+<div id="cursor" class="custom-cursor"></div>
 
-  <!-- Loader -->
-  <div class="loader" id="loader">
-    <div class="loader-inner">
-      <span class="logo-rs">RS<span class="logo-shop">SHOP</span></span>
-      <div class="loader-bar"><div class="loader-fill"></div></div>
-      <p class="loader-text">LOADING</p>
-    </div>
-  </div>
-
-  <!-- Cursor -->
-  <div class="cursor" id="cursor"></div>
-  <div class="cursor-follower" id="cursorFollower"></div>
-
-  <!-- Navbar -->
-  <nav class="navbar" id="navbar">
+<nav class="navbar" id="navbar">
     <div class="nav-container">
-      <a href="index.html" class="nav-logo">
-        RS<span>SHOP</span>
-      </a>
-      <ul class="nav-links" id="navLinks">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="watches.html">Watches</a></li>
-        <li><a href="sunglasses.html">Sunglasses</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="contact.html">Contact</a></li>
-      </ul>
-      <div class="nav-actions">
-        <a href="cart.html" class="nav-cart active" id="cartBtn">
-          <i class="fas fa-shopping-bag"></i>
-          <span class="cart-count" id="cartCount">0</span>
-        </a>
-        <button class="hamburger" id="hamburger" aria-label="Menu">
-          <span></span><span></span><span></span>
-        </button>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Page Hero -->
-  <section class="page-hero" style="padding-top:80px;">
-    <div class="page-hero-content">
-      <h1>Your Cart</h1>
-      <div class="breadcrumb">
-        <a href="index.html">Home</a>
-        <i class="fas fa-chevron-right" style="font-size:10px;"></i>
-        <span>Cart</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- Cart Section -->
-  <section class="cart-section">
-    <div class="container">
-
-      <!-- Empty State -->
-      <div class="empty-cart" id="emptyCart" style="display:none;">
-        <i class="fas fa-shopping-bag"></i>
-        <h3>Your Cart is Empty</h3>
-        <p>Looks like you haven't added anything yet.</p>
-        <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
-          <a href="watches.html" class="btn-shop"><i class="fas fa-clock"></i> Shop Watches</a>
-          <a href="sunglasses.html" class="btn-shop" style="background:linear-gradient(135deg,#1a1a2e,#333);color:#c9a84c;border:1px solid rgba(201,168,76,0.3);">
-            <i class="fas fa-glasses"></i> Shop Sunglasses
-          </a>
+        <a href="index.html" class="nav-logo">RS <span>SHOP</span></a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">হোম</a></li>
+            <li><a href="watches.html">ঘড়ি</a></li>
+            <li><a href="sunglasses.html">সানগ্লাস</a></li>
+            <li><a href="about.html">আমাদের সম্পর্কে</a></li>
+            <li><a href="contact.html">যোগাযোগ</a></li>
+        </ul>
+        <div class="nav-actions">
+            <a href="cart.html" class="cart-icon"><i class="fas fa-shopping-cart"></i><span class="cart-count" id="cartCount">0</span></a>
+            <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
         </div>
-      </div>
+    </div>
+</nav>
 
-      <!-- Cart Content -->
-      <div class="cart-layout" id="cartContent">
-        <!-- Left: Cart Items -->
-        <div>
-          <div class="cart-items-wrap" id="cartItemsWrap">
-            <div class="cart-header">
-              <div>Product</div>
-              <div style="text-align:center;">Price</div>
-              <div style="text-align:center;">Quantity</div>
-              <div style="text-align:center;">Subtotal</div>
-              <div></div>
-            </div>
-            <div id="cartItemsList">
-              <!-- Items rendered here -->
-            </div>
-          </div>
-          <div class="cart-actions">
-            <button class="btn-clear" onclick="clearCart()">
-              <i class="fas fa-trash"></i> Clear Cart
-            </button>
-            <a href="watches.html" class="btn-continue">
-              <i class="fas fa-arrow-left"></i> Continue Shopping
-            </a>
-          </div>
+<section class="page-hero">
+    <h1>Your Cart</h1>
+    <div class="breadcrumb"><a href="index.html">হোম</a> / কার্ট</div>
+</section>
+
+<section class="cart-section">
+    <div class="cart-container">
+        <div class="cart-items-wrap">
+            <div class="cart-title"><i class="fas fa-shopping-cart"></i> কার্ট আইটেম</div>
+            <div id="cartItemsList"></div>
         </div>
-
-        <!-- Right: Order Summary -->
         <div class="order-summary">
-          <div class="summary-title">Order Summary</div>
-
-          <div class="summary-row">
-            <span class="label">Items (<span id="itemCount">0</span>)</span>
-            <span class="value" id="subtotalVal">৳0</span>
-          </div>
-          <div class="summary-row">
-            <span class="label">Delivery</span>
-            <span class="value" id="deliveryVal">৳60</span>
-          </div>
-          <div class="summary-row discount" id="discountRow" style="display:none;">
-            <span class="label">Discount</span>
-            <span class="value" id="discountVal">-৳0</span>
-          </div>
-          <div class="summary-row total">
-            <span class="label">Total</span>
-            <span class="value" id="totalVal">৳0</span>
-          </div>
-
-          <!-- Coupon -->
-          <div class="coupon-wrap">
-            <label>COUPON CODE</label>
-            <div class="coupon-input-row">
-              <input type="text" class="coupon-input" id="couponInput" placeholder="Enter coupon code"/>
-              <button class="btn-coupon" onclick="applyCoupon()">Apply</button>
+            <div class="summary-title"><i class="fas fa-receipt"></i> অর্ডার সারাংশ</div>
+            <div class="summary-row"><span>মোট আইটেম</span><span id="summaryCount">0</span></div>
+            <div class="summary-row"><span>সাবটোটাল</span><span id="summarySubtotal">৳0</span></div>
+            <div class="summary-row"><span>ডেলিভারি চার্জ</span><span>৳60</span></div>
+            <div class="summary-row discount-row" id="discountRow" style="display:none"><span>ডিসকাউন্ট</span><span id="discountAmount">-৳0</span></div>
+            <div class="summary-row total"><span>সর্বমোট</span><span id="summaryTotal">৳0</span></div>
+            <div class="coupon-wrap">
+                <div class="coupon-input">
+                    <input type="text" id="couponInput" placeholder="কুপন কোড দিন">
+                    <button onclick="applyCoupon()">প্রয়োগ</button>
+                </div>
+                <div class="coupon-msg" id="couponMsg"></div>
             </div>
-            <div id="couponMsg" style="font-size:12px;margin-top:8px;"></div>
-          </div>
-
-          <!-- WhatsApp Order -->
-          <a id="whatsappOrderBtn" href="#" class="btn-whatsapp-order" target="_blank">
-            <i class="fab fa-whatsapp" style="font-size:20px;"></i>
-            Order via WhatsApp
-          </a>
-
-          <!-- Checkout -->
-          <button class="btn-checkout" onclick="openCheckout()">
-            Proceed to Checkout
-          </button>
-
-          <!-- Payment Methods -->
-          <div class="payment-icons">
-            <span>PAY VIA</span>
-            <div class="pay-badge bkash">bKash</div>
-            <div class="pay-badge nagad">Nagad</div>
-            <div class="pay-badge rocket">Rocket</div>
-            <div class="pay-badge cod">COD</div>
-          </div>
+            <button class="whatsapp-btn" onclick="openWhatsApp()"><i class="fab fa-whatsapp"></i> WhatsApp এ অর্ডার করুন</button>
+            <button class="checkout-btn" onclick="openCheckout()"><i class="fas fa-lock"></i> চেকআউট করুন</button>
+            <div class="payment-badges">
+                <span class="payment-badge badge-bkash">bKash</span>
+                <span class="payment-badge badge-nagad">Nagad</span>
+                <span class="payment-badge badge-rocket">Rocket</span>
+                <span class="payment-badge badge-cod">COD</span>
+            </div>
         </div>
-      </div>
     </div>
-  </section>
+</section>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-grid">
+<footer class="footer">
+    <div class="footer-container">
         <div class="footer-brand">
-          <div class="footer-logo">RS<span>SHOP</span></div>
-          <p>Premium Watches & Sunglasses. Quality you can trust, style you can feel.</p>
-          <div class="footer-socials">
-            <a href="https://web.facebook.com/sojib.islam.739215" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-            <a href="https://wa.me/8801996283245" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-          </div>
+            <div class="footer-logo">RS <span>SHOP</span></div>
+            <p>প্রিমিয়াম ঘড়ি ও সানগ্লাসের সেরা গন্তব্য।</p>
+            <div class="footer-social">
+                <a href="https://web.facebook.com/sojib.islam.739215" target="_blank"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-whatsapp"></i></a>
+            </div>
         </div>
-        <div class="footer-col">
-          <h4>Quick Links</h4>
-          <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="watches.html">Watches</a></li>
-            <li><a href="sunglasses.html">Sunglasses</a></li>
-            <li><a href="about.html">About Us</a></li>
-            <li><a href="contact.html">Contact</a></li>
-          </ul>
+        <div class="footer-links">
+            <h4>দ্রুত লিংক</h4>
+            <ul>
+                <li><a href="index.html">হোম</a></li>
+                <li><a href="watches.html">ঘড়ি</a></li>
+                <li><a href="sunglasses.html">সানগ্লাস</a></li>
+                <li><a href="about.html">আমাদের সম্পর্কে</a></li>
+            </ul>
         </div>
-        <div class="footer-col">
-          <h4>Support</h4>
-          <ul>
-            <li><a href="cart.html">My Cart</a></li>
-            <li><a href="#">Order Tracking</a></li>
-            <li><a href="#">Return Policy</a></li>
-            <li><a href="#">Privacy Policy</a></li>
-          </ul>
+        <div class="footer-links">
+            <h4>সাপোর্ট</h4>
+            <ul>
+                <li><a href="contact.html">যোগাযোগ</a></li>
+                <li><a href="#">রিটার্ন পলিসি</a></li>
+                <li><a href="#">ডেলিভারি তথ্য</a></li>
+            </ul>
         </div>
-        <div class="footer-col">
-          <h4>Contact</h4>
-          <ul>
-            <li><i class="fas fa-map-marker-alt" style="color:#c9a84c;margin-right:8px;"></i>পূর্বধলা স্টেশন রোড, কাজী সুপার মার্কেট</li>
-            <li><i class="fas fa-phone" style="color:#c9a84c;margin-right:8px;"></i>01996283245</li>
-            <li><i class="fab fa-whatsapp" style="color:#25D366;margin-right:8px;"></i>01996283245</li>
-          </ul>
+        <div class="footer-contact">
+            <h4>যোগাযোগ</h4>
+            <p><i class="fas fa-phone"></i> 01XXXXXXXXX</p>
+            <p><i class="fab fa-whatsapp"></i> 01XXXXXXXXX</p>
+            <p><i class="fab fa-facebook"></i> RS SHOP</p>
         </div>
-      </div>
-      <div class="footer-bottom">
-        <p>© 2024 RS SHOP. All rights reserved. Developed by <span style="color:#c9a84c;">AMIN SHEIKH</span></p>
-      </div>
     </div>
-  </footer>
+    <div class="footer-bottom"><p>© 2024 RS SHOP. All rights reserved.</p></div>
+</footer>
 
-  <!-- WhatsApp Float -->
-  <a href="https://wa.me/8801996283245" class="whatsapp-float" target="_blank" aria-label="WhatsApp">
-    <i class="fab fa-whatsapp"></i>
-  </a>
+<a href="https://wa.me/880XXXXXXXXXX" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
 
-  <!-- Checkout Modal -->
-  <div class="modal-overlay" id="checkoutModal">
-    <div class="modal-box">
-      <div class="modal-title">Place Your Order</div>
-      <div class="modal-subtitle">Fill in your details and we'll confirm via WhatsApp</div>
-
-      <!-- Order Summary in Modal -->
-      <div class="modal-order-summary">
-        <h4>ORDER SUMMARY</h4>
-        <div id="modalOrderItems"></div>
-        <div class="modal-total-row">
-          <span>Total</span>
-          <span id="modalTotal">৳0</span>
+<div class="modal-overlay" id="checkoutModal">
+    <div class="modal">
+        <div class="modal-title"><i class="fas fa-lock"></i> চেকআউট</div>
+        <div class="modal-summary">
+            <div class="modal-summary-row"><span>সাবটোটাল</span><span id="modalSubtotal">৳0</span></div>
+            <div class="modal-summary-row"><span>ডেলিভারি</span><span>৳60</span></div>
+            <div class="modal-summary-row total"><span>সর্বমোট</span><span id="modalTotal">৳0</span></div>
         </div>
-      </div>
-
-      <!-- Form -->
-      <div class="form-group">
-        <label>Full Name *</label>
-        <input type="text" id="orderName" placeholder="Your full name"/>
-      </div>
-      <div class="form-group">
-        <label>Phone Number *</label>
-        <input type="tel" id="orderPhone" placeholder="01XXXXXXXXX"/>
-      </div>
-      <div class="form-group">
-        <label>Delivery Address *</label>
-        <textarea id="orderAddress" placeholder="Your full delivery address"></textarea>
-      </div>
-      <div class="form-group">
-        <label>Payment Method *</label>
-        <select id="orderPayment">
-          <option value="">Select Payment Method</option>
-          <option value="bKash">bKash — 01996283245</option>
-          <option value="Nagad">Nagad — 01996283245</option>
-          <option value="Rocket">Rocket — 01996283245</option>
-          <option value="COD">Cash on Delivery</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>Special Instructions (Optional)</label>
-        <textarea id="orderNote" placeholder="Any special requests..."></textarea>
-      </div>
-
-      <button class="btn-place-order" onclick="placeOrder()">
-        <i class="fas fa-check"></i> Confirm Order
-      </button>
-      <button class="btn-modal-close" onclick="closeCheckout()">Cancel</button>
+        <div class="form-field"><label>পূর্ণ নাম *</label><input type="text" id="oName" placeholder="আপনার নাম"></div>
+        <div class="form-field"><label>ফোন নম্বর *</label><input type="tel" id="oPhone" placeholder="01XXXXXXXXX"></div>
+        <div class="form-field"><label>ডেলিভারি ঠিকানা *</label><textarea id="oAddress" placeholder="বিস্তারিত ঠিকানা লিখুন..."></textarea></div>
+        <div class="form-field"><label>পেমেন্ট পদ্ধতি *</label>
+            <select id="oPayment">
+                <option value="">পেমেন্ট পদ্ধতি বেছে নিন</option>
+                <option value="bKash">bKash</option>
+                <option value="Nagad">Nagad</option>
+                <option value="Rocket">Rocket</option>
+                <option value="COD">Cash on Delivery</option>
+            </select>
+        </div>
+        <div class="form-field"><label>বিশেষ নির্দেশনা</label><textarea id="oNote" placeholder="কোনো বিশেষ নির্দেশনা থাকলে লিখুন..."></textarea></div>
+        <div class="modal-btns">
+            <button class="confirm-btn" onclick="placeOrder()"><i class="fas fa-check"></i> অর্ডার নিশ্চিত করুন</button>
+            <button class="cancel-btn" onclick="closeCheckout()">বাতিল</button>
+        </div>
     </div>
-  </div>
+</div>
 
-  <!-- Firebase -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
-    import {
-      getFirestore, collection, addDoc, serverTimestamp
-    } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+<script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js';
+    import { getFirestore, collection, addDoc } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js';
 
     const firebaseConfig = {
-      apiKey: "AIzaSyAszNu3DWs2bCej1GXxnQeXr9y1DR1FyuD",
-      authDomain: "sojib-shop.firebaseapp.com",
-      projectId: "sojib-shop",
-      storageBucket: "sojib-shop.firebasestorage.app",
-      messagingSenderId: "1061639520028",
-      appId: "1:1061639520028:web:d164fdf6f3d0bbd79304d9"
+        apiKey: "AIzaSyAerNu3OWe2bCejiGXxnQeXr9yiDR1FysU",
+        authDomain: "sojib-shop.firebaseapp.com",
+        projectId: "sojib-shop",
+        storageBucket: "sojib-shop.firebasestorage.app",
+        messagingSenderId: "1061639520028",
+        appId: "1:1061639520028:web:d164fdf6f3d0bbd79304d9"
     };
+
     const app = initializeApp(firebaseConfig);
-    const db  = getFirestore(app);
+    const db = getFirestore(app);
 
-    window._saveOrderToFirebase = async function(orderData) {
-      try {
-        await addDoc(collection(db, "orders"), {
-          ...orderData,
-          createdAt: serverTimestamp(),
-          status: "pending"
-        });
-        return true;
-      } catch(e) {
-        console.error("Order save error:", e);
-        return false;
-      }
-    };
-  </script>
+    const DELIVERY = 60;
+    let cartItems = JSON.parse(localStorage.getItem('rs_cart') || '[]');
+    let discount = 0;
+    let discountPercent = 0;
 
-  <!-- Cart Logic -->
-  <script>
-    /* ── CART STATE ── */
-    let cart = JSON.parse(localStorage.getItem('rs_cart') || '[]');
-    let appliedDiscount = 0;
-
-    function saveCart() {
-      localStorage.setItem('rs_cart', JSON.stringify(cart));
-      updateCartBadge();
-    }
-    function updateCartBadge() {
-      const total = cart.reduce((s, i) => s + i.qty, 0);
-      document.querySelectorAll('.cart-count').forEach(el => el.textContent = total);
-    }
-
-    /* ── RENDER CART ── */
     function renderCart() {
-      const list   = document.getElementById('cartItemsList');
-      const empty  = document.getElementById('emptyCart');
-      const content = document.getElementById('cartContent');
-
-      if (cart.length === 0) {
-        empty.style.display   = 'block';
-        content.style.display = 'none';
-        return;
-      }
-      empty.style.display   = 'none';
-      content.style.display = 'grid';
-
-      list.innerHTML = cart.map((item, idx) => `
-        <div class="cart-item" id="cartItem_${idx}">
-          <div class="cart-product">
-            ${item.image
-              ? `<img src="${item.image}" alt="${item.name}" class="cart-img"/>`
-              : `<div class="cart-img-placeholder"><i class="fas fa-${item.category==='watch'?'clock':'glasses'}"></i></div>`
-            }
-            <div class="cart-info">
-              <div class="cat">${item.category === 'watch' ? 'WATCH' : 'SUNGLASS'}</div>
-              <div class="name">${item.name}</div>
-              <div class="variant">SKU: #${item.id ? item.id.substring(0,8).toUpperCase() : '00000000'}</div>
-            </div>
-          </div>
-          <div class="cart-price" style="text-align:center;">৳${Number(item.price).toLocaleString()}</div>
-          <div style="display:flex;justify-content:center;">
-            <div class="qty-control">
-              <button class="qty-btn" onclick="changeQty(${idx},-1)">−</button>
-              <input class="qty-input" type="number" value="${item.qty}" min="1"
-                onchange="setQty(${idx},this.value)" readonly/>
-              <button class="qty-btn" onclick="changeQty(${idx},1)">+</button>
-            </div>
-          </div>
-          <div class="cart-subtotal" style="text-align:center;">৳${(item.price * item.qty).toLocaleString()}</div>
-          <div style="display:flex;justify-content:center;">
-            <button class="remove-btn" onclick="removeItem(${idx})" title="Remove">
-              <i class="fas fa-times"></i>
-            </button>
-          </div>
-        </div>
-      `).join('');
-
-      updateSummary();
-    }
-
-    /* ── CART ACTIONS ── */
-    function changeQty(idx, delta) {
-      cart[idx].qty = Math.max(1, cart[idx].qty + delta);
-      saveCart(); renderCart();
-    }
-    function setQty(idx, val) {
-      cart[idx].qty = Math.max(1, parseInt(val) || 1);
-      saveCart(); renderCart();
-    }
-    function removeItem(idx) {
-      cart.splice(idx, 1);
-      saveCart(); renderCart();
-    }
-    function clearCart() {
-      if(!confirm('Clear all items from cart?')) return;
-      cart = []; saveCart(); renderCart();
-    }
-
-    /* ── SUMMARY ── */
-    function updateSummary() {
-      const subtotal  = cart.reduce((s, i) => s + i.price * i.qty, 0);
-      const delivery  = cart.length > 0 ? 60 : 0;
-      const discount  = appliedDiscount;
-      const total     = subtotal + delivery - discount;
-      const itemCount = cart.reduce((s, i) => s + i.qty, 0);
-
-      document.getElementById('itemCount').textContent  = itemCount;
-      document.getElementById('subtotalVal').textContent = `৳${subtotal.toLocaleString()}`;
-      document.getElementById('deliveryVal').textContent  = `৳${delivery}`;
-      document.getElementById('totalVal').textContent     = `৳${total.toLocaleString()}`;
-
-      if (discount > 0) {
-        document.getElementById('discountRow').style.display = 'flex';
-        document.getElementById('discountVal').textContent   = `-৳${discount}`;
-      }
-
-      /* WhatsApp message */
-      const msg = buildWhatsAppMsg(subtotal, delivery, discount, total);
-      document.getElementById('whatsappOrderBtn').href = `https://wa.me/8801996283245?text=${encodeURIComponent(msg)}`;
-    }
-
-    function buildWhatsAppMsg(subtotal, delivery, discount, total) {
-      let msg = `🛍️ *RS SHOP — New Order*\n\n`;
-      cart.forEach(i => {
-        msg += `• ${i.name} × ${i.qty} = ৳${(i.price * i.qty).toLocaleString()}\n`;
-      });
-      msg += `\n📦 Subtotal: ৳${subtotal.toLocaleString()}`;
-      msg += `\n🚚 Delivery: ৳${delivery}`;
-      if(discount > 0) msg += `\n🎁 Discount: -৳${discount}`;
-      msg += `\n💰 *Total: ৳${total.toLocaleString()}*`;
-      msg += `\n\n📍 Address: পূর্বধলা স্টেশন রোড, কাজী সুপার মার্কেট`;
-      return msg;
-    }
-
-    /* ── COUPON ── */
-    const COUPONS = { 'RS10': 10, 'RSVIP': 15 };
-    function applyCoupon() {
-      const code  = document.getElementById('couponInput').value.trim().toUpperCase();
-      const msgEl = document.getElementById('couponMsg');
-      if (COUPONS[code]) {
-        const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
-        appliedDiscount = Math.round(subtotal * COUPONS[code] / 100);
-        msgEl.style.color = '#4caf50';
-        msgEl.textContent = `✅ ${COUPONS[code]}% discount applied! You save ৳${appliedDiscount}`;
+        const list = document.getElementById('cartItemsList');
+        if (!cartItems.length) {
+            list.innerHTML = `<div class="empty-cart"><i class="fas fa-shopping-cart"></i><p>কার্ট খালি!</p><a href="index.html">কেনাকাটা শুরু করুন</a></div>`;
+            updateSummary();
+            return;
+        }
+        list.innerHTML = cartItems.map((item, i) => `
+            <div class="cart-item">
+                <div class="cart-item-img">${item.image ? `<img src="${item.image}" alt="${item.name}">` : '<i class="fas fa-box"></i>'}</div>
+                <div>
+                    <div class="item-category">${item.category || ''}</div>
+                    <div class="item-name">${item.name}</div>
+                    <div class="item-sku">SKU: ${item.sku || 'N/A'}</div>
+                    <div class="item-price">৳${item.price}</div>
+                    <div class="qty-controls">
+                        <button class="qty-btn" onclick="changeQty(${i}, -1)">−</button>
+                        <span class="qty-num">${item.qty}</span>
+                        <button class="qty-btn" onclick="changeQty(${i}, 1)">+</button>
+                    </div>
+                </div>
+                <div class="item-right">
+                    <button class="remove-btn" onclick="removeItem(${i})"><i class="fas fa-trash"></i></button>
+                    <div class="item-subtotal">৳${(item.price * item.qty).toLocaleString()}</div>
+                </div>
+            </div>`).join('');
+        const clearBtn = document.createElement('button');
+        clearBtn.className = 'clear-btn';
+        clearBtn.innerHTML = '<i class="fas fa-trash"></i> কার্ট খালি করুন';
+        clearBtn.onclick = clearCart;
+        list.appendChild(clearBtn);
         updateSummary();
-      } else {
-        msgEl.style.color = '#ff5050';
-        msgEl.textContent = '❌ Invalid coupon code.';
-      }
     }
 
-    /* ── CHECKOUT MODAL ── */
-    function openCheckout() {
-      if(cart.length === 0) return;
-      const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
-      const delivery = 60;
-      const total    = subtotal + delivery - appliedDiscount;
-
-      /* fill modal summary */
-      document.getElementById('modalOrderItems').innerHTML = cart.map(i =>
-        `<div class="modal-order-item">
-          <span>${i.name} × ${i.qty}</span>
-          <strong>৳${(i.price * i.qty).toLocaleString()}</strong>
-        </div>`
-      ).join('') + `<div class="modal-order-item">
-        <span>Delivery</span><strong>৳${delivery}</strong>
-      </div>`;
-      document.getElementById('modalTotal').textContent = `৳${total.toLocaleString()}`;
-      document.getElementById('checkoutModal').classList.add('open');
+    function updateSummary() {
+        const subtotal = cartItems.reduce((s, i) => s + i.price * i.qty, 0);
+        const count = cartItems.reduce((s, i) => s + i.qty, 0);
+        discount = discountPercent ? Math.round(subtotal * discountPercent / 100) : 0;
+        const total = subtotal + DELIVERY - discount;
+        document.getElementById('summaryCount').textContent = count;
+        document.getElementById('summarySubtotal').textContent = '৳' + subtotal.toLocaleString();
+        document.getElementById('summaryTotal').textContent = '৳' + total.toLocaleString();
+        document.getElementById('modalSubtotal').textContent = '৳' + subtotal.toLocaleString();
+        document.getElementById('modalTotal').textContent = '৳' + total.toLocaleString();
+        if (discount > 0) {
+            document.getElementById('discountRow').style.display = 'flex';
+            document.getElementById('discountAmount').textContent = '-৳' + discount.toLocaleString();
+        } else {
+            document.getElementById('discountRow').style.display = 'none';
+        }
+        document.getElementById('cartCount').textContent = count;
     }
 
-    function closeCheckout() {
-      document.getElementById('checkoutModal').classList.remove('open');
-    }
-
-    /* ── PLACE ORDER ── */
-    async function placeOrder() {
-      const name    = document.getElementById('orderName').value.trim();
-      const phone   = document.getElementById('orderPhone').value.trim();
-      const address = document.getElementById('orderAddress').value.trim();
-      const payment = document.getElementById('orderPayment').value;
-      const note    = document.getElementById('orderNote').value.trim();
-
-      if(!name || !phone || !address || !payment) {
-        alert('Please fill in all required fields.');
-        return;
-      }
-
-      const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
-      const delivery = 60;
-      const total    = subtotal + delivery - appliedDiscount;
-
-      const orderData = {
-        customerName: name,
-        phone, address, payment, note,
-        items: cart.map(i => ({ id: i.id, name: i.name, price: i.price, qty: i.qty, category: i.category })),
-        subtotal, delivery,
-        discount: appliedDiscount,
-        total
-      };
-
-      const btn = document.querySelector('.btn-place-order');
-      btn.textContent = 'Placing Order…';
-      btn.disabled = true;
-
-      const saved = await window._saveOrderToFirebase(orderData);
-
-      if(saved) {
-        /* send WhatsApp confirmation */
-        const msg = `🛍️ *RS SHOP — Order Placed*\n\n`
-          + `👤 Name: ${name}\n📞 Phone: ${phone}\n📍 Address: ${address}\n`
-          + `💳 Payment: ${payment}\n\n`
-          + cart.map(i => `• ${i.name} × ${i.qty} = ৳${(i.price * i.qty).toLocaleString()}`).join('\n')
-          + `\n\n💰 *Total: ৳${total.toLocaleString()}*`
-          + (note ? `\n\n📝 Note: ${note}` : '');
-
-        window.open(`https://wa.me/8801996283245?text=${encodeURIComponent(msg)}`, '_blank');
-
-        /* clear cart */
-        cart = [];
-        saveCart();
-        closeCheckout();
+    window.changeQty = function(i, d) {
+        cartItems[i].qty = Math.max(1, cartItems[i].qty + d);
+        localStorage.setItem('rs_cart', JSON.stringify(cartItems));
         renderCart();
-        alert('✅ Order placed! WhatsApp has been opened to confirm your order.');
-      } else {
-        btn.textContent = 'Confirm Order';
-        btn.disabled = false;
-        alert('❌ Something went wrong. Please try again or order via WhatsApp.');
-      }
     }
 
-    /* expose globals */
-    window.changeQty   = changeQty;
-    window.setQty      = setQty;
-    window.removeItem  = removeItem;
-    window.clearCart   = clearCart;
-    window.applyCoupon = applyCoupon;
-    window.openCheckout = openCheckout;
-    window.closeCheckout = closeCheckout;
-    window.placeOrder  = placeOrder;
+    window.removeItem = function(i) {
+        cartItems.splice(i, 1);
+        localStorage.setItem('rs_cart', JSON.stringify(cartItems));
+        renderCart();
+    }
 
-    /* init */
+    window.clearCart = function() {
+        if (confirm('কার্ট খালি করবেন?')) {
+            cartItems = [];
+            localStorage.removeItem('rs_cart');
+            renderCart();
+        }
+    }
+
+    window.applyCoupon = function() {
+        const code = document.getElementById('couponInput').value.trim().toUpperCase();
+        const msg = document.getElementById('couponMsg');
+        if (code === 'RS10') { discountPercent = 10; msg.className = 'coupon-msg ok'; msg.textContent = '✅ ১০% ছাড় প্রয়োগ হয়েছে!'; }
+        else if (code === 'RSVIP') { discountPercent = 15; msg.className = 'coupon-msg ok'; msg.textContent = '✅ ১৫% ছাড় প্রয়োগ হয়েছে!'; }
+        else { discountPercent = 0; msg.className = 'coupon-msg err'; msg.textContent = '❌ কুপন কোড সঠিক নয়!'; }
+        updateSummary();
+    }
+
+    window.openWhatsApp = function() {
+        if (!cartItems.length) { alert('কার্ট খালি!'); return; }
+        const subtotal = cartItems.reduce((s, i) => s + i.price * i.qty, 0);
+        const total = subtotal + DELIVERY - discount;
+        let msg = '🛒 *নতুন অর্ডার — RS SHOP*\n\n';
+        cartItems.forEach(i => { msg += `▪ ${i.name} × ${i.qty} = ৳${i.price * i.qty}\n`; });
+        msg += `\nসাবটোটাল: ৳${subtotal}\nডেলিভারি: ৳${DELIVERY}`;
+        if (discount) msg += `\nডিসকাউন্ট: -৳${discount}`;
+        msg += `\n*সর্বমোট: ৳${total}*`;
+        window.open('https://wa.me/880XXXXXXXXXX?text=' + encodeURIComponent(msg), '_blank');
+    }
+
+    window.openCheckout = function() {
+        if (!cartItems.length) { alert('কার্ট খালি!'); return; }
+        document.getElementById('checkoutModal').classList.add('open');
+    }
+
+    window.closeCheckout = function() {
+        document.getElementById('checkoutModal').classList.remove('open');
+    }
+
+    window.placeOrder = async function() {
+        const name = document.getElementById('oName').value.trim();
+        const phone = document.getElementById('oPhone').value.trim();
+        const address = document.getElementById('oAddress').value.trim();
+        const payment = document.getElementById('oPayment').value;
+        if (!name || !phone || !address || !payment) { alert('সব তথ্য পূরণ করুন!'); return; }
+        const subtotal = cartItems.reduce((s, i) => s + i.price * i.qty, 0);
+        const total = subtotal + DELIVERY - discount;
+        try {
+            await addDoc(collection(db, 'orders'), {
+                name, phone, address, payment,
+                note: document.getElementById('oNote').value,
+                items: cartItems,
+                subtotal, delivery: DELIVERY, discount, total,
+                status: 'pending',
+                createdAt: new Date().toISOString()
+            });
+            localStorage.removeItem('rs_cart');
+            cartItems = [];
+            closeCheckout();
+            let waMsg = `✅ *অর্ডার নিশ্চিত — RS SHOP*\n\nনাম: ${name}\nফোন: ${phone}\nঠিকানা: ${address}\nপেমেন্ট: ${payment}\n*সর্বমোট: ৳${total}*`;
+            window.open('https://wa.me/880XXXXXXXXXX?text=' + encodeURIComponent(waMsg), '_blank');
+            alert('✅ অর্ডার সফলভাবে দেওয়া হয়েছে!');
+            renderCart();
+        } catch(e) {
+            alert('❌ অর্ডার দিতে সমস্যা হয়েছে! আবার চেষ্টা করুন।');
+        }
+    }
+
     renderCart();
-  </script>
-
-  <script src="main.js"></script>
+</script>
+<script src="main.js"></script>
 </body>
 </html>

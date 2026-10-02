@@ -30,13 +30,10 @@
 <!-- ══ NAVBAR ══ -->
 <nav class="navbar" id="navbar">
   <div class="nav-container">
-    <!-- LOGO -->
     <a href="index.html" class="nav-logo">
       <span class="logo-rs">RS</span>
       <span class="logo-shop">SHOP</span>
     </a>
-
-    <!-- LINKS -->
     <ul class="nav-links" id="navLinks">
       <li><a href="index.html" class="active">Home</a></li>
       <li><a href="watches.html">Watches</a></li>
@@ -44,8 +41,6 @@
       <li><a href="about.html">About</a></li>
       <li><a href="contact.html">Contact</a></li>
     </ul>
-
-    <!-- ACTIONS -->
     <div class="nav-actions">
       <a href="cart.html" class="cart-icon">
         <i class="fas fa-shopping-bag"></i>
@@ -70,12 +65,8 @@
     </h1>
     <p class="hero-sub">Premium Watches & Sunglasses at the Best Price</p>
     <div class="hero-btns">
-      <a href="watches.html" class="btn-primary">
-        Shop Watches <i class="fas fa-arrow-right"></i>
-      </a>
-      <a href="sunglasses.html" class="btn-outline">
-        Shop Sunglasses
-      </a>
+      <a href="watches.html" class="btn-primary">Shop Watches <i class="fas fa-arrow-right"></i></a>
+      <a href="sunglasses.html" class="btn-outline">Shop Sunglasses</a>
     </div>
     <div class="hero-stats">
       <div class="stat-item">
@@ -240,10 +231,7 @@
         <p>"Amazing quality watch at a very affordable price. Love shopping at RS SHOP!"</p>
         <div class="t-author">
           <div class="t-avatar">R</div>
-          <div>
-            <strong>Rakib Hassan</strong>
-            <span>Dhaka</span>
-          </div>
+          <div><strong>Rakib Hassan</strong><span>Dhaka</span></div>
         </div>
       </div>
       <div class="testimonial-card" id="tCard1">
@@ -251,10 +239,7 @@
         <p>"The sunglasses quality is incredible. Never expected this quality at such a price!"</p>
         <div class="t-author">
           <div class="t-avatar">S</div>
-          <div>
-            <strong>Sumaiya Akter</strong>
-            <span>Mymensingh</span>
-          </div>
+          <div><strong>Sumaiya Akter</strong><span>Mymensingh</span></div>
         </div>
       </div>
       <div class="testimonial-card" id="tCard2">
@@ -262,10 +247,7 @@
         <p>"Super fast delivery and beautiful packaging. Will definitely order again!"</p>
         <div class="t-author">
           <div class="t-avatar">M</div>
-          <div>
-            <strong>Mahmudul Hasan</strong>
-            <span>Netrokona</span>
-          </div>
+          <div><strong>Mahmudul Hasan</strong><span>Netrokona</span></div>
         </div>
       </div>
       <div class="t-dots">
@@ -282,8 +264,6 @@
   <div class="footer-inner">
     <div class="container">
       <div class="footer-grid">
-
-        <!-- Brand -->
         <div class="f-brand">
           <div class="footer-logo">
             <span class="logo-rs">RS</span>
@@ -291,16 +271,10 @@
           </div>
           <p>The best premium watch & sunglass shop in Purbadhala. Quality products at the best price.</p>
           <div class="f-social">
-            <a href="https://web.facebook.com/sojib.islam.739215" target="_blank">
-              <i class="fab fa-facebook-f"></i>
-            </a>
-            <a href="https://wa.me/8801996283245" target="_blank">
-              <i class="fab fa-whatsapp"></i>
-            </a>
+            <a href="https://web.facebook.com/sojib.islam.739215" target="_blank"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://wa.me/8801996283245" target="_blank"><i class="fab fa-whatsapp"></i></a>
           </div>
         </div>
-
-        <!-- Quick Links -->
         <div class="f-links">
           <h4>Quick Links</h4>
           <ul>
@@ -311,8 +285,6 @@
             <li><a href="contact.html">Contact</a></li>
           </ul>
         </div>
-
-        <!-- Support -->
         <div class="f-links">
           <h4>Support</h4>
           <ul>
@@ -322,8 +294,6 @@
             <li><a href="contact.html">Contact Us</a></li>
           </ul>
         </div>
-
-        <!-- Contact -->
         <div class="f-contact">
           <h4>Contact Us</h4>
           <p><i class="fas fa-map-marker-alt"></i> Purbadhala Station Road, Kazi Super Market</p>
@@ -336,7 +306,6 @@
             <span class="pay cod">COD</span>
           </div>
         </div>
-
       </div>
     </div>
   </div>
@@ -353,15 +322,13 @@
   <span class="wa-tip">Order Now</span>
 </a>
 
-<!-- ══ FIREBASE ══ -->
+<!-- ══ FIREBASE + PRODUCTS ══ -->
 <script type="module">
-  import { initializeApp }
-    from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
-  import { getFirestore, collection, getDocs, query, where, limit }
-    from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+  import { getFirestore, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
   const firebaseConfig = {
-    apiKey: "AIzaSyAszNu3DWs2bCej1GXxnQeXr9y1DR1FyuD",
+    apiKey: "AIzaSyAerNu3OWe2bCejiGXxnQeXr9yiDR1FysU",
     authDomain: "sojib-shop.firebaseapp.com",
     projectId: "sojib-shop",
     storageBucket: "sojib-shop.firebasestorage.app",
@@ -370,56 +337,121 @@
   };
 
   const app = initializeApp(firebaseConfig);
-  const db  = getFirestore(app);
+  const db = getFirestore(app);
 
-  async function loadProducts(category, gridId) {
-    const grid = document.getElementById(gridId);
+  // ===== CART FUNCTION =====
+  window.addToCart = function(id, name, price, image, category) {
+    let cart = JSON.parse(localStorage.getItem('rs_cart') || '[]');
+    const existing = cart.find(i => i.id === id);
+    if (existing) existing.qty += 1;
+    else cart.push({ id, name, price, image, category, qty: 1 });
+    localStorage.setItem('rs_cart', JSON.stringify(cart));
+    const count = cart.reduce((s, i) => s + i.qty, 0);
+    document.querySelectorAll('#cartCount').forEach(el => el.textContent = count);
+    showCartToast(name);
+  }
+
+  function showCartToast(name) {
+    let toast = document.getElementById('cartToast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'cartToast';
+      toast.style.cssText = `
+        position:fixed; bottom:80px; right:20px;
+        background:#111; border:1px solid rgba(201,168,76,0.5);
+        color:#e0e0e0; padding:14px 20px; border-radius:10px;
+        z-index:9999; font-size:0.9rem;
+        box-shadow:0 8px 32px rgba(0,0,0,0.5);
+        display:none;
+      `;
+      document.body.appendChild(toast);
+    }
+    toast.innerHTML = `<i class="fas fa-check-circle" style="color:#2ed573;margin-right:8px"></i> <strong>${name}</strong> added to cart!`;
+    toast.style.display = 'block';
+    setTimeout(() => toast.style.display = 'none', 2500);
+  }
+
+  // ===== PRODUCT CARD =====
+  function createCard(doc) {
+    const p = doc.data();
+    const id = doc.id;
+    const discount = p.oldPrice ? Math.round((p.oldPrice - p.price) / p.oldPrice * 100) : 0;
+    const imgHtml = p.image
+      ? `<img src="${p.image}" alt="${p.name}" loading="lazy"/>`
+      : `<div style="width:100%;height:220px;background:#1a1a1a;display:flex;align-items:center;justify-content:center"><i class="fas fa-box" style="font-size:3rem;color:#444"></i></div>`;
+
+    return `
+      <div class="product-card" onclick="location.href='product.html?id=${id}'">
+        <div class="p-img-wrap">
+          ${imgHtml}
+          ${discount > 0 ? `<span class="p-badge">${discount}% OFF</span>` : ''}
+          ${p.stock === 'out_of_stock' ? `<span class="p-badge" style="background:#ff4757;left:auto;right:12px">স্টক শেষ</span>` : ''}
+          <div class="p-hover">
+            <button onclick="event.stopPropagation();location.href='product.html?id=${id}'">
+              <i class="fas fa-eye"></i> Quick View
+            </button>
+          </div>
+        </div>
+        <div class="p-info">
+          <h3>${p.name}</h3>
+          <div class="p-price">
+            <span class="p-current">৳${Number(p.price).toLocaleString()}</span>
+            ${p.oldPrice ? `<span class="p-old">৳${Number(p.oldPrice).toLocaleString()}</span>` : ''}
+          </div>
+          <button class="p-cart-btn"
+            onclick="event.stopPropagation(); addToCart('${id}','${p.name.replace(/'/g,"\\'")}',${p.price},'${p.image || ''}','${p.category}')">
+            <i class="fas fa-shopping-bag"></i> Add to Cart
+          </button>
+        </div>
+      </div>`;
+  }
+
+  // ===== LOAD WATCHES =====
+  async function loadWatches() {
+    const grid = document.getElementById('watchGrid');
     try {
-      const q = query(
-        collection(db, "products"),
-        where("category", "==", category),
-        where("featured", "==", true),
-        limit(4)
-      );
+      const q = query(collection(db, 'products'), where('category', '==', 'watches'));
       const snap = await getDocs(q);
-      if(snap.empty){
-        grid.innerHTML = `<p class="empty-msg">No products found.</p>`;
+      if (snap.empty) {
+        grid.innerHTML = `<p style="color:#666;text-align:center;grid-column:1/-1;padding:40px">No watches found.</p>`;
         return;
       }
       grid.innerHTML = '';
-      snap.forEach(doc => {
-        const p = doc.data();
-        grid.innerHTML += `
-          <div class="product-card" onclick="location.href='product.html?id=${doc.id}'">
-            <div class="p-img-wrap">
-              <img src="${p.image}" alt="${p.name}" loading="lazy"/>
-              ${p.discount ? `<span class="p-badge">${p.discount}% OFF</span>` : ''}
-              <div class="p-hover">
-                <button onclick="event.stopPropagation();location.href='product.html?id=${doc.id}'">
-                  <i class="fas fa-eye"></i> Quick View
-                </button>
-              </div>
-            </div>
-            <div class="p-info">
-              <h3>${p.name}</h3>
-              <div class="p-price">
-                <span class="p-current">৳${Number(p.price).toLocaleString()}</span>
-                ${p.oldPrice ? `<span class="p-old">৳${Number(p.oldPrice).toLocaleString()}</span>` : ''}
-              </div>
-              <button class="p-cart-btn"
-                onclick="event.stopPropagation();addToCart('${doc.id}','${p.name}',${p.price},'${p.image}')">
-                <i class="fas fa-shopping-bag"></i> Add to Cart
-              </button>
-            </div>
-          </div>`;
-      });
+      snap.forEach(doc => grid.innerHTML += createCard(doc));
     } catch(e) {
-      grid.innerHTML = `<p class="empty-msg">Failed to load products.</p>`;
+      console.error('Watch load error:', e);
+      grid.innerHTML = `<p style="color:#666;text-align:center;grid-column:1/-1;padding:40px">Failed to load.</p>`;
     }
   }
 
-  loadProducts("watch",    "watchGrid");
-  loadProducts("sunglass", "sunglassGrid");
+  // ===== LOAD SUNGLASSES =====
+  async function loadSunglasses() {
+    const grid = document.getElementById('sunglassGrid');
+    try {
+      const q = query(collection(db, 'products'), where('category', '==', 'sunglasses'));
+      const snap = await getDocs(q);
+      if (snap.empty) {
+        grid.innerHTML = `<p style="color:#666;text-align:center;grid-column:1/-1;padding:40px">No sunglasses found.</p>`;
+        return;
+      }
+      grid.innerHTML = '';
+      snap.forEach(doc => grid.innerHTML += createCard(doc));
+    } catch(e) {
+      console.error('Sunglasses load error:', e);
+      grid.innerHTML = `<p style="color:#666;text-align:center;grid-column:1/-1;padding:40px">Failed to load.</p>`;
+    }
+  }
+
+  // ===== CART COUNT ON LOAD =====
+  function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem('rs_cart') || '[]');
+    const count = cart.reduce((s, i) => s + i.qty, 0);
+    document.querySelectorAll('#cartCount').forEach(el => el.textContent = count);
+  }
+
+  updateCartCount();
+  loadWatches();
+  loadSunglasses();
 </script>
 
 <script src="main.js"></script>

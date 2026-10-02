@@ -9,14 +9,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Raleway:wght@300;400;600;700;800&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <style>
-    /* ── PAGE HERO ── */
     .page-hero {
       min-height: 40vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: radial-gradient(ellipse at center,
-        rgba(201,168,76,0.08) 0%, transparent 70%), var(--bg);
+      background: radial-gradient(ellipse at center, rgba(201,168,76,0.08) 0%, transparent 70%), var(--bg);
       border-bottom: 1px solid var(--border);
       text-align: center;
       padding: 120px 20px 60px;
@@ -27,20 +25,8 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 60px,
-        rgba(201,168,76,0.02) 60px,
-        rgba(201,168,76,0.02) 61px
-      ),
-      repeating-linear-gradient(
-        90deg,
-        transparent,
-        transparent 60px,
-        rgba(201,168,76,0.02) 60px,
-        rgba(201,168,76,0.02) 61px
-      );
+      background: repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(201,168,76,0.02) 60px, rgba(201,168,76,0.02) 61px),
+      repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(201,168,76,0.02) 60px, rgba(201,168,76,0.02) 61px);
     }
     .page-hero-content { position: relative; z-index: 1; }
     .page-hero-tag {
@@ -59,18 +45,13 @@
       font-family: 'Cinzel', serif;
       font-size: clamp(36px, 6vw, 72px);
       font-weight: 900;
-      background: linear-gradient(135deg,
-        var(--gold-dark), var(--gold), var(--gold-light));
+      background: linear-gradient(135deg, var(--gold-dark), var(--gold), var(--gold-light));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
       margin-bottom: 12px;
     }
-    .page-hero p {
-      font-size: 14px;
-      color: var(--text-muted);
-      letter-spacing: 2px;
-    }
+    .page-hero p { font-size: 14px; color: var(--text-muted); letter-spacing: 2px; }
     .breadcrumb {
       display: flex;
       align-items: center;
@@ -83,8 +64,6 @@
     .breadcrumb a { color: var(--gold); transition: opacity 0.3s; }
     .breadcrumb a:hover { opacity: 0.7; }
     .breadcrumb i { font-size: 8px; }
-
-    /* ── FILTER BAR ── */
     .filter-section {
       background: var(--bg2);
       border-bottom: 1px solid var(--border);
@@ -100,19 +79,8 @@
       gap: 20px;
       flex-wrap: wrap;
     }
-    .filter-left {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .filter-label {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      color: var(--text-muted);
-      text-transform: uppercase;
-    }
+    .filter-left { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .filter-label { font-size: 11px; font-weight: 700; letter-spacing: 2px; color: var(--text-muted); text-transform: uppercase; }
     .filter-btn {
       background: var(--bg3);
       border: 1px solid var(--border);
@@ -126,17 +94,8 @@
       cursor: pointer;
       transition: all 0.3s ease;
     }
-    .filter-btn:hover,
-    .filter-btn.active {
-      background: var(--gold);
-      color: #000;
-      border-color: var(--gold);
-    }
-    .filter-right {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
+    .filter-btn:hover, .filter-btn.active { background: var(--gold); color: #000; border-color: var(--gold); }
+    .filter-right { display: flex; align-items: center; gap: 12px; }
     .sort-select {
       background: var(--bg3);
       border: 1px solid var(--border);
@@ -149,29 +108,15 @@
       font-family: 'Raleway', sans-serif;
     }
     .sort-select option { background: var(--bg3); }
-    .result-count {
-      font-size: 12px;
-      color: var(--text-muted);
-      letter-spacing: 1px;
-    }
+    .result-count { font-size: 12px; color: var(--text-muted); letter-spacing: 1px; }
     .result-count span { color: var(--gold); font-weight: 700; }
-
-    /* ── PRODUCTS SECTION ── */
-    .products-section {
-      padding: 60px 0 100px;
-      background: var(--bg);
-    }
+    .products-section { padding: 60px 0 100px; background: var(--bg); }
     .products-grid-full {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 24px;
     }
-
-    /* ── LOAD MORE ── */
-    .load-more-wrap {
-      text-align: center;
-      margin-top: 50px;
-    }
+    .load-more-wrap { text-align: center; margin-top: 50px; }
     .load-more-btn {
       display: inline-flex;
       align-items: center;
@@ -189,50 +134,14 @@
       transition: all 0.3s ease;
       font-family: 'Raleway', sans-serif;
     }
-    .load-more-btn:hover {
-      background: var(--gold);
-      color: #000;
-      border-color: var(--gold);
-      transform: translateY(-2px);
-    }
-    .load-more-btn:disabled {
-      opacity: 0.4;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    /* ── EMPTY STATE ── */
-    .empty-state {
-      grid-column: 1 / -1;
-      text-align: center;
-      padding: 80px 20px;
-    }
-    .empty-state i {
-      font-size: 60px;
-      color: var(--border);
-      display: block;
-      margin-bottom: 20px;
-    }
-    .empty-state h3 {
-      font-size: 20px;
-      color: var(--text-muted);
-      margin-bottom: 10px;
-    }
-    .empty-state p {
-      font-size: 13px;
-      color: var(--text-muted);
-    }
-
-    @media (max-width: 1024px) {
-      .products-grid-full { grid-template-columns: repeat(3, 1fr); }
-    }
-    @media (max-width: 768px) {
-      .products-grid-full { grid-template-columns: repeat(2, 1fr); }
-      .filter-section { top: 56px; }
-    }
-    @media (max-width: 480px) {
-      .products-grid-full { grid-template-columns: 1fr; }
-    }
+    .load-more-btn:hover { background: var(--gold); color: #000; border-color: var(--gold); transform: translateY(-2px); }
+    .empty-state { grid-column: 1 / -1; text-align: center; padding: 80px 20px; }
+    .empty-state i { font-size: 60px; color: var(--border); display: block; margin-bottom: 20px; }
+    .empty-state h3 { font-size: 20px; color: var(--text-muted); margin-bottom: 10px; }
+    .empty-state p { font-size: 13px; color: var(--text-muted); }
+    @media (max-width: 1024px) { .products-grid-full { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 768px) { .products-grid-full { grid-template-columns: repeat(2, 1fr); } .filter-section { top: 56px; } }
+    @media (max-width: 480px) { .products-grid-full { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -241,8 +150,7 @@
 <div class="loader" id="loader">
   <div class="loader-inner">
     <div class="loader-logo">
-      <span class="logo-rs">RS</span>
-      <span class="logo-shop">SHOP</span>
+      <span class="logo-rs">RS</span><span class="logo-shop">SHOP</span>
     </div>
     <div class="loader-bar"><div class="loader-fill"></div></div>
     <div class="loader-text">LOADING...</div>
@@ -257,8 +165,7 @@
 <nav class="navbar" id="navbar">
   <div class="nav-container">
     <a href="index.html" class="nav-logo">
-      <span class="logo-rs">RS</span>
-      <span class="logo-shop">SHOP</span>
+      <span class="logo-rs">RS</span><span class="logo-shop">SHOP</span>
     </a>
     <ul class="nav-links" id="navLinks">
       <li><a href="index.html">Home</a></li>
@@ -299,28 +206,20 @@
     <div class="filter-inner">
       <div class="filter-left">
         <span class="filter-label">Filter:</span>
-        <button class="filter-btn active" data-filter="all"
-          onclick="filterProducts('all', this)">All</button>
-        <button class="filter-btn" data-filter="analog"
-          onclick="filterProducts('analog', this)">Analog</button>
-        <button class="filter-btn" data-filter="digital"
-          onclick="filterProducts('digital', this)">Digital</button>
-        <button class="filter-btn" data-filter="smart"
-          onclick="filterProducts('smart', this)">Smart</button>
-        <button class="filter-btn" data-filter="couple"
-          onclick="filterProducts('couple', this)">Couple</button>
+        <button class="filter-btn active" onclick="filterProducts('all', this)">All</button>
+        <button class="filter-btn" onclick="filterProducts('analog', this)">Analog</button>
+        <button class="filter-btn" onclick="filterProducts('digital', this)">Digital</button>
+        <button class="filter-btn" onclick="filterProducts('smart', this)">Smart</button>
+        <button class="filter-btn" onclick="filterProducts('couple', this)">Couple</button>
       </div>
       <div class="filter-right">
-        <select class="sort-select" id="sortSelect"
-          onchange="sortProducts(this.value)">
+        <select class="sort-select" id="sortSelect" onchange="sortProducts(this.value)">
           <option value="default">Default</option>
           <option value="price-low">Price: Low to High</option>
           <option value="price-high">Price: High to Low</option>
           <option value="newest">Newest First</option>
         </select>
-        <span class="result-count">
-          Showing <span id="productCount">0</span> products
-        </span>
+        <span class="result-count">Showing <span id="productCount">0</span> products</span>
       </div>
     </div>
   </div>
@@ -336,8 +235,7 @@
       </div>
     </div>
     <div class="load-more-wrap" id="loadMoreWrap" style="display:none;">
-      <button class="load-more-btn" id="loadMoreBtn"
-        onclick="loadMore()">
+      <button class="load-more-btn" onclick="loadMore()">
         <i class="fas fa-plus"></i> Load More
       </button>
     </div>
@@ -351,15 +249,12 @@
       <div class="footer-grid">
         <div class="f-brand">
           <div class="footer-logo">
-            <span class="logo-rs">RS</span>
-            <span class="logo-shop">SHOP</span>
+            <span class="logo-rs">RS</span><span class="logo-shop">SHOP</span>
           </div>
           <p>The best premium watch & sunglass shop in Purbadhala.</p>
           <div class="f-social">
-            <a href="https://web.facebook.com/sojib.islam.739215"
-              target="_blank"><i class="fab fa-facebook-f"></i></a>
-            <a href="https://wa.me/8801996283245"
-              target="_blank"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://web.facebook.com/sojib.islam.739215" target="_blank"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://wa.me/8801996283245" target="_blank"><i class="fab fa-whatsapp"></i></a>
           </div>
         </div>
         <div class="f-links">
@@ -383,8 +278,7 @@
         </div>
         <div class="f-contact">
           <h4>Contact Us</h4>
-          <p><i class="fas fa-map-marker-alt"></i>
-            Purbadhala Station Road, Kazi Super Market</p>
+          <p><i class="fas fa-map-marker-alt"></i> Purbadhala Station Road, Kazi Super Market</p>
           <p><i class="fas fa-phone"></i> 01996283245</p>
           <p><i class="fab fa-whatsapp"></i> 01996283245</p>
           <div class="payment-methods">
@@ -399,8 +293,7 @@
   </div>
   <div class="footer-bottom">
     <div class="container">
-      <p>© 2024 RS SHOP. All Rights Reserved |
-        Developed by <strong>AMIN SHEIKH</strong></p>
+      <p>© 2024 RS SHOP. All Rights Reserved | Developed by <strong>AMIN SHEIKH</strong></p>
     </div>
   </div>
 </footer>
@@ -413,13 +306,11 @@
 
 <!-- FIREBASE -->
 <script type="module">
-  import { initializeApp }
-    from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
-  import { getFirestore, collection, getDocs, query, where, orderBy }
-    from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+  import { getFirestore, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
   const firebaseConfig = {
-    apiKey: "AIzaSyAszNu3DWs2bCej1GXxnQeXr9y1DR1FyuD",
+    apiKey: "AIzaSyAerNu3OWe2bCejiGXxnQeXr9yiDR1FysU",
     authDomain: "sojib-shop.firebaseapp.com",
     projectId: "sojib-shop",
     storageBucket: "sojib-shop.firebasestorage.app",
@@ -428,80 +319,54 @@
   };
 
   const app = initializeApp(firebaseConfig);
-  const db  = getFirestore(app);
+  const db = getFirestore(app);
 
-  let allProducts    = [];
-  let filtered       = [];
-  let currentFilter  = 'all';
-  let currentSort    = 'default';
-  let visibleCount   = 8;
-  const PER_PAGE     = 8;
+  let allProducts = [];
+  let filtered = [];
+  let currentFilter = 'all';
+  let currentSort = 'default';
+  let visibleCount = 8;
+  const PER_PAGE = 8;
 
-  /* ── Fetch all watches ── */
-  async function fetchWatches() {
-    const grid = document.getElementById('watchGrid');
-    try {
-      const q    = query(
-        collection(db, "products"),
-        where("category", "==", "watch")
-      );
-      const snap = await getDocs(q);
-
-      allProducts = [];
-      snap.forEach(doc => {
-        allProducts.push({ id: doc.id, ...doc.data() });
-      });
-
-      filtered = [...allProducts];
-      renderProducts();
-    } catch(e) {
-      grid.innerHTML = `
-        <div class="empty-state">
-          <i class="fas fa-exclamation-circle"></i>
-          <h3>Failed to load products</h3>
-          <p>Please check your connection and try again.</p>
-        </div>`;
-    }
+  // ===== CART =====
+  window.addToCart = function(id, name, price, image) {
+    let cart = JSON.parse(localStorage.getItem('rs_cart') || '[]');
+    const existing = cart.find(i => i.id === id);
+    if (existing) existing.qty += 1;
+    else cart.push({ id, name, price, image, category: 'watches', qty: 1 });
+    localStorage.setItem('rs_cart', JSON.stringify(cart));
+    const count = cart.reduce((s, i) => s + i.qty, 0);
+    document.querySelectorAll('#cartCount').forEach(el => el.textContent = count);
+    showCartToast(name);
   }
 
-  /* ── Render products ── */
-  function renderProducts() {
-    const grid  = document.getElementById('watchGrid');
-    const count = document.getElementById('productCount');
-    const wrap  = document.getElementById('loadMoreWrap');
-
-    if (filtered.length === 0) {
-      grid.innerHTML = `
-        <div class="empty-state">
-          <i class="fas fa-clock"></i>
-          <h3>No watches found</h3>
-          <p>Try a different filter</p>
-        </div>`;
-      if (count) count.textContent = '0';
-      if (wrap)  wrap.style.display = 'none';
-      return;
+  function showCartToast(name) {
+    let toast = document.getElementById('cartToast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'cartToast';
+      toast.style.cssText = 'position:fixed;bottom:80px;right:20px;background:#111;border:1px solid rgba(201,168,76,0.5);color:#e0e0e0;padding:14px 20px;border-radius:10px;z-index:9999;font-size:0.9rem;box-shadow:0 8px 32px rgba(0,0,0,0.5);display:none;';
+      document.body.appendChild(toast);
     }
+    toast.innerHTML = `<i class="fas fa-check-circle" style="color:#2ed573;margin-right:8px"></i> <strong>${name}</strong> added to cart!`;
+    toast.style.display = 'block';
+    setTimeout(() => toast.style.display = 'none', 2500);
+  }
 
-    const visible = filtered.slice(0, visibleCount);
-    if (count) count.textContent = filtered.length;
-
-    grid.innerHTML = visible.map(p => `
-      <div class="product-card"
-        onclick="location.href='product.html?id=${p.id}'">
+  // ===== PRODUCT CARD =====
+  function createCard(p) {
+    const discount = p.oldPrice ? Math.round((p.oldPrice - p.price) / p.oldPrice * 100) : 0;
+    const outOfStock = p.stock === 'out_of_stock';
+    return `
+      <div class="product-card" onclick="location.href='product.html?id=${p.id}'">
         <div class="p-img-wrap">
-          <img src="${p.image || 'https://via.placeholder.com/400x400/141414/c9a84c?text=Watch'}"
-            alt="${p.name}" loading="lazy"/>
-          ${p.discount
-            ? `<span class="p-badge">${p.discount}% OFF</span>`
-            : ''}
-          ${p.stock === false
-            ? `<span class="p-badge" style="background:#ff4444;left:auto;right:12px;">
-                Out of Stock</span>`
-            : ''}
+          ${p.image
+            ? `<img src="${p.image}" alt="${p.name}" loading="lazy"/>`
+            : `<div style="width:100%;height:220px;background:#1a1a1a;display:flex;align-items:center;justify-content:center"><i class="fas fa-clock" style="font-size:3rem;color:#444"></i></div>`}
+          ${discount > 0 ? `<span class="p-badge">${discount}% OFF</span>` : ''}
+          ${outOfStock ? `<span class="p-badge" style="background:#ff4757;left:auto;right:12px">Out of Stock</span>` : ''}
           <div class="p-hover">
-            <button
-              onclick="event.stopPropagation();
-                       location.href='product.html?id=${p.id}'">
+            <button onclick="event.stopPropagation();location.href='product.html?id=${p.id}'">
               <i class="fas fa-eye"></i> Quick View
             </button>
           </div>
@@ -509,86 +374,90 @@
         <div class="p-info">
           <h3>${p.name}</h3>
           <div class="p-price">
-            <span class="p-current">
-              ৳${Number(p.price).toLocaleString()}
-            </span>
-            ${p.oldPrice
-              ? `<span class="p-old">
-                  ৳${Number(p.oldPrice).toLocaleString()}
-                 </span>`
-              : ''}
+            <span class="p-current">৳${Number(p.price).toLocaleString()}</span>
+            ${p.oldPrice ? `<span class="p-old">৳${Number(p.oldPrice).toLocaleString()}</span>` : ''}
           </div>
-          <button class="p-cart-btn"
-            ${p.stock === false ? 'disabled style="opacity:0.5;cursor:not-allowed;"' : ''}
-            onclick="event.stopPropagation();
-              ${p.stock !== false
-                ? `addToCart('${p.id}','${p.name}',
-                    ${p.price},'${p.image || ''}')`
-                : ''}">
+          <button class="p-cart-btn" ${outOfStock ? 'disabled style="opacity:0.5;cursor:not-allowed"' : ''}
+            onclick="event.stopPropagation(); ${!outOfStock ? `addToCart('${p.id}','${p.name.replace(/'/g,"\\'")}',${p.price},'${p.image || ''}')` : ''}">
             <i class="fas fa-shopping-bag"></i>
-            ${p.stock === false ? 'Out of Stock' : 'Add to Cart'}
+            ${outOfStock ? 'Out of Stock' : 'Add to Cart'}
           </button>
         </div>
-      </div>`
-    ).join('');
+      </div>`;
+  }
 
-    /* Load more button */
-    if (wrap) {
-      wrap.style.display =
-        filtered.length > visibleCount ? 'block' : 'none';
+  // ===== FETCH WATCHES =====
+  async function fetchWatches() {
+    const grid = document.getElementById('watchGrid');
+    try {
+      const snap = await getDocs(query(collection(db, 'products'), where('category', '==', 'watches')));
+      allProducts = [];
+      snap.forEach(doc => allProducts.push({ id: doc.id, ...doc.data() }));
+      filtered = [...allProducts];
+      updateCartCount();
+      renderProducts();
+    } catch(e) {
+      console.error(e);
+      grid.innerHTML = `<div class="empty-state"><i class="fas fa-exclamation-circle"></i><h3>Failed to load</h3><p>Please try again.</p></div>`;
     }
   }
 
-  /* ── Filter ── */
+  // ===== RENDER =====
+  function renderProducts() {
+    const grid = document.getElementById('watchGrid');
+    const countEl = document.getElementById('productCount');
+    const wrap = document.getElementById('loadMoreWrap');
+
+    if (!filtered.length) {
+      grid.innerHTML = `<div class="empty-state"><i class="fas fa-clock"></i><h3>No watches found</h3><p>Try a different filter</p></div>`;
+      if (countEl) countEl.textContent = '0';
+      if (wrap) wrap.style.display = 'none';
+      return;
+    }
+
+    if (countEl) countEl.textContent = filtered.length;
+    grid.innerHTML = filtered.slice(0, visibleCount).map(p => createCard(p)).join('');
+    if (wrap) wrap.style.display = filtered.length > visibleCount ? 'block' : 'none';
+  }
+
+  // ===== FILTER =====
   window.filterProducts = function(type, btn) {
     currentFilter = type;
-    visibleCount  = PER_PAGE;
-
-    document.querySelectorAll('.filter-btn').forEach(b =>
-      b.classList.remove('active')
-    );
+    visibleCount = PER_PAGE;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-
     filtered = type === 'all'
       ? [...allProducts]
-      : allProducts.filter(p =>
-          (p.subCategory || '').toLowerCase() === type
-        );
-
+      : allProducts.filter(p => (p.subCategory || '').toLowerCase() === type);
     applySortAndRender();
   };
 
-  /* ── Sort ── */
+  // ===== SORT =====
   window.sortProducts = function(value) {
-    currentSort  = value;
+    currentSort = value;
     visibleCount = PER_PAGE;
     applySortAndRender();
   };
 
   function applySortAndRender() {
-    switch (currentSort) {
-      case 'price-low':
-        filtered.sort((a, b) => a.price - b.price);
-        break;
-      case 'price-high':
-        filtered.sort((a, b) => b.price - a.price);
-        break;
-      case 'newest':
-        filtered.sort((a, b) =>
-          (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0)
-        );
-        break;
-      default:
-        break;
-    }
+    if (currentSort === 'price-low') filtered.sort((a, b) => a.price - b.price);
+    else if (currentSort === 'price-high') filtered.sort((a, b) => b.price - a.price);
+    else if (currentSort === 'newest') filtered.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     renderProducts();
   }
 
-  /* ── Load More ── */
+  // ===== LOAD MORE =====
   window.loadMore = function() {
     visibleCount += PER_PAGE;
     renderProducts();
   };
+
+  // ===== CART COUNT =====
+  function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem('rs_cart') || '[]');
+    const count = cart.reduce((s, i) => s + i.qty, 0);
+    document.querySelectorAll('#cartCount').forEach(el => el.textContent = count);
+  }
 
   fetchWatches();
 </script>

@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>RS SHOP — Premium Watch & Sunglass</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Raleway:wght@300;400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
+
+<!-- ══ LOADER ══ -->
+<div class="loader" id="loader">
+  <div class="loader-inner">
+    <div class="loader-logo">
+      <span class="logo-rs">RS</span>
+      <span class="logo-shop">SHOP</span>
+    </div>
+    <div class="loader-bar"><div class="loader-fill"></div></div>
+    <div class="loader-text">LOADING EXPERIENCE...</div>
+  </div>
+</div>
+
+<!-- ══ CUSTOM CURSOR ══ -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-follower" id="cursorFollower"></div>
+
+<!-- ══ NAVBAR ══ -->
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <!-- LOGO -->
+    <a href="index.html" class="nav-logo">
+      <span class="logo-rs">RS</span>
+      <span class="logo-shop">SHOP</span>
+    </a>
+
+    <!-- LINKS -->
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="watches.html">Watches</a></li>
+      <li><a href="sunglasses.html">Sunglasses</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+
+    <!-- ACTIONS -->
+    <div class="nav-actions">
+      <a href="cart.html" class="cart-icon">
+        <i class="fas fa-shopping-bag"></i>
+        <span class="cart-badge" id="cartCount">0</span>
+      </a>
+      <div class="hamburger" id="hamburger">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section class="hero" id="hero">
+  <div class="hero-particles" id="particles"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">✦ New Collection 2024 ✦</p>
+    <h1 class="hero-title">
+      <span class="line1">Define Your</span>
+      <span class="line2">Style</span>
+    </h1>
+    <p class="hero-sub">Premium Watches & Sunglasses at the Best Price</p>
+    <div class="hero-btns">
+      <a href="watches.html" class="btn-primary">
+        Shop Watches <i class="fas fa-arrow-right"></i>
+      </a>
+      <a href="sunglasses.html" class="btn-outline">
+        Shop Sunglasses
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <span class="stat-number" data-target="500">0</span><span>+</span>
+        <p>Happy Customers</p>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-number" data-target="50">0</span><span>+</span>
+        <p>Products</p>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-number" data-target="3">0</span><span>+</span>
+        <p>Years Experience</p>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll-hint">
+    <span>Scroll Down</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ══ MARQUEE ══ -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span>✦ Premium Watches</span>
+    <span>✦ Stylish Sunglasses</span>
+    <span>✦ Fast Delivery</span>
+    <span>✦ 100% Original</span>
+    <span>✦ Best Price</span>
+    <span>✦ Cash on Delivery</span>
+    <span>✦ Premium Watches</span>
+    <span>✦ Stylish Sunglasses</span>
+    <span>✦ Fast Delivery</span>
+    <span>✦ 100% Original</span>
+    <span>✦ Best Price</span>
+    <span>✦ Cash on Delivery</span>
+  </div>
+</div>
+
+<!-- ══ CATEGORIES ══ -->
+<section class="section categories" id="categories">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-tag">Our Products</span>
+      <h2>Shop By Category</h2>
+    </div>
+    <div class="cat-grid">
+      <a href="watches.html" class="cat-card" data-aos="left">
+        <div class="cat-icon"><i class="fas fa-clock"></i></div>
+        <div class="cat-body">
+          <h3>Premium Watches</h3>
+          <p>Explore our exclusive watch collection</p>
+          <span>Shop Now <i class="fas fa-arrow-right"></i></span>
+        </div>
+        <div class="cat-glow"></div>
+      </a>
+      <a href="sunglasses.html" class="cat-card" data-aos="right">
+        <div class="cat-icon"><i class="fas fa-glasses"></i></div>
+        <div class="cat-body">
+          <h3>Stylish Sunglasses</h3>
+          <p>Find your perfect pair of shades</p>
+          <span>Shop Now <i class="fas fa-arrow-right"></i></span>
+        </div>
+        <div class="cat-glow"></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FEATURED WATCHES ══ -->
+<section class="section featured" id="featuredWatches">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-tag">Best Sellers</span>
+      <h2>Featured Watches</h2>
+      <a href="watches.html" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="products-grid" id="watchGrid">
+      <div class="loading-wrap">
+        <div class="spinner"></div>
+        <p>Loading products...</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PROMO BANNER ══ -->
+<section class="promo-banner">
+  <div class="promo-inner">
+    <div class="promo-text">
+      <h2>Special Offer!</h2>
+      <p>Order directly via WhatsApp for exclusive deals</p>
+    </div>
+    <a href="https://wa.me/8801996283245" target="_blank" class="btn-whatsapp">
+      <i class="fab fa-whatsapp"></i> Order on WhatsApp
+    </a>
+  </div>
+</section>
+
+<!-- ══ FEATURED SUNGLASSES ══ -->
+<section class="section featured" id="featuredSunglasses">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-tag">New Arrivals</span>
+      <h2>Featured Sunglasses</h2>
+      <a href="sunglasses.html" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="products-grid" id="sunglassGrid">
+      <div class="loading-wrap">
+        <div class="spinner"></div>
+        <p>Loading products...</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ WHY US ══ -->
+<section class="section why-us">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-tag">Why Choose Us</span>
+      <h2>Our Promise</h2>
+    </div>
+    <div class="why-grid">
+      <div class="why-card" data-delay="0">
+        <div class="why-icon"><i class="fas fa-shield-alt"></i></div>
+        <h3>100% Original</h3>
+        <p>All products are 100% genuine and quality assured</p>
+      </div>
+      <div class="why-card" data-delay="100">
+        <div class="why-icon"><i class="fas fa-truck"></i></div>
+        <h3>Fast Delivery</h3>
+        <p>Quick and safe delivery across Bangladesh</p>
+      </div>
+      <div class="why-card" data-delay="200">
+        <div class="why-icon"><i class="fas fa-undo"></i></div>
+        <h3>Easy Return</h3>
+        <p>3-day hassle-free return policy</p>
+      </div>
+      <div class="why-card" data-delay="300">
+        <div class="why-icon"><i class="fas fa-headset"></i></div>
+        <h3>24/7 Support</h3>
+        <p>Always here to help you anytime</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TESTIMONIALS ══ -->
+<section class="section testimonials">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-tag">Reviews</span>
+      <h2>What Customers Say</h2>
+    </div>
+    <div class="testimonial-wrap">
+      <div class="testimonial-card active" id="tCard0">
+        <div class="stars">★★★★★</div>
+        <p>"Amazing quality watch at a very affordable price. Love shopping at RS SHOP!"</p>
+        <div class="t-author">
+          <div class="t-avatar">R</div>
+          <div>
+            <strong>Rakib Hassan</strong>
+            <span>Dhaka</span>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card" id="tCard1">
+        <div class="stars">★★★★★</div>
+        <p>"The sunglasses quality is incredible. Never expected this quality at such a price!"</p>
+        <div class="t-author">
+          <div class="t-avatar">S</div>
+          <div>
+            <strong>Sumaiya Akter</strong>
+            <span>Mymensingh</span>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card" id="tCard2">
+        <div class="stars">★★★★★</div>
+        <p>"Super fast delivery and beautiful packaging. Will definitely order again!"</p>
+        <div class="t-author">
+          <div class="t-avatar">M</div>
+          <div>
+            <strong>Mahmudul Hasan</strong>
+            <span>Netrokona</span>
+          </div>
+        </div>
+      </div>
+      <div class="t-dots">
+        <span class="t-dot active" onclick="goSlide(0)"></span>
+        <span class="t-dot" onclick="goSlide(1)"></span>
+        <span class="t-dot" onclick="goSlide(2)"></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="container">
+      <div class="footer-grid">
+
+        <!-- Brand -->
+        <div class="f-brand">
+          <div class="footer-logo">
+            <span class="logo-rs">RS</span>
+            <span class="logo-shop">SHOP</span>
+          </div>
+          <p>The best premium watch & sunglass shop in Purbadhala. Quality products at the best price.</p>
+          <div class="f-social">
+            <a href="https://web.facebook.com/sojib.islam.739215" target="_blank">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="https://wa.me/8801996283245" target="_blank">
+              <i class="fab fa-whatsapp"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="f-links">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="watches.html">Watches</a></li>
+            <li><a href="sunglasses.html">Sunglasses</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- Support -->
+        <div class="f-links">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="#">Delivery Policy</a></li>
+            <li><a href="#">Return Policy</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact -->
+        <div class="f-contact">
+          <h4>Contact Us</h4>
+          <p><i class="fas fa-map-marker-alt"></i> Purbadhala Station Road, Kazi Super Market</p>
+          <p><i class="fas fa-phone"></i> 01996283245</p>
+          <p><i class="fab fa-whatsapp"></i> 01996283245</p>
+          <div class="payment-methods">
+            <span class="pay bkash">bKash</span>
+            <span class="pay nagad">Nagad</span>
+            <span class="pay rocket">Rocket</span>
+            <span class="pay cod">COD</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container">
+      <p>© 2024 RS SHOP. All Rights Reserved | Developed by <strong>AMIN SHEIKH</strong></p>
+    </div>
+  </div>
+</footer>
+
+<!-- ══ WHATSAPP FLOAT ══ -->
+<a href="https://wa.me/8801996283245" class="wa-float" target="_blank">
+  <i class="fab fa-whatsapp"></i>
+  <span class="wa-tip">Order Now</span>
+</a>
+
+<!-- ══ FIREBASE ══ -->
+<script type="module">
+  import { initializeApp }
+    from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+  import { getFirestore, collection, getDocs, query, where, limit }
+    from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAszNu3DWs2bCej1GXxnQeXr9y1DR1FyuD",
+    authDomain: "sojib-shop.firebaseapp.com",
+    projectId: "sojib-shop",
+    storageBucket: "sojib-shop.firebasestorage.app",
+    messagingSenderId: "1061639520028",
+    appId: "1:1061639520028:web:d164fdf6f3d0bbd79304d9"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db  = getFirestore(app);
+
+  async function loadProducts(category, gridId) {
+    const grid = document.getElementById(gridId);
+    try {
+      const q = query(
+        collection(db, "products"),
+        where("category", "==", category),
+        where("featured", "==", true),
+        limit(4)
+      );
+      const snap = await getDocs(q);
+      if(snap.empty){
+        grid.innerHTML = `<p class="empty-msg">No products found.</p>`;
+        return;
+      }
+      grid.innerHTML = '';
+      snap.forEach(doc => {
+        const p = doc.data();
+        grid.innerHTML += `
+          <div class="product-card" onclick="location.href='product.html?id=${doc.id}'">
+            <div class="p-img-wrap">
+              <img src="${p.image}" alt="${p.name}" loading="lazy"/>
+              ${p.discount ? `<span class="p-badge">${p.discount}% OFF</span>` : ''}
+              <div class="p-hover">
+                <button onclick="event.stopPropagation();location.href='product.html?id=${doc.id}'">
+                  <i class="fas fa-eye"></i> Quick View
+                </button>
+              </div>
+            </div>
+            <div class="p-info">
+              <h3>${p.name}</h3>
+              <div class="p-price">
+                <span class="p-current">৳${Number(p.price).toLocaleString()}</span>
+                ${p.oldPrice ? `<span class="p-old">৳${Number(p.oldPrice).toLocaleString()}</span>` : ''}
+              </div>
+              <button class="p-cart-btn"
+                onclick="event.stopPropagation();addToCart('${doc.id}','${p.name}',${p.price},'${p.image}')">
+                <i class="fas fa-shopping-bag"></i> Add to Cart
+              </button>
+            </div>
+          </div>`;
+      });
+    } catch(e) {
+      grid.innerHTML = `<p class="empty-msg">Failed to load products.</p>`;
+    }
+  }
+
+  loadProducts("watch",    "watchGrid");
+  loadProducts("sunglass", "sunglassGrid");
+</script>
+
+<script src="main.js"></script>
+</body>
+</html>

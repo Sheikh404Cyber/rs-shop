@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Us — RS SHOP</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Raleway:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+
+    /* ── PAGE HERO ── */
+    .page-hero {
+      min-height: 360px;
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+      display: flex; align-items: center; justify-content: center;
+      text-align: center; position: relative; overflow: hidden;
+      border-bottom: 1px solid rgba(201,168,76,0.15);
+      padding-top: 80px;
+    }
+    .page-hero::before {
+      content:''; position:absolute; inset:0;
+      background: radial-gradient(ellipse at center, rgba(201,168,76,0.1) 0%, transparent 65%);
+    }
+    .page-hero::after {
+      content:''; position:absolute; bottom:0; left:0; right:0; height:1px;
+      background: linear-gradient(90deg, transparent, #c9a84c, transparent);
+    }
+    .page-hero-tag {
+      display:inline-block; padding:6px 20px;
+      border:1px solid rgba(201,168,76,0.4); border-radius:30px;
+      font-size:11px; letter-spacing:4px; color:#c9a84c;
+      font-weight:700; margin-bottom:20px;
+      background: rgba(201,168,76,0.06);
+    }
+    .page-hero h1 {
+      font-family:'Cinzel',serif; font-size:clamp(2.2rem,5vw,4rem);
+      font-weight:900; color:#fff; letter-spacing:4px; margin-bottom:16px;
+      line-height:1.2;
+    }
+    .page-hero h1 span { color:#c9a84c; }
+    .page-hero p {
+      font-size:15px; color:#888; max-width:500px; margin:0 auto 24px;
+      line-height:1.8;
+    }
+    .breadcrumb {
+      display:flex; align-items:center; justify-content:center; gap:10px;
+      font-size:12px; color:#555; letter-spacing:1px;
+    }
+    .breadcrumb a { color:#555; transition:.3s; }
+    .breadcrumb a:hover { color:#c9a84c; }
+    .breadcrumb span { color:#c9a84c; }
+
+    /* ── SECTIONS ── */
+    section { padding: 100px 0; }
+    .section-tag {
+      display:inline-block; padding:5px 18px;
+      border:1px solid rgba(201,168,76,0.35); border-radius:30px;
+      font-size:10px; letter-spacing:4px; color:#c9a84c;
+      font-weight:700; margin-bottom:16px;
+    }
+    .section-title {
+      font-family:'Cinzel',serif; font-size:clamp(1.8rem,3.5vw,2.8rem);
+      font-weight:900; color:#fff; letter-spacing:2px;
+      margin-bottom:16px; line-height:1.25;
+    }
+    .section-title span { color:#c9a84c; }
+    .section-sub {
+      font-size:15px; color:#777; line-height:1.8; max-width:560px;
+    }
+    .divider {
+      width:60px; height:2px;
+      background:linear-gradient(90deg,#8a6a20,#c9a84c,#f0d080);
+      margin: 16px 0 24px; border-radius:2px;
+    }
+
+    /* ── STORY SECTION ── */
+    .story-grid {
+      display:grid; grid-template-columns:1fr 1fr;
+      gap:80px; align-items:center;
+    }
+    .story-visual {
+      position:relative;
+    }
+    .story-main-img {
+      width:100%; aspect-ratio:4/5; object-fit:cover;
+      border-radius:12px;
+      border:1px solid rgba(201,168,76,0.2);
+      background: linear-gradient(135deg,#111,#1e1e1e);
+      display:flex; align-items:center; justify-content:center;
+      overflow:hidden;
+    }
+    .story-img-placeholder {
+      width:100%; aspect-ratio:4/5;
+      background: linear-gradient(135deg,#0f0f0f 0%,#1e1e1e 50%,#0f0f0f 100%);
+      border-radius:12px; border:1px solid rgba(201,168,76,0.15);
+      display:flex; flex-direction:column;
+      align-items:center; justify-content:center; gap:16px;
+      position:relative; overflow:hidden;
+    }
+    .story-img-placeholder::before {
+      content:''; position:absolute; inset:0;
+      background: radial-gradient(ellipse at 30% 40%, rgba(201,168,76,0.08) 0%, transparent 60%);
+    }
+    .story-img-placeholder i {
+      font-size:64px; color:rgba(201,168,76,0.3);
+    }
+    .story-img-placeholder p {
+      font-family:'Cinzel',serif; font-size:22px; font-weight:700;
+      color:rgba(201,168,76,0.5); letter-spacing:4px;
+    }
+    .story-badge {
+      position:absolute; bottom:-20px; right:-20px;
+      width:120px; height:120px; border-radius:50%;
+      background:linear-gradient(135deg,#8a6a20,#c9a84c);
+      display:flex; flex-direction:column;
+      align-items:center; justify-content:center;
+      box-shadow:0 10px 40px rgba(201,168,76,0.4);
+    }
+    .story-badge .num {
+      font-family:'Cinzel',serif; font-size:28px;
+      font-weight:900; color:#000; line-height:1;
+    }
+    .story-badge .txt {
+      font-size:9px; letter-spacing:2px;
+      font-weight:700; color:#000; opacity:.8;
+    }
+    .story-text { }
+    .story-text p {
+      font-size:15px; color:#888; line-height:1.9;
+      margin-bottom:20px;
+    }
+    .story-highlights {
+      display:grid; grid-template-columns:1fr 1fr;
+      gap:16px; margin-top:32px;
+    }
+    .highlight-card {
+      padding:20px; border-radius:8px;
+      background:rgba(255,255,255,0.03);
+      border:1px solid rgba(201,168,76,0.1);
+      transition:all .3s;
+    }
+    .highlight-card:hover {
+      background:rgba(201,168,76,0.05);
+      border-color:rgba(201,168,76,0.25);
+      transform:translateY(-3px);
+    }
+    .highlight-card i {
+      font-size:24px; color:#c9a84c;
+      margin-bottom:10px; display:block;
+    }
+    .highlight-card h4 {
+      font-family:'Cinzel',serif; font-size:14px;
+      font-weight:700; color:#e8e8e8; margin-bottom:6px;
+    }
+    .highlight-card p {
+      font-size:12px; color:#666; line-height:1.6;
+    }
+
+    /* ── STATS ── */
+    .stats-section {
+      background:linear-gradient(135deg,#0d0d0d,#161616,#0d0d0d);
+      border-top:1px solid rgba(201,168,76,0.1);
+      border-bottom:1px solid rgba(201,168,76,0.1);
+      padding:70px 0;
+    }
+    .stats-grid {
+      display:grid; grid-template-columns:repeat(4,1fr);
+      gap:30px; text-align:center;
+    }
+    .stat-box {
+      padding:30px 20px;
+      border-right:1px solid rgba(201,168,76,0.1);
+    }
+    .stat-box:last-child { border-right:none; }
+    .stat-box .num {
+      font-family:'Cinzel',serif; font-size:48px;
+      font-weight:900; color:#c9a84c; line-height:1;
+      margin-bottom:8px;
+    }
+    .stat-box .suffix { font-size:28px; }
+    .stat-box .label {
+      font-size:11px; letter-spacing:3px;
+      color:#666; font-weight:700; text-transform:uppercase;
+    }
+
+    /* ── VALUES ── */
+    .values-grid {
+      display:grid; grid-template-columns:repeat(3,1fr);
+      gap:24px; margin-top:60px;
+    }
+    .value-card {
+      padding:36px 28px; border-radius:10px;
+      background:rgba(255,255,255,0.02);
+      border:1px solid rgba(201,168,76,0.1);
+      transition:all .4s; position:relative; overflow:hidden;
+    }
+    .value-card::before {
+      content:''; position:absolute;
+      top:0; left:0; right:0; height:2px;
+      background:linear-gradient(90deg,transparent,#c9a84c,transparent);
+      opacity:0; transition:.4s;
+    }
+    .value-card:hover { transform:translateY(-6px); border-color:rgba(201,168,76,0.3); background:rgba(201,168,76,0.04); }
+    .value-card:hover::before { opacity:1; }
+    .value-icon {
+      width:56px; height:56px; border-radius:12px;
+      background:rgba(201,168,76,0.1);
+      border:1px solid rgba(201,168,76,0.2);
+      display:flex; align-items:center; justify-content:center;
+      margin-bottom:20px; font-size:22px; color:#c9a84c;
+      transition:.3s;
+    }
+    .value-card:hover .value-icon {
+      background:rgba(201,168,76,0.2);
+      box-shadow:0 0 20px rgba(201,168,76,0.15);
+    }
+    .value-card h3 {
+      font-family:'Cinzel',serif; font-size:16px;
+      font-weight:700; color:#e8e8e8; margin-bottom:12px;
+      letter-spacing:1px;
+    }
+    .value-card p { font-size:13px; color:#666; line-height:1.8; }
+
+    /* ── TEAM ── */
+    .team-grid {
+      display:grid; grid-template-columns:repeat(3,1fr);
+      gap:30px; margin-top:60px;
+    }
+    .team-card {
+      text-align:center; padding:40px 24px;
+      background:rgba(255,255,255,0.02);
+      border:1px solid rgba(201,168,76,0.1);
+      border-radius:12px; transition:all .4s;
+    }
+    .team-card:hover {
+      transform:translateY(-6px);
+      border-color:rgba(201,168,76,0.3);
+      background:rgba(201,168,76,0.03);
+    }
+    .team-avatar {
+      width:90px; height:90px; border-radius:50%;
+      background:linear-gradient(135deg,#1a1a1a,#2a2a2a);
+      border:2px solid rgba(201,168,76,0.3);
+      margin:0 auto 20px;
+      display:flex; align-items:center; justify-content:center;
+      font-family:'Cinzel',serif; font-size:28px;
+      font-weight:900; color:#c9a84c;
+      box-shadow:0 0 30px rgba(201,168,76,0.1);
+    }
+    .team-card h3 {
+      font-family:'Cinzel',serif; font-size:17px;
+      font-weight:700; color:#e8e8e8; margin-bottom:6px;
+    }
+    .team-card .role {
+      font-size:11px; letter-spacing:3px;
+      color:#c9a84c; font-weight:700; margin-bottom:14px;
+    }
+    .team-card p { font-size:13px; color:#666; line-height:1.7; }
+
+    /* ── LOCATION ── */
+    .location-section { background:#0d0d0d; }
+    .location-grid {
+      display:grid; grid-template-columns:1fr 1fr;
+      gap:60px; align-items:center;
+    }
+    .location-info h2 {
+      font-family:'Cinzel',serif; font-size:2rem;
+      font-weight:900; color:#fff; margin-bottom:8px;
+    }
+    .location-info h2 span { color:#c9a84c; }
+    .location-details { margin-top:32px; display:flex; flex-direction:column; gap:20px; }
+    .loc-item {
+      display:flex; align-items:flex-start; gap:16px;
+    }
+    .loc-icon {
+      width:44px; height:44px; border-radius:10px; flex-shrink:0;
+      background:rgba(201,168,76,0.1);
+      border:1px solid rgba(201,168,76,0.2);
+      display:flex; align-items:center; justify-content:center;
+      color:#c9a84c; font-size:16px;
+    }
+    .loc-item h4 {
+      font-size:12px; letter-spacing:2px; color:#c9a84c;
+      font-weight:700; margin-bottom:4px;
+    }
+    .loc-item p { font-size:14px; color:#aaa; line-height:1.6; }
+    .location-map-box {
+      aspect-ratio:4/3; background:linear-gradient(135deg,#111,#1a1a1a);
+      border-radius:12px; border:1px solid rgba(201,168,76,0.15);
+      display:flex; flex-direction:column;
+      align-items:center; justify-content:center;
+      gap:16px; color:#555; position:relative; overflow:hidden;
+    }
+    .location-map-box::before {
+      content:''; position:absolute; inset:0;
+      background:radial-gradient(ellipse at 50% 50%, rgba(201,168,76,0.05) 0%, transparent 60%);
+    }
+    .location-map-box i { font-size:48px; color:rgba(201,168,76,0.3); }
+    .location-map-box p { font-size:13px; letter-spacing:2px; color:#555; }
+    .btn-directions {
+      margin-top:24px; display:inline-flex; align-items:center; gap:10px;
+      padding:14px 28px;
+      background:linear-gradient(135deg,#8a6a20,#c9a84c);
+      color:#000; font-size:12px; font-weight:700; letter-spacing:2px;
+      border-radius:6px; text-transform:uppercase; transition:.3s;
+      text-decoration:none;
+    }
+    .btn-directions:hover { transform:translateY(-2px); box-shadow:0 10px 30px rgba(201,168,76,0.3); }
+
+    /* ── CTA ── */
+    .cta-section {
+      text-align:center;
+      background:linear-gradient(135deg,#0a0a0a,#141414,#0a0a0a);
+      padding:100px 0;
+      border-top:1px solid rgba(201,168,76,0.1);
+    }
+    .cta-section h2 {
+      font-family:'Cinzel',serif; font-size:clamp(1.8rem,4vw,3rem);
+      font-weight:900; color:#fff; letter-spacing:2px;
+      margin-bottom:16px;
+    }
+    .cta-section h2 span { color:#c9a84c; }
+    .cta-section p { font-size:15px; color:#777; margin-bottom:40px; }
+    .cta-btns { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }
+    .btn-primary-cta {
+      padding:16px 36px;
+      background:linear-gradient(135deg,#8a6a20,#c9a84c,#f0d080);
+      color:#000; font-family:'Cinzel',serif; font-size:13px;
+      font-weight:900; letter-spacing:2px; border-radius:6px;
+      text-transform:uppercase; transition:.3s; text-decoration:none;
+      display:inline-flex; align-items:center; gap:10px;
+    }
+    .btn-primary-cta:hover { transform:translateY(-3px); box-shadow:0 15px 40px rgba(201,168,76,0.35); }
+    .btn-secondary-cta {
+      padding:16px 36px; background:transparent;
+      border:1px solid rgba(201,168,76,0.4); color:#c9a84c;
+      font-size:13px; font-weight:700; letter-spacing:2px;
+      border-radius:6px; text-transform:uppercase; transition:.3s;
+      text-decoration:none; display:inline-flex; align-items:center; gap:10px;
+    }
+    .btn-secondary-cta:hover {
+      background:rgba(201,168,76,0.1); border-color:#c9a84c;
+      transform:translateY(-3px);
+    }
+
+    /* Responsive */
+    @media(max-width:900px){
+      .story-grid { grid-template-columns:1fr; gap:50px; }
+      .stats-grid { grid-template-columns:repeat(2,1fr); }
+      .stat-box { border-right:none; border-bottom:1px solid rgba(201,168,76,0.1); }
+      .values-grid { grid-template-columns:repeat(2,1fr); }
+      .team-grid { grid-template-columns:repeat(2,1fr); }
+      .location-grid { grid-template-columns:1fr; gap:40px; }
+    }
+    @media(max-width:600px){
+      .stats-grid { grid-template-columns:1fr 1fr; }
+      .values-grid { grid-template-columns:1fr; }
+      .team-grid { grid-template-columns:1fr; }
+      .story-highlights { grid-template-columns:1fr; }
+      .story-badge { width:90px; height:90px; bottom:-15px; right:-10px; }
+      .story-badge .num { font-size:20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Loader -->
+  <div class="loader" id="loader">
+    <div class="loader-inner">
+      <span class="logo-rs">RS<span class="logo-shop">SHOP</span></span>
+      <div class="loader-bar"><div class="loader-fill"></div></div>
+      <p class="loader-text">LOADING</p>
+    </div>
+  </div>
+
+  <!-- Cursor -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursorFollower"></div>
+
+  <!-- Navbar -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">RS<span>SHOP</span></a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="watches.html">Watches</a></li>
+        <li><a href="sunglasses.html">Sunglasses</a></li>
+        <li><a href="about.html" class="active">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="cart.html" class="nav-cart" id="cartBtn">
+          <i class="fas fa-shopping-bag"></i>
+          <span class="cart-count" id="cartCount">0</span>
+        </a>
+        <button class="hamburger" id="hamburger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Hero -->
+  <section class="page-hero">
+    <div class="page-hero-content" data-aos="fade-up">
+      <div class="page-hero-tag">OUR STORY</div>
+      <h1>About <span>RS SHOP</span></h1>
+      <p>Where timeless craftsmanship meets modern style. Discover the story behind your favourite watch and sunglass destination.</p>
+      <div class="breadcrumb">
+        <a href="index.html">Home</a>
+        <i class="fas fa-chevron-right" style="font-size:9px;"></i>
+        <span>About Us</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Story Section -->
+  <section>
+    <div class="container">
+      <div class="story-grid">
+
+        <!-- Visual -->
+        <div class="story-visual" data-aos="fade-right">
+          <div class="story-img-placeholder">
+            <i class="fas fa-store"></i>
+            <p>RS SHOP</p>
+          </div>
+          <div class="story-badge">
+            <div class="num">3<span class="suffix">+</span></div>
+            <div class="txt">YEARS</div>
+          </div>
+        </div>
+
+        <!-- Text -->
+        <div class="story-text" data-aos="fade-left">
+          <div class="section-tag">WHO WE ARE</div>
+          <h2 class="section-title">Crafting Style <span>Since 2021</span></h2>
+          <div class="divider"></div>
+          <p>
+            RS SHOP was born from a simple belief — that every person deserves to wear quality without compromise. Located in the heart of Purbadhala, we started as a small corner shop with a big dream: to bring premium watches and sunglasses to our community at honest prices.
+          </p>
+          <p>
+            Over the years, we have grown into a trusted name for hundreds of happy customers across the region. Every product we carry is carefully selected for its quality, durability, and style — because we believe what you wear reflects who you are.
+          </p>
+          <div class="story-highlights">
+            <div class="highlight-card">
+              <i class="fas fa-certificate"></i>
+              <h4>100% Original</h4>
+              <p>Every product is genuine and sourced from trusted suppliers.</p>
+            </div>
+            <div class="highlight-card">
+              <i class="fas fa-truck"></i>
+              <h4>Fast Delivery</h4>
+              <p>Delivering to your doorstep across Bangladesh quickly.</p>
+            </div>
+            <div class="highlight-card">
+              <i class="fas fa-undo"></i>
+              <h4>Easy Returns</h4>
+              <p>3-day hassle-free return policy for your peace of mind.</p>
+            </div>
+            <div class="highlight-card">
+              <i class="fas fa-headset"></i>
+              <h4>24/7 Support</h4>
+              <p>Always here for you via WhatsApp anytime you need help.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+  <div class="stats-section">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-box" data-aos="fade-up">
+          <div class="num"><span class="stat-number" data-target="500">0</span><span class="suffix">+</span></div>
+          <div class="label">Happy Customers</div>
+        </div>
+        <div class="stat-box" data-aos="fade-up" style="animation-delay:.1s">
+          <div class="num"><span class="stat-number" data-target="50">0</span><span class="suffix">+</span></div>
+          <div class="label">Premium Products</div>
+        </div>
+        <div class="stat-box" data-aos="fade-up" style="animation-delay:.2s">
+          <div class="num"><span class="stat-number" data-target="3">0</span><span class="suffix">+</span></div>
+          <div class="label">Years Experience</div>
+        </div>
+        <div class="stat-box" data-aos="fade-up" style="animation-delay:.3s">
+          <div class="num"><span class="stat-number" data-target="100">0</span><span class="suffix">%</span></div>
+          <div class="label">Original Products</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Values Section -->
+  <section>
+    <div class="container">
+      <div style="text-align:center;" data-aos="fade-up">
+        <div class="section-tag">WHY CHOOSE US</div>
+        <h2 class="section-title">Our Core <span>Values</span></h2>
+        <div class="divider" style="margin:16px auto 0;"></div>
+        <p class="section-sub" style="margin:16px auto 0; text-align:center;">
+          Everything we do is guided by a commitment to quality, honesty, and customer satisfaction.
+        </p>
+      </div>
+      <div class="values-grid">
+        <div class="value-card" data-aos="fade-up">
+          <div class="value-icon"><i class="fas fa-gem"></i></div>
+          <h3>Premium Quality</h3>
+          <p>We handpick every watch and sunglass to ensure it meets our strict quality standards before it reaches your hands.</p>
+        </div>
+        <div class="value-card" data-aos="fade-up" style="animation-delay:.1s">
+          <div class="value-icon"><i class="fas fa-tags"></i></div>
+          <h3>Best Price</h3>
+          <p>Premium doesn't have to mean expensive. We offer the best prices in the market without sacrificing quality.</p>
+        </div>
+        <div class="value-card" data-aos="fade-up" style="animation-delay:.2s">
+          <div class="value-icon"><i class="fas fa-shield-alt"></i></div>
+          <h3>Trust & Honesty</h3>
+          <p>We believe in transparent business. What you see is what you get — no hidden charges, no fake products.</p>
+        </div>
+        <div class="value-card" data-aos="fade-up" style="animation-delay:.1s">
+          <div class="value-icon"><i class="fas fa-shipping-fast"></i></div>
+          <h3>Fast Delivery</h3>
+          <p>We process and ship orders quickly so you don't have to wait long to enjoy your new purchase.</p>
+        </div>
+        <div class="value-card" data-aos="fade-up" style="animation-delay:.2s">
+          <div class="value-icon"><i class="fas fa-heart"></i></div>
+          <h3>Customer First</h3>
+          <p>Your satisfaction is our top priority. We go the extra mile to make sure every customer leaves happy.</p>
+        </div>
+        <div class="value-card" data-aos="fade-up" style="animation-delay:.3s">
+          <div class="value-icon"><i class="fas fa-sync-alt"></i></div>
+          <h3>Easy Returns</h3>
+          <p>Not satisfied? Our 3-day return policy ensures you can shop with complete confidence and peace of mind.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Section -->
+  <section style="background:#0d0d0d; border-top:1px solid rgba(201,168,76,0.08);">
+    <div class="container">
+      <div style="text-align:center;" data-aos="fade-up">
+        <div class="section-tag">THE TEAM</div>
+        <h2 class="section-title">Meet the <span>People</span></h2>
+        <div class="divider" style="margin:16px auto 0;"></div>
+      </div>
+      <div class="team-grid">
+        <div class="team-card" data-aos="fade-up">
+          <div class="team-avatar">R</div>
+          <h3>RS SHOP Owner</h3>
+          <div class="role">FOUNDER & OWNER</div>
+          <p>The visionary behind RS SHOP, committed to bringing the finest watches and sunglasses to every customer.</p>
+        </div>
+        <div class="team-card" data-aos="fade-up" style="animation-delay:.1s">
+          <div class="team-avatar">A</div>
+          <h3>Amin Sheikh</h3>
+          <div class="role">WEB DEVELOPER</div>
+          <p>The tech mind keeping RS SHOP running smoothly online, ensuring the best digital shopping experience.</p>
+        </div>
+        <div class="team-card" data-aos="fade-up" style="animation-delay:.2s">
+          <div class="team-avatar">S</div>
+          <h3>Support Team</h3>
+          <div class="role">CUSTOMER SUPPORT</div>
+          <p>Always ready to help you 24/7 via WhatsApp. Your questions and concerns are handled with care.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Location Section -->
+  <section class="location-section">
+    <div class="container">
+      <div class="location-grid">
+        <div class="location-info" data-aos="fade-right">
+          <div class="section-tag">FIND US</div>
+          <h2>Visit Our <span>Store</span></h2>
+          <div class="divider"></div>
+          <p style="color:#777; font-size:14px; line-height:1.8; margin-bottom:10px;">
+            Come visit us at our physical store. Our friendly staff will help you find the perfect watch or sunglass that matches your style and budget.
+          </p>
+          <div class="location-details">
+            <div class="loc-item">
+              <div class="loc-icon"><i class="fas fa-map-marker-alt"></i></div>
+              <div>
+                <h4>ADDRESS</h4>
+                <p>পূর্বধলা স্টেশন রোড<br>কাজী সুপার মার্কেট, পূর্বধলা</p>
+              </div>
+            </div>
+            <div class="loc-item">
+              <div class="loc-icon"><i class="fas fa-phone"></i></div>
+              <div>
+                <h4>PHONE & WHATSAPP</h4>
+                <p>01996283245</p>
+              </div>
+            </div>
+            <div class="loc-item">
+              <div class="loc-icon"><i class="fab fa-facebook-f"></i></div>
+              <div>
+                <h4>FACEBOOK</h4>
+                <p><a href="https://web.facebook.com/sojib.islam.739215" target="_blank" style="color:#c9a84c;">RS SHOP on Facebook</a></p>
+              </div>
+            </div>
+            <div class="loc-item">
+              <div class="loc-icon"><i class="fas fa-clock"></i></div>
+              <div>
+                <h4>STORE HOURS</h4>
+                <p>Saturday – Thursday: 9:00 AM – 9:00 PM<br>Friday: 2:00 PM – 9:00 PM</p>
+              </div>
+            </div>
+          </div>
+          <a href="https://wa.me/8801996283245" target="_blank" class="btn-directions">
+            <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+          </a>
+        </div>
+
+        <!-- Map Box -->
+        <div data-aos="fade-left">
+          <div class="location-map-box">
+            <i class="fas fa-map-marked-alt"></i>
+            <p>পূর্বধলা স্টেশন রোড</p>
+            <p style="font-size:11px; letter-spacing:1px;">কাজী সুপার মার্কেট</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <div class="container">
+      <div data-aos="fade-up">
+        <div class="section-tag">GET STARTED</div>
+        <h2>Ready to Find Your <span>Perfect Style?</span></h2>
+        <p>Browse our premium collection of watches and sunglasses today.</p>
+        <div class="cta-btns">
+          <a href="watches.html" class="btn-primary-cta">
+            <i class="fas fa-clock"></i> Shop Watches
+          </a>
+          <a href="sunglasses.html" class="btn-secondary-cta">
+            <i class="fas fa-glasses"></i> Shop Sunglasses
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-logo">RS<span>SHOP</span></div>
+          <p>Premium Watches & Sunglasses. Quality you can trust, style you can feel.</p>
+          <div class="footer-socials">
+            <a href="https://web.facebook.com/sojib.islam.739215" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://wa.me/8801996283245" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="watches.html">Watches</a></li>
+            <li><a href="sunglasses.html">Sunglasses</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="cart.html">My Cart</a></li>
+            <li><a href="#">Order Tracking</a></li>
+            <li><a href="#">Return Policy</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li><i class="fas fa-map-marker-alt" style="color:#c9a84c;margin-right:8px;"></i>পূর্বধলা স্টেশন রোড, কাজী সুপার মার্কেট</li>
+            <li><i class="fas fa-phone" style="color:#c9a84c;margin-right:8px;"></i>01996283245</li>
+            <li><i class="fab fa-whatsapp" style="color:#25D366;margin-right:8px;"></i>01996283245</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2024 RS SHOP. All rights reserved. Developed by <span style="color:#c9a84c;">AMIN SHEIKH</span></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- WhatsApp Float -->
+  <a href="https://wa.me/8801996283245" class="whatsapp-float" target="_blank" aria-label="WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
+  <script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact — RS SHOP</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Raleway:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+
+    /* ── PAGE HERO ── */
+    .page-hero {
+      min-height: 340px;
+      background: linear-gradient(135deg,#0a0a0a 0%,#1a1a1a 50%,#0a0a0a 100%);
+      display:flex; align-items:center; justify-content:center;
+      text-align:center; position:relative; overflow:hidden;
+      border-bottom:1px solid rgba(201,168,76,0.15);
+      padding-top:80px;
+    }
+    .page-hero::before {
+      content:''; position:absolute; inset:0;
+      background:radial-gradient(ellipse at center,rgba(201,168,76,0.1) 0%,transparent 65%);
+    }
+    .page-hero::after {
+      content:''; position:absolute; bottom:0; left:0; right:0; height:1px;
+      background:linear-gradient(90deg,transparent,#c9a84c,transparent);
+    }
+    .page-hero-tag {
+      display:inline-block; padding:6px 20px;
+      border:1px solid rgba(201,168,76,0.4); border-radius:30px;
+      font-size:11px; letter-spacing:4px; color:#c9a84c;
+      font-weight:700; margin-bottom:20px;
+      background:rgba(201,168,76,0.06);
+    }
+    .page-hero h1 {
+      font-family:'Cinzel',serif; font-size:clamp(2.2rem,5vw,4rem);
+      font-weight:900; color:#fff; letter-spacing:4px; margin-bottom:16px;
+    }
+    .page-hero h1 span { color:#c9a84c; }
+    .page-hero p { font-size:15px; color:#888; max-width:480px; margin:0 auto 24px; line-height:1.8; }
+    .breadcrumb {
+      display:flex; align-items:center; justify-content:center; gap:10px;
+      font-size:12px; color:#555; letter-spacing:1px;
+    }
+    .breadcrumb a { color:#555; transition:.3s; }
+    .breadcrumb a:hover { color:#c9a84c; }
+    .breadcrumb span { color:#c9a84c; }
+
+    /* ── CONTACT SECTION ── */
+    .contact-section { padding:100px 0; }
+    .contact-grid {
+      display:grid; grid-template-columns:1fr 1.4fr;
+      gap:60px; align-items:start;
+    }
+
+    /* ── INFO PANEL ── */
+    .contact-info { }
+    .section-tag {
+      display:inline-block; padding:5px 18px;
+      border:1px solid rgba(201,168,76,0.35); border-radius:30px;
+      font-size:10px; letter-spacing:4px; color:#c9a84c;
+      font-weight:700; margin-bottom:16px;
+    }
+    .contact-info h2 {
+      font-family:'Cinzel',serif; font-size:clamp(1.6rem,3vw,2.4rem);
+      font-weight:900; color:#fff; letter-spacing:2px; margin-bottom:12px;
+    }
+    .contact-info h2 span { color:#c9a84c; }
+    .divider {
+      width:50px; height:2px;
+      background:linear-gradient(90deg,#8a6a20,#c9a84c,#f0d080);
+      margin:16px 0 24px; border-radius:2px;
+    }
+    .contact-info > p {
+      font-size:14px; color:#777; line-height:1.9; margin-bottom:36px;
+    }
+
+    .contact-cards { display:flex; flex-direction:column; gap:16px; }
+    .contact-card {
+      display:flex; align-items:flex-start; gap:16px;
+      padding:20px 22px;
+      background:rgba(255,255,255,0.02);
+      border:1px solid rgba(201,168,76,0.1);
+      border-radius:10px; transition:all .3s;
+    }
+    .contact-card:hover {
+      background:rgba(201,168,76,0.04);
+      border-color:rgba(201,168,76,0.25);
+      transform:translateX(4px);
+    }
+    .contact-card-icon {
+      width:46px; height:46px; border-radius:10px; flex-shrink:0;
+      background:rgba(201,168,76,0.1);
+      border:1px solid rgba(201,168,76,0.2);
+      display:flex; align-items:center; justify-content:center;
+      color:#c9a84c; font-size:18px; transition:.3s;
+    }
+    .contact-card:hover .contact-card-icon {
+      background:rgba(201,168,76,0.2);
+      box-shadow:0 0 20px rgba(201,168,76,0.15);
+    }
+    .contact-card-body h4 {
+      font-size:10px; letter-spacing:3px; color:#c9a84c;
+      font-weight:700; margin-bottom:5px;
+    }
+    .contact-card-body p {
+      font-size:14px; color:#bbb; line-height:1.6;
+    }
+    .contact-card-body a {
+      font-size:14px; color:#bbb; transition:.3s;
+    }
+    .contact-card-body a:hover { color:#c9a84c; }
+
+    /* Social Links */
+    .social-section { margin-top:32px; }
+    .social-section h4 {
+      font-size:10px; letter-spacing:3px; color:#666;
+      font-weight:700; margin-bottom:14px;
+    }
+    .social-links { display:flex; gap:12px; }
+    .social-link {
+      width:44px; height:44px; border-radius:10px;
+      background:rgba(255,255,255,0.03);
+      border:1px solid rgba(201,168,76,0.15);
+      display:flex; align-items:center; justify-content:center;
+      color:#888; font-size:16px; transition:all .3s;
+      text-decoration:none;
+    }
+    .social-link:hover {
+      background:rgba(201,168,76,0.1);
+      border-color:#c9a84c; color:#c9a84c;
+      transform:translateY(-3px);
+    }
+    .social-link.fb:hover  { background:rgba(24,119,242,0.15); border-color:#1877f2; color:#1877f2; }
+    .social-link.wa:hover  { background:rgba(37,211,102,0.15); border-color:#25D366; color:#25D366; }
+
+    /* Quick Actions */
+    .quick-actions { margin-top:32px; display:flex; flex-direction:column; gap:12px; }
+    .btn-whatsapp {
+      display:flex; align-items:center; justify-content:center; gap:10px;
+      padding:14px 24px;
+      background:linear-gradient(135deg,#25D366,#128C7E);
+      color:#fff; font-size:13px; font-weight:700; letter-spacing:1px;
+      border-radius:8px; text-decoration:none; transition:all .3s;
+    }
+    .btn-whatsapp:hover { transform:translateY(-2px); box-shadow:0 10px 30px rgba(37,211,102,0.3); }
+    .btn-facebook {
+      display:flex; align-items:center; justify-content:center; gap:10px;
+      padding:14px 24px;
+      background:rgba(24,119,242,0.1);
+      border:1px solid rgba(24,119,242,0.3);
+      color:#1877f2; font-size:13px; font-weight:700; letter-spacing:1px;
+      border-radius:8px; text-decoration:none; transition:all .3s;
+    }
+    .btn-facebook:hover { background:rgba(24,119,242,0.2); transform:translateY(-2px); }
+
+    /* ── CONTACT FORM ── */
+    .contact-form-wrap {
+      background:rgba(255,255,255,0.02);
+      border:1px solid rgba(201,168,76,0.12);
+      border-radius:16px; padding:44px;
+      position:relative; overflow:hidden;
+    }
+    .contact-form-wrap::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:2px;
+      background:linear-gradient(90deg,transparent,#c9a84c,transparent);
+    }
+    .form-title {
+      font-family:'Cinzel',serif; font-size:22px; font-weight:700;
+      color:#fff; letter-spacing:2px; margin-bottom:8px;
+    }
+    .form-subtitle { font-size:13px; color:#666; margin-bottom:32px; line-height:1.6; }
+
+    .form-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    .form-group { margin-bottom:20px; }
+    .form-group label {
+      display:block; font-size:10px; font-weight:700;
+      letter-spacing:2.5px; color:#888; margin-bottom:9px;
+      text-transform:uppercase;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width:100%; padding:14px 16px;
+      background:rgba(255,255,255,0.04);
+      border:1px solid rgba(201,168,76,0.15);
+      border-radius:8px; color:#e8e8e8;
+      font-size:14px; font-family:'Raleway',sans-serif;
+      outline:none; transition:all .3s;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color:#c9a84c;
+      background:rgba(201,168,76,0.04);
+      box-shadow:0 0 0 3px rgba(201,168,76,0.08);
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color:#3a3a3a; }
+    .form-group select option { background:#111; color:#e8e8e8; }
+    .form-group textarea { resize:vertical; min-height:120px; }
+
+    .char-count { font-size:11px; color:#555; text-align:right; margin-top:5px; }
+
+    .btn-send {
+      width:100%; padding:16px;
+      background:linear-gradient(135deg,#8a6a20,#c9a84c,#f0d080);
+      color:#000; font-family:'Cinzel',serif; font-size:14px;
+      font-weight:900; letter-spacing:3px; border:none;
+      border-radius:8px; cursor:pointer; transition:all .3s;
+      text-transform:uppercase; display:flex;
+      align-items:center; justify-content:center; gap:10px;
+    }
+    .btn-send:hover { transform:translateY(-2px); box-shadow:0 15px 40px rgba(201,168,76,0.35); }
+    .btn-send:disabled { opacity:.6; cursor:not-allowed; transform:none; }
+
+    .form-note {
+      text-align:center; font-size:11px; color:#555;
+      margin-top:14px; line-height:1.6;
+    }
+    .form-note span { color:#c9a84c; }
+
+    /* Success Message */
+    .success-msg {
+      display:none; text-align:center; padding:40px 20px;
+    }
+    .success-msg i { font-size:52px; color:#4caf50; margin-bottom:16px; }
+    .success-msg h3 {
+      font-family:'Cinzel',serif; font-size:20px; color:#e8e8e8; margin-bottom:10px;
+    }
+    .success-msg p { font-size:14px; color:#777; margin-bottom:24px; }
+    .btn-send-another {
+      padding:12px 28px;
+      background:rgba(201,168,76,0.1);
+      border:1px solid rgba(201,168,76,0.3);
+      color:#c9a84c; font-size:12px; font-weight:700;
+      letter-spacing:2px; border-radius:6px; cursor:pointer;
+      transition:.3s; text-transform:uppercase;
+    }
+    .btn-send-another:hover { background:rgba(201,168,76,0.2); }
+
+    /* ── FAQ SECTION ── */
+    .faq-section {
+      padding:100px 0;
+      background:#0d0d0d;
+      border-top:1px solid rgba(201,168,76,0.08);
+    }
+    .faq-header { text-align:center; margin-bottom:60px; }
+    .faq-header h2 {
+      font-family:'Cinzel',serif; font-size:clamp(1.8rem,3.5vw,2.8rem);
+      font-weight:900; color:#fff; letter-spacing:2px; margin-bottom:8px;
+    }
+    .faq-header h2 span { color:#c9a84c; }
+    .faq-header p { font-size:14px; color:#666; margin-top:10px; }
+    .faq-divider {
+      width:50px; height:2px;
+      background:linear-gradient(90deg,#8a6a20,#c9a84c,#f0d080);
+      margin:14px auto 0; border-radius:2px;
+    }
+
+    .faq-list { max-width:760px; margin:0 auto; display:flex; flex-direction:column; gap:12px; }
+    .faq-item {
+      background:rgba(255,255,255,0.02);
+      border:1px solid rgba(201,168,76,0.1);
+      border-radius:10px; overflow:hidden; transition:.3s;
+    }
+    .faq-item.open { border-color:rgba(201,168,76,0.3); }
+    .faq-question {
+      display:flex; align-items:center; justify-content:space-between;
+      padding:20px 24px; cursor:pointer; transition:.3s;
+    }
+    .faq-question:hover { background:rgba(201,168,76,0.04); }
+    .faq-question h4 {
+      font-size:15px; font-weight:600; color:#e8e8e8;
+      flex:1; padding-right:16px;
+    }
+    .faq-icon {
+      width:30px; height:30px; border-radius:50%;
+      background:rgba(201,168,76,0.08);
+      border:1px solid rgba(201,168,76,0.2);
+      display:flex; align-items:center; justify-content:center;
+      color:#c9a84c; font-size:12px; flex-shrink:0; transition:.4s;
+    }
+    .faq-item.open .faq-icon { transform:rotate(45deg); background:rgba(201,168,76,0.15); }
+    .faq-answer {
+      max-height:0; overflow:hidden;
+      transition:max-height .4s ease, padding .3s ease;
+      padding:0 24px;
+    }
+    .faq-item.open .faq-answer { max-height:200px; padding:0 24px 20px; }
+    .faq-answer p { font-size:14px; color:#777; line-height:1.8; }
+
+    /* ── MAP/LOCATION BANNER ── */
+    .map-banner {
+      padding:80px 0;
+      background:linear-gradient(135deg,#080808,#0f0f0f,#080808);
+      border-top:1px solid rgba(201,168,76,0.08);
+      text-align:center;
+    }
+    .map-banner h2 {
+      font-family:'Cinzel',serif; font-size:clamp(1.6rem,3vw,2.4rem);
+      font-weight:900; color:#fff; letter-spacing:2px; margin-bottom:8px;
+    }
+    .map-banner h2 span { color:#c9a84c; }
+    .map-banner p { font-size:14px; color:#666; margin-bottom:40px; }
+    .map-info-grid {
+      display:grid; grid-template-columns:repeat(3,1fr);
+      gap:24px; max-width:760px; margin:0 auto;
+    }
+    .map-info-box {
+      padding:28px 20px;
+      background:rgba(255,255,255,0.02);
+      border:1px solid rgba(201,168,76,0.1);
+      border-radius:10px; transition:.3s;
+    }
+    .map-info-box:hover {
+      border-color:rgba(201,168,76,0.3);
+      background:rgba(201,168,76,0.04);
+      transform:translateY(-4px);
+    }
+    .map-info-box i { font-size:28px; color:#c9a84c; margin-bottom:12px; }
+    .map-info-box h4 {
+      font-size:11px; letter-spacing:2px; color:#c9a84c;
+      font-weight:700; margin-bottom:8px;
+    }
+    .map-info-box p { font-size:13px; color:#777; line-height:1.7; }
+
+    /* Responsive */
+    @media(max-width:900px){
+      .contact-grid { grid-template-columns:1fr; gap:50px; }
+      .map-info-grid { grid-template-columns:1fr; max-width:400px; }
+    }
+    @media(max-width:600px){
+      .form-row { grid-template-columns:1fr; }
+      .contact-form-wrap { padding:28px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Loader -->
+  <div class="loader" id="loader">
+    <div class="loader-inner">
+      <span class="logo-rs">RS<span class="logo-shop">SHOP</span></span>
+      <div class="loader-bar"><div class="loader-fill"></div></div>
+      <p class="loader-text">LOADING</p>
+    </div>
+  </div>
+
+  <!-- Cursor -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursorFollower"></div>
+
+  <!-- Navbar -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">RS<span>SHOP</span></a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="watches.html">Watches</a></li>
+        <li><a href="sunglasses.html">Sunglasses</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html" class="active">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="cart.html" class="nav-cart" id="cartBtn">
+          <i class="fas fa-shopping-bag"></i>
+          <span class="cart-count" id="cartCount">0</span>
+        </a>
+        <button class="hamburger" id="hamburger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Hero -->
+  <section class="page-hero">
+    <div class="page-hero-content" data-aos="fade-up">
+      <div class="page-hero-tag">GET IN TOUCH</div>
+      <h1>Contact <span>Us</span></h1>
+      <p>Have a question or want to place an order? We are always here to help you.</p>
+      <div class="breadcrumb">
+        <a href="index.html">Home</a>
+        <i class="fas fa-chevron-right" style="font-size:9px;"></i>
+        <span>Contact</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="contact-section">
+    <div class="container">
+      <div class="contact-grid">
+
+        <!-- Left: Info -->
+        <div class="contact-info" data-aos="fade-right">
+          <div class="section-tag">CONTACT INFO</div>
+          <h2>Let's <span>Talk</span></h2>
+          <div class="divider"></div>
+          <p>Whether you have a question about a product, want to place an order, or just want to say hello — we'd love to hear from you. Reach out via WhatsApp for the fastest response!</p>
+
+          <div class="contact-cards">
+            <div class="contact-card">
+              <div class="contact-card-icon"><i class="fas fa-map-marker-alt"></i></div>
+              <div class="contact-card-body">
+                <h4>STORE ADDRESS</h4>
+                <p>পূর্বধলা স্টেশন রোড<br>কাজী সুপার মার্কেট, পূর্বধলা</p>
+              </div>
+            </div>
+            <div class="contact-card">
+              <div class="contact-card-icon"><i class="fas fa-phone-alt"></i></div>
+              <div class="contact-card-body">
+                <h4>PHONE</h4>
+                <a href="tel:+8801996283245">01996283245</a>
+              </div>
+            </div>
+            <div class="contact-card">
+              <div class="contact-card-icon"><i class="fab fa-whatsapp"></i></div>
+              <div class="contact-card-body">
+                <h4>WHATSAPP</h4>
+                <a href="https://wa.me/8801996283245" target="_blank">01996283245 — Chat Now</a>
+              </div>
+            </div>
+            <div class="contact-card">
+              <div class="contact-card-icon"><i class="fab fa-facebook-f"></i></div>
+              <div class="contact-card-body">
+                <h4>FACEBOOK</h4>
+                <a href="https://web.facebook.com/sojib.islam.739215" target="_blank">RS SHOP on Facebook</a>
+              </div>
+            </div>
+            <div class="contact-card">
+              <div class="contact-card-icon"><i class="fas fa-clock"></i></div>
+              <div class="contact-card-body">
+                <h4>STORE HOURS</h4>
+                <p>Sat – Thu: 9:00 AM – 9:00 PM<br>Friday: 2:00 PM – 9:00 PM</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Social -->
+          <div class="social-section">
+            <h4>FOLLOW US</h4>
+            <div class="social-links">
+              <a href="https://web.facebook.com/sojib.islam.739215" target="_blank" class="social-link fb" title="Facebook">
+                <i class="fab fa-facebook-f"></i>
+              </a>
+              <a href="https://wa.me/8801996283245" target="_blank" class="social-link wa" title="WhatsApp">
+                <i class="fab fa-whatsapp"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Quick Actions -->
+          <div class="quick-actions">
+            <a href="https://wa.me/8801996283245?text=Hello%20RS%20SHOP!%20I%20have%20a%20question." target="_blank" class="btn-whatsapp">
+              <i class="fab fa-whatsapp" style="font-size:18px;"></i>
+              Chat on WhatsApp
+            </a>
+            <a href="https://web.facebook.com/sojib.islam.739215" target="_blank" class="btn-facebook">
+              <i class="fab fa-facebook-f"></i>
+              Message on Facebook
+            </a>
+          </div>
+        </div>
+
+        <!-- Right: Form -->
+        <div class="contact-form-wrap" data-aos="fade-left">
+          <!-- Form View -->
+          <div id="formView">
+            <div class="form-title">Send a Message</div>
+            <div class="form-subtitle">Fill in the form below and we'll get back to you as soon as possible — usually within a few hours!</div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Your Name *</label>
+                <input type="text" id="cName" placeholder="Full name"/>
+              </div>
+              <div class="form-group">
+                <label>Phone Number *</label>
+                <input type="tel" id="cPhone" placeholder="01XXXXXXXXX"/>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Subject *</label>
+              <select id="cSubject">
+                <option value="">Select a subject</option>
+                <option value="Product Inquiry">Product Inquiry</option>
+                <option value="Order Status">Order Status</option>
+                <option value="Return & Refund">Return & Refund</option>
+                <option value="Payment Help">Payment Help</option>
+                <option value="General Question">General Question</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Message *</label>
+              <textarea id="cMessage" placeholder="Write your message here..." maxlength="500"
+                oninput="document.getElementById('charCount').textContent = this.value.length"></textarea>
+              <div class="char-count"><span id="charCount">0</span>/500</div>
+            </div>
+
+            <button class="btn-send" id="sendBtn" onclick="sendMessage()">
+              <i class="fas fa-paper-plane"></i> Send Message
+            </button>
+
+            <div class="form-note">
+              Or contact us directly via
+              <span><a href="https://wa.me/8801996283245" target="_blank" style="color:#c9a84c;text-decoration:none;">WhatsApp</a></span>
+              for instant reply.
+            </div>
+          </div>
+
+          <!-- Success View -->
+          <div class="success-msg" id="successView">
+            <i class="fas fa-check-circle"></i>
+            <h3>Message Sent!</h3>
+            <p>Thank you for reaching out. We'll get back to you shortly. For faster response, chat with us on WhatsApp!</p>
+            <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+              <button class="btn-send-another" onclick="resetForm()">Send Another</button>
+              <a href="https://wa.me/8801996283245" target="_blank" style="padding:12px 28px;background:linear-gradient(135deg,#25D366,#128C7E);color:#fff;font-size:12px;font-weight:700;letter-spacing:1px;border-radius:6px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;">
+                <i class="fab fa-whatsapp"></i> WhatsApp
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="faq-section">
+    <div class="container">
+      <div class="faq-header" data-aos="fade-up">
+        <div class="section-tag" style="display:inline-block;padding:5px 18px;border:1px solid rgba(201,168,76,0.35);border-radius:30px;font-size:10px;letter-spacing:4px;color:#c9a84c;font-weight:700;">FAQ</div>
+        <h2>Frequently Asked <span>Questions</span></h2>
+        <div class="faq-divider"></div>
+        <p>Everything you need to know about RS SHOP and our products.</p>
+      </div>
+
+      <div class="faq-list">
+        <div class="faq-item" data-aos="fade-up">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <h4>Are all products 100% original?</h4>
+            <div class="faq-icon"><i class="fas fa-plus"></i></div>
+          </div>
+          <div class="faq-answer">
+            <p>Yes! Every single product at RS SHOP is 100% original and sourced from trusted suppliers. We never compromise on quality or authenticity.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" data-aos="fade-up">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <h4>How can I place an order?</h4>
+            <div class="faq-icon"><i class="fas fa-plus"></i></div>
+          </div>
+          <div class="faq-answer">
+            <p>You can place an order directly through our website by adding items to cart, or you can message us on WhatsApp at 01996283245 and we'll help you order manually.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" data-aos="fade-up">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <h4>What payment methods do you accept?</h4>
+            <div class="faq-icon"><i class="fas fa-plus"></i></div>
+          </div>
+          <div class="faq-answer">
+            <p>We accept bKash, Nagad, Rocket, and Cash on Delivery (COD). All mobile banking payments go to the number 01996283245.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" data-aos="fade-up">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <h4>Do you deliver all over Bangladesh?</h4>
+            <div class="faq-icon"><i class="fas fa-plus"></i></div>
+          </div>
+          <div class="faq-answer">
+            <p>Yes! We deliver all over Bangladesh. Delivery charge is ৳60 for most areas. Delivery typically takes 2–4 business days depending on your location.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" data-aos="fade-up">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <h4>What is your return policy?</h4>
+            <div class="faq-icon"><i class="fas fa-plus"></i></div>
+          </div>
+          <div class="faq-answer">
+            <p>We offer a 3-day easy return policy. If you're not satisfied with your purchase, contact us within 3 days of receiving your order and we'll sort it out for you.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" data-aos="fade-up">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <h4>How long does delivery take?</h4>
+            <div class="faq-icon"><i class="fas fa-plus"></i></div>
+          </div>
+          <div class="faq-answer">
+            <p>Standard delivery takes 2–4 business days across Bangladesh. For orders within Purbadhala, same-day or next-day delivery may be available.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Map Banner -->
+  <section class="map-banner">
+    <div class="container">
+      <div data-aos="fade-up">
+        <h2>Visit Our <span>Store</span></h2>
+        <p>Come see us in person at our store in Purbadhala</p>
+        <div class="map-info-grid">
+          <div class="map-info-box">
+            <i class="fas fa-map-marker-alt"></i>
+            <h4>ADDRESS</h4>
+            <p>পূর্বধলা স্টেশন রোড<br>কাজী সুপার মার্কেট</p>
+          </div>
+          <div class="map-info-box">
+            <i class="fas fa-clock"></i>
+            <h4>OPENING HOURS</h4>
+            <p>Sat–Thu: 9AM–9PM<br>Fri: 2PM–9PM</p>
+          </div>
+          <div class="map-info-box">
+            <i class="fab fa-whatsapp"></i>
+            <h4>WHATSAPP</h4>
+            <p>01996283245<br>24/7 Support</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-logo">RS<span>SHOP</span></div>
+          <p>Premium Watches & Sunglasses. Quality you can trust, style you can feel.</p>
+          <div class="footer-socials">
+            <a href="https://web.facebook.com/sojib.islam.739215" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://wa.me/8801996283245" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="watches.html">Watches</a></li>
+            <li><a href="sunglasses.html">Sunglasses</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="cart.html">My Cart</a></li>
+            <li><a href="#">Order Tracking</a></li>
+            <li><a href="#">Return Policy</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li><i class="fas fa-map-marker-alt" style="color:#c9a84c;margin-right:8px;"></i>পূর্বধলা স্টেশন রোড, কাজী সুপার মার্কেট</li>
+            <li><i class="fas fa-phone" style="color:#c9a84c;margin-right:8px;"></i>01996283245</li>
+            <li><i class="fab fa-whatsapp" style="color:#25D366;margin-right:8px;"></i>01996283245</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2024 RS SHOP. All rights reserved. Developed by <span style="color:#c9a84c;">AMIN SHEIKH</span></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- WhatsApp Float -->
+  <a href="https://wa.me/8801996283245" class="whatsapp-float" target="_blank" aria-label="WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
+  <!-- Firebase -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+    import {
+      getFirestore, collection, addDoc, serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAszNu3DWs2bCej1GXxnQeXr9y1DR1FyuD",
+      authDomain: "sojib-shop.firebaseapp.com",
+      projectId: "sojib-shop",
+      storageBucket: "sojib-shop.firebasestorage.app",
+      messagingSenderId: "1061639520028",
+      appId: "1:1061639520028:web:d164fdf6f3d0bbd79304d9"
+    };
+    const app = initializeApp(firebaseConfig);
+    const db  = getFirestore(app);
+
+    window._saveMessage = async function(data) {
+      try {
+        await addDoc(collection(db, "messages"), {
+          ...data,
+          createdAt: serverTimestamp(),
+          read: false
+        });
+        return true;
+      } catch(e) {
+        console.error(e);
+        return false;
+      }
+    };
+  </script>
+
+  <!-- Contact Form Logic -->
+  <script>
+    /* FAQ Toggle */
+    function toggleFaq(el) {
+      const item = el.parentElement;
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    }
+
+    /* Send Message */
+    async function sendMessage() {
+      const name    = document.getElementById('cName').value.trim();
+      const phone   = document.getElementById('cPhone').value.trim();
+      const subject = document.getElementById('cSubject').value;
+      const message = document.getElementById('cMessage').value.trim();
+
+      if (!name || !phone || !subject || !message) {
+        alert('Please fill in all required fields.');
+        return;
+      }
+
+      const btn = document.getElementById('sendBtn');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+
+      const saved = await window._saveMessage({ name, phone, subject, message });
+
+      if (saved) {
+        document.getElementById('formView').style.display    = 'none';
+        document.getElementById('successView').style.display = 'block';
+      } else {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
+        alert('Something went wrong. Please try again or contact us via WhatsApp.');
+      }
+    }
+
+    /* Reset Form */
+    function resetForm() {
+      document.getElementById('cName').value    = '';
+      document.getElementById('cPhone').value   = '';
+      document.getElementById('cSubject').value = '';
+      document.getElementById('cMessage').value = '';
+      document.getElementById('charCount').textContent = '0';
+      document.getElementById('sendBtn').disabled = false;
+      document.getElementById('sendBtn').innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
+      document.getElementById('formView').style.display    = 'block';
+      document.getElementById('successView').style.display = 'none';
+    }
+
+    /* Cart Count */
+    function updateCartBadge() {
+      const cart  = JSON.parse(localStorage.getItem('rs_cart') || '[]');
+      const total = cart.reduce((s, i) => s + i.qty, 0);
+      document.querySelectorAll('.cart-count').forEach(el => el.textContent = total);
+    }
+    updateCartBadge();
+
+    window.toggleFaq   = toggleFaq;
+    window.sendMessage = sendMessage;
+    window.resetForm   = resetForm;
+  </script>
+
+  <script src="main.js"></script>
+</body>
+</html>

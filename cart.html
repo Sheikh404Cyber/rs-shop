@@ -9,6 +9,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <style>
+        /* ══ NAV DROPDOWN ══ */
+        .nav-links li{position:relative}
+        .nav-dropdown{position:absolute;top:100%;left:50%;transform:translateX(-50%) translateY(10px);background:rgba(10,10,10,0.97);backdrop-filter:blur(20px);border:1px solid var(--border);border-radius:10px;padding:12px 0;min-width:170px;opacity:0;visibility:hidden;transition:all .3s ease;z-index:100;box-shadow:0 20px 50px rgba(0,0,0,0.7)}
+        .nav-links li:hover .nav-dropdown{opacity:1;visibility:visible;transform:translateX(-50%) translateY(4px)}
+        .nav-dropdown a{display:block!important;padding:8px 22px!important;font-size:12px!important;color:var(--text-muted)!important;letter-spacing:1px!important;transition:all .3s!important;white-space:nowrap}
+        .nav-dropdown a:hover{color:var(--gold)!important;background:rgba(201,168,76,0.06);padding-left:28px!important}
+        .nav-dropdown a::after{display:none!important}
+        .has-dropdown>a .drop-arrow{font-size:8px;margin-left:4px;transition:transform .3s}
+        .has-dropdown:hover>a .drop-arrow{transform:rotate(180deg)}
+
+        /* ══ PAGE STYLES ══ */
         .page-hero{background:linear-gradient(135deg,#0a0a0a 0%,#1a1a1a 100%);padding:120px 0 60px;text-align:center;border-bottom:1px solid rgba(201,168,76,0.2)}
         [data-theme="light"] .page-hero{background:linear-gradient(135deg,#f8f6f0 0%,#ede8db 100%);border-bottom-color:rgba(0,0,0,0.08)}
         .page-hero h1{font-family:'Cinzel',serif;font-size:2.5rem;color:var(--gold,#C9A84C);margin-bottom:12px;letter-spacing:2px}
@@ -156,6 +167,7 @@
         .toast.show{display:flex;align-items:center;gap:10px}
         @keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
         @media(max-width:900px){.cart-container{grid-template-columns:1fr}.order-summary{position:static}.suggestions-grid{grid-template-columns:repeat(2,1fr)}}
+        @media(max-width:768px){.nav-dropdown{display:none!important}.has-dropdown>a .drop-arrow{display:none}}
         @media(max-width:480px){.page-hero h1{font-size:1.8rem}.suggestions-grid{grid-template-columns:1fr 1fr}.pay-method-grid{grid-template-columns:repeat(2,1fr)}}
     </style>
 </head>
@@ -172,20 +184,43 @@
 <div class="cursor" id="cursor"></div>
 <div class="cursor-follower" id="cursorFollower"></div>
 
+<!-- ══ NAVBAR (English + Dropdown) ══ -->
 <nav class="navbar" id="navbar">
     <div class="nav-container">
         <a href="index.html" class="nav-logo"><span class="logo-rs">RS</span><span class="logo-shop">SHOP</span></a>
         <ul class="nav-links" id="navLinks">
-            <li><a href="index.html">হোম</a></li>
-            <li><a href="watches.html">ঘড়ি</a></li>
-            <li><a href="sunglasses.html">সানগ্লাস</a></li>
-            <li><a href="gift.html">গিফট</a></li>
-            <li><a href="track.html">অর্ডার ট্র্যাক</a></li>
-            <li><a href="contact.html">যোগাযোগ</a></li>
+            <li><a href="index.html">Home</a></li>
+            <li class="has-dropdown">
+                <a href="watches.html">Watches <i class="fas fa-chevron-down drop-arrow"></i></a>
+                <div class="nav-dropdown">
+                    <a href="watches.html?gender=men"><i class="fas fa-male" style="width:16px;margin-right:6px"></i>Men</a>
+                    <a href="watches.html?gender=women"><i class="fas fa-female" style="width:16px;margin-right:6px"></i>Women</a>
+                    <a href="watches.html?gender=kids"><i class="fas fa-child" style="width:16px;margin-right:6px"></i>Kids</a>
+                    <a href="watches.html"><i class="fas fa-th" style="width:16px;margin-right:6px"></i>All Watches</a>
+                </div>
+            </li>
+            <li class="has-dropdown">
+                <a href="sunglasses.html">Sunglasses <i class="fas fa-chevron-down drop-arrow"></i></a>
+                <div class="nav-dropdown">
+                    <a href="sunglasses.html?gender=men"><i class="fas fa-male" style="width:16px;margin-right:6px"></i>Men</a>
+                    <a href="sunglasses.html?gender=women"><i class="fas fa-female" style="width:16px;margin-right:6px"></i>Women</a>
+                    <a href="sunglasses.html?gender=kids"><i class="fas fa-child" style="width:16px;margin-right:6px"></i>Kids</a>
+                    <a href="sunglasses.html"><i class="fas fa-th" style="width:16px;margin-right:6px"></i>All Sunglasses</a>
+                </div>
+            </li>
+            <li><a href="gift.html">🎁 Gift Collection</a></li>
+            <li><a href="track.html">Order Track</a></li>
+            <li><a href="contact.html">Contact</a></li>
         </ul>
         <div class="nav-actions">
-            <a href="wishlist.html" class="wishlist-icon" title="Wishlist"><i class="fas fa-heart"></i><span class="wishlist-badge" id="wishlistCount">0</span></a>
-            <a href="cart.html" class="cart-icon active"><i class="fas fa-shopping-bag"></i><span class="cart-badge" id="cartCount">0</span></a>
+            <a href="wishlist.html" class="cart-icon" title="Wishlist" style="margin-right:4px">
+                <i class="fas fa-heart"></i>
+                <span class="cart-badge" id="wishCount" style="background:#ff4757">0</span>
+            </a>
+            <a href="cart.html" class="cart-icon active">
+                <i class="fas fa-shopping-bag"></i>
+                <span class="cart-badge" id="cartCount">0</span>
+            </a>
             <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
         </div>
     </div>
@@ -193,7 +228,7 @@
 
 <section class="page-hero">
     <h1><i class="fas fa-shopping-cart"></i> আপনার কার্ট</h1>
-    <div class="breadcrumb"><a href="index.html">হোম</a> / কার্ট</div>
+    <div class="breadcrumb"><a href="index.html">Home</a> / Cart</div>
 </section>
 
 <section class="cart-section">
@@ -246,7 +281,7 @@
     </div>
 </section>
 
-<!-- CHECKOUT MODAL -->
+<!-- ══ CHECKOUT MODAL ══ -->
 <div class="modal-overlay" id="checkoutModal">
     <div class="modal">
         <div class="order-success" id="orderSuccess">
@@ -254,7 +289,7 @@
             <h3>অর্ডার সফল হয়েছে!</h3>
             <p>আপনার অর্ডার সফলভাবে পাওয়া গেছে।</p>
             <p>আমরা শীঘ্রই আপনার সাথে যোগাযোগ করবো।</p>
-            <div class="order-id-badge" id="successOrderId">RS-000000</div>
+            <div class="order-id-badge" id="successOrderId">#------</div>
             <br>
             <a href="index.html" class="btn-continue"><i class="fas fa-arrow-left"></i> শপিং চালিয়ে যান</a>
         </div>
@@ -279,17 +314,17 @@
             </div>
             <div class="payment-info-box bkash" id="infoBox-bKash">
                 <div class="pay-info-title bkash"><i class="fas fa-mobile-alt"></i> bKash এ Send Money করুন</div>
-                <div class="pay-number-display bkash" id="bkashNumber">01318204129</div>
+                <div class="pay-number-display bkash">01318204129</div>
                 <div class="pay-instruction">উপরের নম্বরে Send Money করুন এবং Transaction ID নিচে দিন।</div>
             </div>
             <div class="payment-info-box nagad" id="infoBox-Nagad">
                 <div class="pay-info-title nagad"><i class="fas fa-mobile-alt"></i> Nagad এ Send Money করুন</div>
-                <div class="pay-number-display nagad" id="nagadNumber">01318204129</div>
+                <div class="pay-number-display nagad">01318204129</div>
                 <div class="pay-instruction">উপরের নম্বরে Send Money করুন এবং Transaction ID নিচে দিন।</div>
             </div>
             <div class="payment-info-box rocket" id="infoBox-Rocket">
                 <div class="pay-info-title rocket"><i class="fas fa-mobile-alt"></i> Rocket এ Send Money করুন</div>
-                <div class="pay-number-display rocket" id="rocketNumber">013182041291</div>
+                <div class="pay-number-display rocket">013182041291</div>
                 <div class="pay-instruction">উপরের নম্বরে Send Money করুন এবং Transaction ID নিচে দিন।</div>
             </div>
             <div class="payment-info-box cod" id="infoBox-COD">
@@ -315,14 +350,14 @@
 
 <div class="toast" id="toast"></div>
 
-<!-- FOOTER -->
+<!-- ══ FOOTER ══ -->
 <footer class="footer">
     <div class="footer-inner">
         <div class="container">
             <div class="footer-grid">
                 <div class="f-brand">
                     <div class="footer-logo"><span class="logo-rs">RS</span><span class="logo-shop">SHOP</span></div>
-                    <p>প্রিমিয়াম ঘড়ি ও সানগ্লাসের সেরা গন্তব্য।</p>
+                    <p>প্রিমিয়াম ঘড়ি, সানগ্লাস ও গিফটের সেরা গন্তব্য। পূর্বধলায় সেরা মানের পণ্য সবচেয়ে সাশ্রয়ী মূল্যে।</p>
                     <div class="f-social">
                         <a href="https://web.facebook.com/sojib.islam.739215" target="_blank" class="fb-icon"><i class="fab fa-facebook-f"></i></a>
                         <a href="https://wa.me/8801996283245" target="_blank" class="wa-icon"><i class="fab fa-whatsapp"></i></a>
@@ -331,19 +366,20 @@
                 <div class="f-links">
                     <h4>দ্রুত লিংক</h4>
                     <ul>
-                        <li><a href="index.html">হোম</a></li>
-                        <li><a href="watches.html">ঘড়ি</a></li>
-                        <li><a href="sunglasses.html">সানগ্লাস</a></li>
-                        <li><a href="gift.html">গিফট কালেকশন</a></li>
-                        <li><a href="track.html">অর্ডার ট্র্যাক</a></li>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="watches.html">Watches</a></li>
+                        <li><a href="sunglasses.html">Sunglasses</a></li>
+                        <li><a href="gift.html">Gift Collection</a></li>
+                        <li><a href="track.html">Order Track</a></li>
                     </ul>
                 </div>
                 <div class="f-links">
                     <h4>সাপোর্ট</h4>
                     <ul>
-                        <li><a href="contact.html">যোগাযোগ</a></li>
-                        <li><a href="#">রিটার্ন পলিসি</a></li>
-                        <li><a href="#">ডেলিভারি তথ্য</a></li>
+                        <li><a href="#">Delivery Policy</a></li>
+                        <li><a href="#">Return Policy</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
                     </ul>
                 </div>
                 <div class="f-contact">
@@ -363,341 +399,324 @@
     </div>
     <div class="footer-bottom">
         <div class="container">
-            <p>© 2026 RS SHOP. All Rights Reserved | Developed by <a href="https://web.facebook.com/AMIN.SHEIKH.01" target="_blank" style="color:var(--gold);text-decoration:none;font-weight:700;transition:opacity .3s" onmouseover="this.style.opacity='.7'" onmouseout="this.style.opacity='1'">AMIN SHEIKH</a></p>
+            <p>© 2026 RS SHOP. All Rights Reserved | Developed by
+                <a href="https://web.facebook.com/AMIN.SHEIKH.01" target="_blank"
+                   style="color:var(--gold);text-decoration:none;font-weight:700;transition:opacity .3s"
+                   onmouseover="this.style.opacity='.7'" onmouseout="this.style.opacity='1'">AMIN SHEIKH</a>
+            </p>
         </div>
     </div>
 </footer>
 
-<a href="https://wa.me/8801996283245" class="wa-float" target="_blank"><i class="fab fa-whatsapp"></i><span class="wa-tip">WhatsApp এ অর্ডার</span></a>
+<a href="https://wa.me/8801996283245" class="wa-float" target="_blank">
+    <i class="fab fa-whatsapp"></i>
+    <span class="wa-tip">Order Now</span>
+</a>
 
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getFirestore, collection, addDoc, getDocs, doc, getDoc, serverTimestamp, query, limit }
-    from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+  import { getFirestore, collection, getDocs, addDoc, serverTimestamp }
+    from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
+  /* ✅ sojib-shop Firebase config */
   const firebaseConfig = {
-    apiKey:"AIzaSyBWUHpKt5oU3e00RWZRn8HnH0YWXV4MNQE",
-    authDomain:"rs-shop-bd.firebaseapp.com",
-    projectId:"rs-shop-bd",
-    storageBucket:"rs-shop-bd.appspot.com",
-    messagingSenderId:"1069750407537",
-    appId:"1:1069750407537:web:abc123"
+    apiKey:            "AIzaSyAerNu3OWe2bCejiGXxnQeXr9yiDR1FysU",
+    authDomain:        "sojib-shop.firebaseapp.com",
+    projectId:         "sojib-shop",
+    storageBucket:     "sojib-shop.firebasestorage.app",
+    messagingSenderId: "1061639520028",
+    appId:             "1:1061639520028:web:d164fdf6f3d0bbd79304d9"
   };
+
   const app = initializeApp(firebaseConfig);
   const db  = getFirestore(app);
 
-  /* ── Delivery Charges from Firebase ── */
-  let deliveryInside  = 60;
-  let deliveryOutside = 120;
-  let freeAt          = 2000;
+  /* ══ CART STATE ══ */
+  let cart        = JSON.parse(localStorage.getItem('rs_cart') || '[]');
+  let couponData  = null;
+  let selectedPay = null;
+  const DELIVERY  = { inside: 60, outside: 120 };
+  const COUPONS   = { 'RSSHOP10': 10, 'SAVE20': 20, 'WELCOME15': 15 };
 
-  async function loadDeliverySettings() {
-    try {
-      const snap = await getDoc(doc(db, 'settings', 'delivery'));
-      if (snap.exists()) {
-        const d = snap.data();
-        deliveryInside  = d.dhaka   || 60;
-        deliveryOutside = d.outside || 120;
-        freeAt          = d.freeAt  || 2000;
-      }
-    } catch(e) {}
-    updateSummary();
-  }
-
-  /* ── Payment Settings ── */
-  async function loadPaymentNumbers() {
-    try {
-      const snap = await getDoc(doc(db, 'settings', 'payment'));
-      if (snap.exists()) {
-        const p = snap.data();
-        if (p.bkashNum)  document.getElementById('bkashNumber').textContent  = p.bkashNum;
-        if (p.nagadNum)  document.getElementById('nagadNumber').textContent  = p.nagadNum;
-        if (p.rocketNum) document.getElementById('rocketNumber').textContent = p.rocketNum;
-      }
-    } catch(e) {}
-  }
-
-  /* ── Suggestions ── */
-  async function loadSuggestions() {
-    try {
-      const snap = await getDocs(query(collection(db, 'products'), limit(4)));
-      if (snap.empty) return;
-      const grid = document.getElementById('suggestionsGrid');
-      const sec  = document.getElementById('suggestionsSection');
-      let html = '';
-      snap.forEach(d => {
-        const p = { id: d.id, ...d.data() };
-        html += `<a href="product.html?id=${p.id}" class="suggest-card">
-          <img src="${p.imageUrl||''}" alt="${p.name}" onerror="this.style.background='#222'">
-          <div class="suggest-card-info">
-            <div class="suggest-card-name">${p.name||''}</div>
-            <div class="suggest-card-price">৳${p.price||0}</div>
-          </div></a>`;
-      });
-      if (grid) grid.innerHTML = html;
-      if (sec)  sec.style.display = 'block';
-    } catch(e) {}
-  }
-
-  /* ── Place Order ── */
-  window.placeOrder = async function() {
-    const name    = document.getElementById('oName').value.trim();
-    const phone   = document.getElementById('oPhone').value.trim();
-    const address = document.getElementById('oAddress').value.trim();
-    const method  = window._selectedPayMethod || '';
-    const txn     = document.getElementById('transactionId').value.trim();
-    const note    = document.getElementById('oNote').value.trim();
-
-    if (!name)    { showCartToast('❌ নাম দিন!'); return; }
-    if (!phone)   { showCartToast('❌ ফোন নম্বর দিন!'); return; }
-    if (!address) { showCartToast('❌ ঠিকানা দিন!'); return; }
-    if (!method)  { showCartToast('❌ পেমেন্ট পদ্ধতি বেছে নিন!'); return; }
-    if (method !== 'Cash on Delivery' && !txn) { showCartToast('❌ Transaction ID দিন!'); return; }
-
-    const cart      = getCart();
-    if (!cart.length) { showCartToast('❌ কার্ট খালি!'); return; }
-
-    const btn = document.getElementById('confirmBtn');
-    btn.disabled = true;
-    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> অপেক্ষা করুন...';
-
-    const area     = document.getElementById('deliveryArea').value;
-    const subtotal = cart.reduce((s, i) => s + (i.price * i.qty), 0);
-    const delivery = subtotal >= freeAt ? 0 : (area === 'inside' ? deliveryInside : deliveryOutside);
-    const discount = window._discountAmt || 0;
-    const total    = subtotal + delivery - discount;
-    const orderId  = 'RS-' + Date.now().toString().slice(-6);
-
-    try {
-      await addDoc(collection(db, 'orders'), {
-        orderId, name, phone, address,
-        paymentMethod: method,
-        transactionId: txn || 'N/A',
-        note,
-        items: cart.map(i => ({ id: i.id, name: i.name, price: i.price, qty: i.qty, image: i.image })),
-        subtotal, delivery, discount, total,
-        status: 'pending',
-        area,
-        createdAt: serverTimestamp()
-      });
-      localStorage.removeItem('rs_cart');
-      document.getElementById('successOrderId').textContent = orderId;
-      document.getElementById('checkoutForm').style.display = 'none';
-      document.getElementById('orderSuccess').classList.add('show');
-      renderCart();
-    } catch(e) {
-      showCartToast('❌ অর্ডার হয়নি! আবার চেষ্টা করুন।');
-      btn.disabled = false;
-      btn.innerHTML = '<i class="fas fa-check-circle"></i> অর্ডার নিশ্চিত করুন';
-    }
-  };
-
-  loadDeliverySettings();
-  loadPaymentNumbers();
-  loadSuggestions();
-</script>
-
-<script>
-  /* ── Cart Helpers ── */
-  function getCart() {
-    try { return JSON.parse(localStorage.getItem('rs_cart') || '[]'); } catch(e) { return []; }
-  }
-  function saveCart(cart) {
-    localStorage.setItem('rs_cart', JSON.stringify(cart));
-    updateCounts();
-    renderCart();
-  }
-
-  let _discountAmt = 0;
-  window._discountAmt = 0;
-  window._selectedPayMethod = '';
-
-  const COUPONS = { 'RS10': 10, 'RS20': 20, 'SAVE15': 15 };
-
-  function updateCounts() {
-    const cart = getCart();
-    const wish = JSON.parse(localStorage.getItem('rs_wishlist') || '[]');
-    const total = cart.reduce((s, i) => s + (i.qty || 1), 0);
-    const cEl = document.getElementById('cartCount');
-    const wEl = document.getElementById('wishlistCount');
-    if (cEl) cEl.textContent = total;
-    if (wEl) wEl.textContent = wish.length;
-  }
-
-  window.updateSummary = function() {
-    const cart     = getCart();
-    const area     = document.getElementById('deliveryArea')?.value || 'inside';
-    const subtotal = cart.reduce((s, i) => s + (i.price * i.qty), 0);
-    const delivery = subtotal >= (window._freeAt || 2000) ? 0 : (area === 'inside' ? (window._delivIn || 60) : (window._delivOut || 120));
-    const total    = subtotal + delivery - _discountAmt;
-
-    document.getElementById('summaryCount').textContent    = cart.reduce((s, i) => s + i.qty, 0);
-    document.getElementById('summarySubtotal').textContent = '৳' + subtotal.toLocaleString();
-    document.getElementById('summaryDelivery').textContent = delivery === 0 ? 'ফ্রি! 🎉' : '৳' + delivery;
-    document.getElementById('summaryTotal').textContent    = '৳' + total.toLocaleString();
-    if (_discountAmt > 0) {
-      document.getElementById('discountRow').style.display = 'flex';
-      document.getElementById('discountAmount').textContent = '-৳' + _discountAmt;
-    } else {
-      document.getElementById('discountRow').style.display = 'none';
-    }
-
-    /* modal summary */
-    const mItems = document.getElementById('modalItems');
-    if (mItems) {
-      mItems.innerHTML = cart.map(i => `<div class="modal-item-row"><span>${i.name} × ${i.qty}</span><span>৳${i.price * i.qty}</span></div>`).join('');
-    }
-    const mSub  = document.getElementById('modalSubtotal');
-    const mDel  = document.getElementById('modalDelivery');
-    const mTot  = document.getElementById('modalTotal');
-    const mDisc = document.getElementById('modalDiscount');
-    const mDiscRow = document.getElementById('modalDiscountRow');
-    if (mSub) mSub.textContent = '৳' + subtotal.toLocaleString();
-    if (mDel) mDel.textContent = delivery === 0 ? 'ফ্রি! 🎉' : '৳' + delivery;
-    if (mTot) mTot.textContent = '৳' + total.toLocaleString();
-    if (mDisc && mDiscRow) {
-      mDiscRow.style.display = _discountAmt > 0 ? 'flex' : 'none';
-      mDisc.textContent = '-৳' + _discountAmt;
-    }
-    window._currentTotal    = total;
-    window._currentDelivery = delivery;
-    window._currentSubtotal = subtotal;
-  };
-
+  /* ══ RENDER CART ══ */
   function renderCart() {
-    const cart = getCart();
-    const list = document.getElementById('cartItemsList');
-    const countEl = document.getElementById('itemCountLabel');
-    if (countEl) countEl.textContent = cart.reduce((s, i) => s + i.qty, 0);
+    const list  = document.getElementById('cartItemsList');
+    const wc    = document.getElementById('wishCount');
+    const wish  = JSON.parse(localStorage.getItem('rs_wishlist') || '[]');
+    if (wc) wc.textContent = wish.length;
 
     if (!cart.length) {
-      list.innerHTML = `<div class="empty-cart">
-        <i class="fas fa-shopping-bag"></i>
-        <p>আপনার কার্ট খালি আছে!</p>
-        <a href="index.html">শপিং শুরু করুন</a>
-      </div>`;
+      list.innerHTML = `
+        <div class="empty-cart">
+          <i class="fas fa-shopping-bag"></i>
+          <p>আপনার কার্ট খালি!</p>
+          <a href="index.html">শপিং শুরু করুন</a>
+        </div>`;
       updateSummary();
+      document.getElementById('suggestionsSection').style.display = 'none';
       return;
     }
 
-    list.innerHTML = cart.map(item => `
+    list.innerHTML = cart.map((item, i) => `
       <div class="cart-item">
         <div class="cart-item-img">
-          ${item.image ? `<img src="${item.image}" alt="${item.name}" onerror="this.parentElement.innerHTML='🛍️'">` : '🛍️'}
+          ${item.image
+            ? `<img src="${item.image}" alt="${item.name}" onerror="this.parentElement.innerHTML='🛍️'">`
+            : '🛍️'}
         </div>
         <div>
+          <div class="item-category">${item.category || 'Product'}</div>
           <div class="item-name">${item.name}</div>
-          <div class="item-price">৳${item.price}</div>
+          <div class="item-price">৳${Number(item.price).toLocaleString()}</div>
           <div class="qty-controls">
-            <button class="qty-btn" onclick="changeQty('${item.id}',-1)">−</button>
+            <button class="qty-btn" onclick="changeQty(${i},-1)">−</button>
             <span class="qty-num">${item.qty}</span>
-            <button class="qty-btn" onclick="changeQty('${item.id}',1)">+</button>
+            <button class="qty-btn" onclick="changeQty(${i},1)">+</button>
           </div>
         </div>
         <div class="item-right">
           <div class="item-subtotal">৳${(item.price * item.qty).toLocaleString()}</div>
-          <button class="remove-btn" onclick="removeItem('${item.id}')" title="সরান"><i class="fas fa-trash"></i></button>
+          <button class="remove-btn" onclick="removeItem(${i})" title="সরান"><i class="fas fa-trash"></i></button>
         </div>
-      </div>`).join('') + `<button class="clear-btn" onclick="clearCart()"><i class="fas fa-trash-alt"></i> সব মুছুন</button>`;
+      </div>`).join('');
 
+    list.innerHTML += `<button class="clear-btn" onclick="clearCart()"><i class="fas fa-trash-alt"></i> কার্ট খালি করুন</button>`;
     updateSummary();
+    loadSuggestions();
   }
 
-  window.changeQty = function(id, delta) {
-    const cart = getCart();
-    const item = cart.find(i => i.id === id);
-    if (!item) return;
-    item.qty = Math.max(1, item.qty + delta);
-    saveCart(cart);
+  window.changeQty = function(i, d) {
+    cart[i].qty = Math.max(1, (cart[i].qty || 1) + d);
+    saveCart(); renderCart();
   };
 
-  window.removeItem = function(id) {
-    saveCart(getCart().filter(i => i.id !== id));
+  window.removeItem = function(i) {
+    cart.splice(i, 1); saveCart(); renderCart();
+    showToast('🗑️ পণ্য সরানো হয়েছে', '#ff4757');
   };
 
   window.clearCart = function() {
-    if (confirm('সব আইটেম মুছে দেবেন?')) { saveCart([]); }
+    if (!confirm('কার্ট খালি করবেন?')) return;
+    cart = []; saveCart(); renderCart();
+    showToast('🗑️ কার্ট খালি করা হয়েছে', '#ff4757');
   };
 
+  function saveCart() {
+    localStorage.setItem('rs_cart', JSON.stringify(cart));
+    const total = cart.reduce((s, i) => s + (i.qty || 1), 0);
+    document.querySelectorAll('#cartCount').forEach(el => el.textContent = total);
+  }
+
+  /* ══ SUMMARY ══ */
+  window.updateSummary = function() {
+    const area     = document.getElementById('deliveryArea').value;
+    const delivery = DELIVERY[area] || 60;
+    const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
+    const count    = cart.reduce((s, i) => s + i.qty, 0);
+    let   discount = 0;
+    if (couponData) discount = Math.round(subtotal * couponData.pct / 100);
+    const total = subtotal - discount + (cart.length ? delivery : 0);
+
+    document.getElementById('summaryCount').textContent    = count;
+    document.getElementById('summarySubtotal').textContent = '৳' + subtotal.toLocaleString();
+    document.getElementById('summaryDelivery').textContent = cart.length ? '৳' + delivery : '৳0';
+    document.getElementById('summaryTotal').textContent    = '৳' + total.toLocaleString();
+    document.getElementById('discountRow').style.display   = discount ? 'flex' : 'none';
+    document.getElementById('discountAmount').textContent  = '-৳' + discount.toLocaleString();
+  };
+
+  /* ══ COUPON ══ */
   window.applyCoupon = function() {
     const code = document.getElementById('couponInput').value.trim().toUpperCase();
     const msg  = document.getElementById('couponMsg');
-    if (!code) { msg.className='coupon-msg err'; msg.textContent='❌ কুপন কোড দিন!'; return; }
-    if (COUPONS[code]) {
-      _discountAmt = COUPONS[code];
-      window._discountAmt = _discountAmt;
-      msg.className = 'coupon-msg ok';
-      msg.textContent = '';
-      const aEl = document.getElementById('appliedCouponText');
-      if (aEl) aEl.textContent = code + ' — ৳' + _discountAmt + ' ছাড়';
-      document.getElementById('couponApplied').classList.add('show');
-      document.getElementById('couponInput').disabled = true;
-      updateSummary();
-      showCartToast('✅ কুপন প্রয়োগ হয়েছে! ৳' + _discountAmt + ' ছাড় পেয়েছেন।');
-    } else {
-      msg.className = 'coupon-msg err';
-      msg.textContent = '❌ কুপন কোড সঠিক নয়!';
+    if (!COUPONS[code]) {
+      msg.textContent = '❌ কুপন কোড ভুল বা মেয়াদোত্তীর্ণ!';
+      msg.className   = 'coupon-msg err'; return;
     }
+    couponData = { code, pct: COUPONS[code] };
+    msg.textContent = '';
+    document.getElementById('couponApplied').classList.add('show');
+    document.getElementById('appliedCouponText').textContent = `${code} — ${COUPONS[code]}% ছাড়`;
+    document.getElementById('couponInputWrap').style.display = 'none';
+    updateSummary();
+    showToast(`🎉 ${COUPONS[code]}% ছাড় প্রয়োগ হয়েছে!`, '#2ed573');
   };
 
   window.removeCoupon = function() {
-    _discountAmt = 0;
-    window._discountAmt = 0;
+    couponData = null;
     document.getElementById('couponApplied').classList.remove('show');
-    document.getElementById('couponInput').value    = '';
-    document.getElementById('couponInput').disabled = false;
+    document.getElementById('couponInputWrap').style.display = 'flex';
+    document.getElementById('couponInput').value = '';
     document.getElementById('couponMsg').textContent = '';
     updateSummary();
-    showCartToast('কুপন সরানো হয়েছে।');
   };
 
+  /* ══ WHATSAPP ORDER ══ */
+  window.openWhatsApp = function() {
+    if (!cart.length) { showToast('⚠️ কার্ট খালি!', '#ffa502'); return; }
+    const area     = document.getElementById('deliveryArea').value;
+    const delivery = DELIVERY[area];
+    const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
+    let   discount = 0;
+    if (couponData) discount = Math.round(subtotal * couponData.pct / 100);
+    const total = subtotal - discount + delivery;
+    const items = cart.map(i => `• ${i.name} ×${i.qty} = ৳${(i.price*i.qty).toLocaleString()}`).join('\n');
+    const msg = `🛒 *RS SHOP — নতুন অর্ডার*\n\n${items}\n\n` +
+      `Subtotal: ৳${subtotal.toLocaleString()}\n` +
+      (discount ? `Discount: -৳${discount.toLocaleString()}\n` : '') +
+      `Delivery: ৳${delivery}\n*Total: ৳${total.toLocaleString()}*\n\n` +
+      `Delivery: ${area === 'inside' ? 'ঢাকার ভেতরে' : 'ঢাকার বাইরে'}`;
+    window.open('https://wa.me/8801996283245?text=' + encodeURIComponent(msg), '_blank');
+  };
+
+  /* ══ CHECKOUT MODAL ══ */
   window.openCheckout = function() {
-    if (!getCart().length) { showCartToast('❌ কার্ট খালি!'); return; }
+    if (!cart.length) { showToast('⚠️ কার্ট খালি!', '#ffa502'); return; }
+    const area     = document.getElementById('deliveryArea').value;
+    const delivery = DELIVERY[area];
+    const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
+    let   discount = 0;
+    if (couponData) discount = Math.round(subtotal * couponData.pct / 100);
+    const total = subtotal - discount + delivery;
+
+    document.getElementById('modalItems').innerHTML =
+      cart.map(i => `<div class="modal-item-row"><span>${i.name} ×${i.qty}</span><span>৳${(i.price*i.qty).toLocaleString()}</span></div>`).join('');
+    document.getElementById('modalSubtotal').textContent = '৳' + subtotal.toLocaleString();
+    document.getElementById('modalDelivery').textContent = '৳' + delivery;
+    document.getElementById('modalTotal').textContent    = '৳' + total.toLocaleString();
+    document.getElementById('modalDiscountRow').style.display = discount ? 'flex' : 'none';
+    document.getElementById('modalDiscount').textContent = '-৳' + discount.toLocaleString();
+
     document.getElementById('checkoutModal').classList.add('open');
-    document.getElementById('checkoutForm').style.display = 'block';
     document.getElementById('orderSuccess').classList.remove('show');
-    const btn = document.getElementById('confirmBtn');
-    if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-check-circle"></i> অর্ডার নিশ্চিত করুন'; }
-    updateSummary();
+    document.getElementById('checkoutForm').style.display = 'block';
+    selectedPay = null;
+    document.querySelectorAll('.pay-method-btn').forEach(b => b.classList.remove('selected'));
+    document.querySelectorAll('.payment-info-box').forEach(b => b.classList.remove('show'));
+    document.getElementById('txnGroup').classList.remove('show');
   };
 
   window.closeCheckout = function() {
     document.getElementById('checkoutModal').classList.remove('open');
   };
 
-  window.selectPayMethod = function(method, btn) {
-    window._selectedPayMethod = method;
+  window.selectPayMethod = function(method, el) {
+    selectedPay = method;
     document.querySelectorAll('.pay-method-btn').forEach(b => b.classList.remove('selected'));
-    btn.classList.add('selected');
+    el.classList.add('selected');
     document.querySelectorAll('.payment-info-box').forEach(b => b.classList.remove('show'));
     const key = method === 'Cash on Delivery' ? 'COD' : method;
-    const box = document.getElementById('infoBox-' + key);
+    const box = document.getElementById('infoBox-' + (method === 'Cash on Delivery' ? 'COD' : method));
     if (box) box.classList.add('show');
-    const txnGroup = document.getElementById('txnGroup');
-    if (txnGroup) txnGroup.classList.toggle('show', method !== 'Cash on Delivery');
+    const txn = document.getElementById('txnGroup');
+    txn.classList.toggle('show', method !== 'Cash on Delivery');
   };
 
-  window.openWhatsApp = function() {
-    const cart = getCart();
-    if (!cart.length) { showCartToast('❌ কার্ট খালি!'); return; }
-    const items = cart.map(i => `• ${i.name} × ${i.qty} = ৳${i.price * i.qty}`).join('\n');
-    const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
-    const msg   = encodeURIComponent(`*RS SHOP — নতুন অর্ডার* 🛍️\n\n${items}\n\n*মোট: ৳${total}*\n\nঅর্ডার নিশ্চিত করুন।`);
-    window.open('https://wa.me/8801996283245?text=' + msg, '_blank');
+  /* ══ PLACE ORDER ══ */
+  window.placeOrder = async function() {
+    const name    = document.getElementById('oName').value.trim();
+    const phone   = document.getElementById('oPhone').value.trim();
+    const address = document.getElementById('oAddress').value.trim();
+    const note    = document.getElementById('oNote').value.trim();
+    const txnId   = document.getElementById('transactionId').value.trim();
+
+    if (!name)    { showToast('⚠️ নাম দিন', '#ffa502'); return; }
+    if (!phone)   { showToast('⚠️ ফোন নম্বর দিন', '#ffa502'); return; }
+    if (!address) { showToast('⚠️ ঠিকানা দিন', '#ffa502'); return; }
+    if (!selectedPay) { showToast('⚠️ পেমেন্ট পদ্ধতি বেছে নিন', '#ffa502'); return; }
+    if (selectedPay !== 'Cash on Delivery' && !txnId) {
+      showToast('⚠️ Transaction ID দিন', '#ffa502'); return;
+    }
+
+    const btn = document.getElementById('confirmBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> প্রসেস হচ্ছে...';
+
+    const area     = document.getElementById('deliveryArea').value;
+    const delivery = DELIVERY[area];
+    const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
+    let   discount = 0;
+    if (couponData) discount = Math.round(subtotal * couponData.pct / 100);
+    const total = subtotal - discount + delivery;
+
+    try {
+      const ref = await addDoc(collection(db, 'orders'), {
+        customerName:    name,
+        customerPhone:   phone,
+        customerAddress: address,
+        items:           cart.map(i => ({ id: i.id||'', name: i.name, price: i.price, qty: i.qty, image: i.image||'' })),
+        subtotal,
+        deliveryCharge:  delivery,
+        deliveryArea:    area,
+        discount,
+        coupon:          couponData ? couponData.code : null,
+        total,
+        paymentMethod:   selectedPay,
+        transactionId:   txnId || null,
+        note:            note || null,
+        status:          'pending',
+        createdAt:       serverTimestamp()
+      });
+
+      const shortId = '#' + ref.id.slice(-6).toUpperCase();
+      document.getElementById('successOrderId').textContent = shortId;
+      document.getElementById('orderSuccess').classList.add('show');
+      document.getElementById('checkoutForm').style.display = 'none';
+
+      cart = []; saveCart(); renderCart();
+      showToast('✅ অর্ডার সফল! ' + shortId, '#2ed573');
+
+    } catch(e) {
+      console.error('Order error:', e);
+      showToast('❌ অর্ডার ব্যর্থ! আবার চেষ্টা করুন।', '#ff4757');
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fas fa-check-circle"></i> অর্ডার নিশ্চিত করুন';
+    }
   };
 
-  function showCartToast(msg) {
+  /* ══ SUGGESTIONS ══ */
+  async function loadSuggestions() {
+    try {
+      const snap = await getDocs(collection(db, 'products'));
+      const cartIds = cart.map(i => i.id);
+      const products = [];
+      snap.forEach(d => { if (!cartIds.includes(d.id)) products.push({ id: d.id, ...d.data() }); });
+      const picked = products.sort(() => Math.random() - 0.5).slice(0, 4);
+      if (!picked.length) return;
+      const grid = document.getElementById('suggestionsGrid');
+      grid.innerHTML = picked.map(p => `
+        <a href="product.html?id=${p.id}" class="suggest-card">
+          <img src="${p.images?.[0] || p.image || ''}" alt="${p.name}"
+               onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22160%22><rect fill=%22%23111%22 width=%22200%22 height=%22160%22/><text x=%2250%25%22 y=%2250%25%22 fill=%22%23555%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22 font-size=%2240%22>🛍️</text></svg>'">
+          <div class="suggest-card-info">
+            <div class="suggest-card-name">${p.name}</div>
+            <div class="suggest-card-price">৳${Number(p.price || 0).toLocaleString()}</div>
+          </div>
+        </a>`).join('');
+      document.getElementById('suggestionsSection').style.display = 'block';
+    } catch(e) { console.log('Suggestions:', e); }
+  }
+
+  /* ══ TOAST ══ */
+  function showToast(msg, color = '#C9A84C') {
     const t = document.getElementById('toast');
-    if (!t) return;
-    t.textContent = msg;
+    t.innerHTML = `<i class="fas fa-info-circle" style="color:${color}"></i> ${msg}`;
+    t.style.borderColor = color + '55';
     t.classList.add('show');
     setTimeout(() => t.classList.remove('show'), 3000);
   }
 
-  /* init */
+  /* ══ INIT ══ */
   if (localStorage.getItem('rs_theme') === 'light') document.documentElement.setAttribute('data-theme', 'light');
+  const wish = JSON.parse(localStorage.getItem('rs_wishlist') || '[]');
+  const wc   = document.getElementById('wishCount');
+  if (wc) wc.textContent = wish.length;
   renderCart();
-  updateCounts();
+
+  /* Close modal on backdrop click */
+  document.getElementById('checkoutModal').addEventListener('click', function(e) {
+    if (e.target === this) closeCheckout();
+  });
 </script>
 <script src="main.js"></script>
 </body>

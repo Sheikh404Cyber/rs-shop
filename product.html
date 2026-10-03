@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product — RS SHOP</title>
+  <meta name="description" id="metaDesc" content="RS SHOP — original watches, sunglasses and gifts. Cash on Delivery available.">
+  <meta name="theme-color" content="#080808">
+  <script>if(localStorage.getItem('rs_theme')==='light')document.documentElement.setAttribute('data-theme','light')</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .info-box{margin-top:22px;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+    .info-row{display:flex;gap:12px;align-items:flex-start;padding:13px 16px;border-bottom:1px solid var(--border);font-size:.92rem}
+    .info-row:last-child{border:none}
+    .info-row i{color:var(--gold);width:20px;text-align:center;margin-top:4px}
+    .info-row small{display:block;color:var(--muted)}
+    .qty-row{display:flex;align-items:center;gap:16px;margin:6px 0 4px}
+    .wish-btn.on{color:var(--red);border-color:var(--red)}
+    .nf{text-align:center;padding:90px 0}
+  </style>
+</head>
+<body data-page="product">
+
+<div id="site-header"></div>
+
+<main>
+  <section class="page-hero" style="padding:26px 0 20px">
+    <div class="container"><div class="crumbs" id="crumbs"><a href="index.html">Home</a> / <span>Product</span></div></div>
+  </section>
+
+  <section class="section" style="padding-top:36px">
+    <div class="container" id="view">
+      <div class="pd-grid"><div class="skeleton" style="aspect-ratio:1;min-height:0"></div><div class="skeleton"></div></div>
+    </div>
+  </section>
+
+  <section class="section alt hidden" id="relatedSec">
+    <div class="container">
+      <div class="section-head"><div><h2>Related Products</h2></div></div>
+      <div class="product-grid" id="relatedGrid"></div>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+
+<script type="module" src="main.js"></script>
+<script type="module">
+  import { getProduct, getRelated, getFlashSale, applyFlash, getDeliverySettings, getPaymentSettings,
+           CATEGORIES, GENDERS, SUBCATS, PAYMENT_LABELS, taka, discountPercent, esc, waLink } from "./firebase.js";
+  import { Cart, Wish, toast, productCard } from "./main.js";
+
+  const $ = s => document.querySelector(s);
+  const id = new URLSearchParams(location.search).get("id");
+
+  const notFound = () => $("#view").innerHTML = `
+    <div class="nf"><i class="fas fa-box-open" style="font-size:3rem;color:var(--gold);opacity:.5"></i>
+    <h2 style="margin:12px 0 6px">Product paoa jayni</h2><p style="color:var(--muted);margin-bottom:18px">Product ta shoriye newa hoyeche ba link ta bhul.</p>
+    <a class="btn btn-primary" href="index.html">Home e jao</a></div>`;
+  if (!id) { notFound(); throw 0; }
+
+  let p, flash;
+  try { [p, flash] = await Promise.all([getProduct(id), getFlashSale()]); } catch (e) { console.error(e); }
+  if (!p) { notFound(); throw 0; }
+  p = applyFlash(p, flash);
+
+  const cat = CATEGORIES[p.category];
+  const off = discountPercent(p.price, p.oldPrice);
+  const out = p.stock === "out_of_stock";
+  const maxQty = p.stockQty > 0 ? p.stockQty : 10;
+  const [del, pay] = await Promise.all([getDeliverySettings(), getPaymentSettings()]);
+  const payNames = Object.entries(pay).filter(([, v]) => v.on).map(([k]) => PAYMENT_LABELS[k]).join(", ");
+
+  /* page title / SEO */
+  document.title = `${p.name} — RS SHOP`;
+  $("#metaDesc").content = `${p.name} — ${taka(p.price)}. Original quality, Cash on Delivery available. RS SHOP Purbadhala.`;
+  $("#crumbs").innerHTML = `<a href="index.html">Home</a> / ${cat ? `<a href="${cat.path}">${cat.label}</a> / ` : ""}<span>${esc(p.name)}</span>`;
+  const ld = document.createElement("script"); ld.type = "application/ld+json";
+  ld.textContent = JSON.stringify({ "@context": "https://schema.org", "@type": "Product", name: p.name, image: p.imageUrl, description: p.description || p.name,
+    offers: { "@type": "Offer", priceCurrency: "BDT", price: p.price, availability: out ? "https://schema.org/OutOfStock" : "https://schema.org/InStock" } });
+  document.head.appendChild(ld);
+
+  const stockChip = out ? `<span class="chip out">Stock Out</span>` : p.stock === "limited" ? `<span class="chip low">Limited Stock</span>` : `<span class="chip ok">In Stock</span>`;
+  const waText = `Assalamu alaikum, ami ei product ta order korte chai:\n${p.name}\nDam: ${taka(p.price)}\nLink: ${location.href}`;
+
+  $("#view").innerHTML = `
+  <div class="pd-grid">
+    <div class="pd-main">${""}<img src="${esc(p.imageUrl)}" alt="${esc(p.name)}"></div>
+    <div class="pd-info">
+      <div class="pd-meta">${stockChip}
+        ${cat ? `<span class="chip">${cat.label}</span>` : ""}
+        ${GENDERS[p.gender] ? `<span class="chip">${GENDERS[p.gender]}</span>` : ""}
+        ${p.subCategory ? `<span class="chip">${SUBCATS[p.subCategory] || esc(p.subCategory)}</span>` : ""}
+        ${p.flashSale && flash.active ? `<span class="chip low">⚡ Flash Sale</span>` : ""}</div>
+      <h1>${esc(p.name)}</h1>
+      <div class="pd-price"><span class="p-now">${taka(p.price)}</span>
+        ${p.oldPrice > p.price ? `<span class="p-old" style="font-size:1.1rem">${taka(p.oldPrice)}</span><span class="p-off" style="position:static">${off}% OFF</span>` : ""}</div>
+      ${p.description ? `<p class="pd-desc">${esc(p.description)}</p>` : ""}
+      ${out ? "" : `<div class="qty-row"><span>Quantity</span><div class="qty"><button id="qMinus" aria-label="Kom">−</button><span id="qVal">1</span><button id="qPlus" aria-label="Bari">+</button></div></div>`}
+      <div class="pd-buy">
+        ${out ? `<button class="btn btn-dark" disabled>Stock Out</button>`
+              : `<button class="btn btn-outline" id="addBtn"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+                 <button class="btn btn-primary" id="buyBtn">Order Now</button>`}
+      </div>
+      <div class="pd-buy" style="margin-top:12px">
+        <a class="btn btn-wa" href="${waLink(waText)}" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> Order on WhatsApp</a>
+        <button class="btn btn-dark wish-btn ${Wish.has(p.id) ? "on" : ""}" id="wishBtn"><i class="fas fa-heart"></i> Wishlist</button>
+      </div>
+      <div class="info-box">
+        <div class="info-row"><i class="fas fa-truck-fast"></i><div>Delivery charge<small>Purbadhala/Dhaka: ${taka(del.dhaka)} · Onno jela: ${taka(del.outside)}${del.freeAt ? ` · ${taka(del.freeAt)} er upore free` : ""}</small></div></div>
+        <div class="info-row"><i class="fas fa-money-bill-wave"></i><div>Payment<small>${esc(payNames || "Cash on Delivery")}</small></div></div>
+        <div class="info-row"><i class="fas fa-shield-alt"></i><div>100% Original<small>Genuine product, quality guarantee</small></div></div>
+        <div class="info-row"><i class="fas fa-rotate-left"></i><div>3 Day Easy Return<small><a href="policy.html?type=delivery-return" style="color:var(--gold)">Return policy dekho</a></small></div></div>
+      </div>
+    </div>
+  </div>`;
+
+  /* quantity + buttons */
+  let qty = 1;
+  const setQty = n => { qty = Math.min(maxQty, Math.max(1, n)); $("#qVal").textContent = qty; };
+  $("#qMinus")?.addEventListener("click", () => setQty(qty - 1));
+  $("#qPlus")?.addEventListener("click", () => setQty(qty + 1));
+  $("#addBtn")?.addEventListener("click", () => { Cart.add(p, qty); toast("Cart e add hoyeche ✓"); });
+  $("#buyBtn")?.addEventListener("click", () => { Cart.add(p, qty); location.href = "cart.html"; });
+  $("#wishBtn").addEventListener("click", e => {
+    const on = Wish.toggle(p.id); e.currentTarget.classList.toggle("on", on);
+    toast(on ? "Wishlist e add hoyeche ❤️" : "Wishlist theke soriye newa hoyeche");
+  });
+
+  /* related */
+  const rel = (await getRelated(p, 4).catch(() => [])).map(x => applyFlash(x, flash));
+  if (rel.length) { $("#relatedGrid").innerHTML = rel.map(productCard).join(""); $("#relatedSec").classList.remove("hidden"); }
+</script>
+</body>
+</html>

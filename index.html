@@ -10,15 +10,12 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <style>
     /* ══ INDEX-ONLY STYLES ══ */
-
-    /* ── DROPDOWN NAV ── */
     .nav-links li{position:relative}
     .nav-dropdown{position:absolute;top:100%;left:50%;transform:translateX(-50%) translateY(10px);background:rgba(10,10,10,0.97);backdrop-filter:blur(20px);border:1px solid var(--border);border-radius:10px;padding:12px 0;min-width:170px;opacity:0;visibility:hidden;transition:all .3s ease;z-index:100;box-shadow:0 20px 50px rgba(0,0,0,0.7)}
     .nav-links li:hover .nav-dropdown{opacity:1;visibility:visible;transform:translateX(-50%) translateY(4px)}
     .nav-dropdown a{display:block!important;padding:8px 22px!important;font-size:12px!important;color:var(--text-muted)!important;letter-spacing:1px!important;transition:all .3s!important;white-space:nowrap}
     .nav-dropdown a:hover{color:var(--gold)!important;background:rgba(201,168,76,0.06);padding-left:28px!important}
     .nav-dropdown a::after{display:none!important}
-    .has-dropdown>a::after{content:''!important;display:none!important}
     .has-dropdown>a .drop-arrow{font-size:8px;margin-left:4px;transition:transform .3s}
     .has-dropdown:hover>a .drop-arrow{transform:rotate(180deg)}
 
@@ -122,10 +119,10 @@
     .pay.cod{font-size:10px;font-weight:800;padding:5px 10px;border-radius:4px;letter-spacing:1px;background:var(--bg4);color:var(--gold);border:1px solid var(--border)}
 
     /* ── SOCIAL ICON COLORS ── */
-    .f-social a.fb-icon{background:#1877F2 !important;color:#fff !important;border-color:#1877F2 !important}
-    .f-social a.fb-icon:hover{background:#145db2 !important;border-color:#145db2 !important}
-    .f-social a.wa-icon{background:#25D366 !important;color:#fff !important;border-color:#25D366 !important}
-    .f-social a.wa-icon:hover{background:#1ebe5d !important;border-color:#1ebe5d !important}
+    .f-social a.fb-icon{background:#1877F2!important;color:#fff!important;border-color:#1877F2!important}
+    .f-social a.fb-icon:hover{background:#145db2!important;border-color:#145db2!important}
+    .f-social a.wa-icon{background:#25D366!important;color:#fff!important;border-color:#25D366!important}
+    .f-social a.wa-icon:hover{background:#1ebe5d!important;border-color:#1ebe5d!important}
 
     /* ── DARK/LIGHT TOGGLE ── */
     .theme-toggle{position:fixed;top:50%;right:0;transform:translateY(-50%);background:rgba(15,15,15,0.9);backdrop-filter:blur(10px);border:1px solid var(--border);border-right:none;border-radius:8px 0 0 8px;padding:10px 12px;cursor:pointer;z-index:998;transition:all .3s}
@@ -245,15 +242,12 @@
 
 <!-- ══ HERO (Banner Slider) ══ -->
 <section class="hero" id="hero">
-  <!-- Slides container — Firebase থেকে JS দিয়ে populate হবে -->
   <div class="hero-slides" id="heroSlides">
-    <!-- Default fallback slide (কোনো banner না থাকলে দেখাবে) -->
+    <!-- Firebase থেকে JS দিয়ে populate হবে — fallback slide -->
     <div class="hero-slide active" style="background:radial-gradient(ellipse at 20% 50%,rgba(201,168,76,0.12) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(201,168,76,0.07) 0%,transparent 50%),#080808"></div>
   </div>
-  <!-- Prev / Next arrows -->
   <button class="hero-slide-arrow hero-arrow-prev" onclick="heroPrev()" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
   <button class="hero-slide-arrow hero-arrow-next" onclick="heroNext()" aria-label="Next"><i class="fas fa-chevron-right"></i></button>
-  <!-- Dots -->
   <div class="hero-slide-dots" id="heroSlideDots">
     <span class="hero-slide-dot active"></span>
   </div>
@@ -432,7 +426,7 @@
   </div>
 </section>
 
-<!-- ══ WHY US (একবারই দেখাবে) ══ -->
+<!-- ══ WHY US ══ -->
 <section class="section why-us">
   <div class="container">
     <div class="section-head"><span class="section-tag">Why Choose Us</span><h2>Our Promise</h2></div>
@@ -527,12 +521,12 @@
           <p><i class="fas fa-map-marker-alt"></i> Purbadhala Station Road, Kazi Super Market</p>
           <p><i class="fas fa-phone"></i> 01996283245</p>
           <p><i class="fab fa-whatsapp"></i> 01996283245</p>
-          <!-- ══ আসল Payment Logo ══ -->
+          <!-- ══ Payment Logos ══ -->
           <div class="payment-methods">
             <img class="pay-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Bkash_Logo.png/320px-Bkash_Logo.png" alt="bKash"/>
             <img class="pay-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Nagad_Logo.png/320px-Nagad_Logo.png" alt="Nagad"/>
-            <img class="pay-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Rocket_logo_%28DBBL%29.png/320px-Rocket_logo_%28DBBL%29.png" alt="Rocket"/>
-            <span class="pay cod">Cash on Delivery</span>
+            <img class="pay-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Rocket_bKash_logo.png/320px-Rocket_bKash_logo.png" alt="Rocket"/>
+            <span class="pay cod">COD</span>
           </div>
         </div>
       </div>
@@ -540,352 +534,155 @@
   </div>
   <div class="footer-bottom">
     <div class="container">
-      <p>© 2026 RS SHOP. All Rights Reserved | Developed by
-        <a href="https://web.facebook.com/AMIN.SHEIKH.01" target="_blank"
-           style="color:var(--gold);text-decoration:none;font-weight:700;transition:opacity .3s"
-           onmouseover="this.style.opacity='.7'" onmouseout="this.style.opacity='1'">AMIN SHEIKH</a>
-      </p>
+      <p>© 2026 RS SHOP. All Rights Reserved | Developed by <a href="https://web.facebook.com/AMIN.SHEIKH.01" target="_blank" style="color:var(--gold);text-decoration:none;font-weight:700;transition:opacity .3s" onmouseover="this.style.opacity='.7'" onmouseout="this.style.opacity='1'">AMIN SHEIKH</a></p>
     </div>
   </div>
 </footer>
 
 <!-- ══ WHATSAPP FLOAT ══ -->
-<a href="https://wa.me/8801996283245" class="wa-float" target="_blank">
+<a href="https://wa.me/8801996283245" class="wa-float" target="_blank" title="WhatsApp">
   <i class="fab fa-whatsapp"></i>
-  <span class="wa-tip">Order Now</span>
+  <span class="wa-tip">Order on WhatsApp</span>
 </a>
 
 <!-- ══ QUICK VIEW MODAL ══ -->
-<div class="quickview-overlay" id="quickviewOverlay" onclick="if(event.target===this)closeQuickView()">
+<div class="quickview-overlay" id="quickViewOverlay" onclick="if(event.target===this)closeQuickView()">
   <div class="quickview-modal">
     <button class="qv-close" onclick="closeQuickView()"><i class="fas fa-times"></i></button>
-    <img class="qv-img" id="qvImg" src="" alt=""/>
+    <img class="qv-img" id="qvImg" src="" alt="Product"/>
     <div class="qv-info">
       <span class="qv-cat" id="qvCat"></span>
       <h3 id="qvName"></h3>
-      <div><span class="qv-price" id="qvPrice"></span><span class="qv-old" id="qvOld"></span></div>
+      <div>
+        <span class="qv-price" id="qvPrice"></span>
+        <span class="qv-old" id="qvOld"></span>
+      </div>
       <p class="qv-desc" id="qvDesc"></p>
       <div class="qv-btns">
-        <button class="btn-primary" id="qvCartBtn" onclick="addToCartFromQV()"><span>Add to Cart</span></button>
-        <a class="btn-outline" id="qvViewBtn" href="#">View Details</a>
+        <button class="btn-primary" id="qvCartBtn"><i class="fas fa-shopping-bag"></i> <span>Add to Cart</span></button>
+        <button class="btn-outline" onclick="closeQuickView()">Close</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ══ PAGE TRANSITION ══ -->
-<div class="page-transition" id="pageTransition"></div>
-
 <!-- ══ FIREBASE ══ -->
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { initializeApp }     from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
   import { getFirestore, collection, getDocs, query, where, orderBy, limit, doc, getDoc }
     from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
   const firebaseConfig = {
-    apiKey: "AIzaSyBWUHpKt5oU3e00RWZRn8HnH0YWXV4MNQE",
-    authDomain: "rs-shop-bd.firebaseapp.com",
-    projectId: "rs-shop-bd",
-    storageBucket: "rs-shop-bd.appspot.com",
+    apiKey:            "AIzaSyBWUHpKt5oU3e00RWZRn8HnH0YWXV4MNQE",
+    authDomain:        "rs-shop-bd.firebaseapp.com",
+    projectId:         "rs-shop-bd",
+    storageBucket:     "rs-shop-bd.appspot.com",
     messagingSenderId: "1069750407537",
-    appId: "1:1069750407537:web:abc123"
+    appId:             "1:1069750407537:web:abc123"
   };
 
   const app = initializeApp(firebaseConfig);
   const db  = getFirestore(app);
-  window._db = db;
 
-  /* ── Hero Banners from Firebase ── */
-  async function loadHeroBanners() {
+  /* ── Hero Banners ── */
+  async function loadBanners() {
     try {
-      const snap = await getDocs(query(collection(db,'banners'), orderBy('order')));
-      const banners = [];
-      snap.forEach(d => banners.push(d.data()));
-      if (banners.length > 0) {
-        const slidesEl = document.getElementById('heroSlides');
-        const dotsEl   = document.getElementById('heroSlideDots');
-        slidesEl.innerHTML = '';
-        dotsEl.innerHTML   = '';
-        banners.forEach((b, i) => {
-          const slide = document.createElement('div');
-          slide.className = 'hero-slide' + (i===0?' active':'');
-          slide.style.backgroundImage = `url('${b.imageUrl}')`;
-          slidesEl.appendChild(slide);
-          const dot = document.createElement('span');
-          dot.className = 'hero-slide-dot' + (i===0?' active':'');
-          dot.onclick = () => goHeroSlide(i);
-          dotsEl.appendChild(dot);
-        });
-        window._heroBanners = banners;
-        window._heroTotal   = banners.length;
+      const snap = await getDocs(query(collection(db, 'banners'), orderBy('order')));
+      if (snap.empty) return;
+      const slidesContainer = document.getElementById('heroSlides');
+      const dotsContainer   = document.getElementById('heroSlideDots');
+      slidesContainer.innerHTML = '';
+      dotsContainer.innerHTML   = '';
+      let idx = 0;
+      snap.forEach(d => {
+        const b = d.data();
+        if (!b.active) return;
+        const slide = document.createElement('div');
+        slide.className  = 'hero-slide' + (idx === 0 ? ' active' : '');
+        slide.style.backgroundImage = `url('${b.imageUrl}')`;
+        slidesContainer.appendChild(slide);
+        const dot = document.createElement('span');
+        dot.className = 'hero-slide-dot' + (idx === 0 ? ' active' : '');
+        dot.onclick   = () => { setHeroSlide(idx); resetHeroTimer(); };
+        dotsContainer.appendChild(dot);
+        idx++;
+      });
+      if (idx > 1) {
+        /* re-init slider after DOM update */
+        if (typeof resetHeroTimer === 'function') resetHeroTimer();
       }
-    } catch(e){ console.log('Banner load:', e); }
+    } catch(e) { console.warn('Banner load error:', e); }
   }
 
   /* ── Products ── */
-  async function loadProducts(cat, gender='all', gridId, maxItems=8) {
+  async function loadProducts(category, gridId, limitNum = 8) {
     const grid = document.getElementById(gridId);
     if (!grid) return;
-    grid.innerHTML = '<div class="loading-wrap"><div class="spinner"></div><p>Loading...</p></div>';
     try {
-      let q;
-      if (gender === 'all') {
-        q = query(collection(db,'products'), where('category','==',cat), where('active','==',true), orderBy('createdAt','desc'), limit(maxItems));
-      } else {
-        q = query(collection(db,'products'), where('category','==',cat), where('gender','==',gender), where('active','==',true), orderBy('createdAt','desc'), limit(maxItems));
-      }
+      const q    = query(
+        collection(db, 'products'),
+        where('category', '==', category),
+        where('featured',  '==', true),
+        limit(limitNum)
+      );
       const snap = await getDocs(q);
       if (snap.empty) {
-        grid.innerHTML = `<div class="empty-msg">No ${cat} found.</div>`;
+        grid.innerHTML = `<div class="empty-msg">কোনো পণ্য পাওয়া যায়নি</div>`;
         return;
       }
-      grid.innerHTML = '';
-      snap.forEach(d => {
-        const p = { id: d.id, ...d.data() };
-        grid.innerHTML += buildProductCard(p);
-      });
-      window._allProducts = window._allProducts || [];
-      snap.forEach(d => window._allProducts.push({ id: d.id, ...d.data() }));
+      const all = [];
+      snap.forEach(d => all.push({ id: d.id, ...d.data() }));
+      window._allProducts = (window._allProducts || []).concat(all);
+      grid.innerHTML = all.map(p => window.buildProductCard(p)).join('');
     } catch(e) {
-      grid.innerHTML = `<div class="empty-msg">Error loading products.</div>`;
+      grid.innerHTML = `<div class="empty-msg">লোড হয়নি, পরে চেষ্টা করুন।</div>`;
     }
   }
 
   /* ── Flash Sale ── */
   async function loadFlashSale() {
     try {
-      const snap = await getDoc(doc(db,'settings','flashSale'));
+      const docRef = doc(db, 'settings', 'flashSale');
+      const snap   = await getDoc(docRef);
       if (!snap.exists()) return;
       const fs = snap.data();
       if (!fs.active) return;
-      const now = new Date();
-      const end = fs.endDate?.toDate ? fs.endDate.toDate() : new Date(fs.endDate);
-      if (now >= end) return;
-      document.getElementById('flashSaleSection').style.display = 'block';
-      document.getElementById('flashSaleTitle').textContent = fs.title || 'Flash Sale!';
-      startFlashTimer(end);
-      await loadProducts('watches','all','flashGrid',4);
-    } catch(e){}
+      const section = document.getElementById('flashSaleSection');
+      if (section) section.style.display = 'block';
+      const title = document.getElementById('flashSaleTitle');
+      const sub   = document.getElementById('flashSaleSub');
+      if (title && fs.title) title.textContent = fs.title;
+      if (sub   && fs.subtitle) sub.textContent = fs.subtitle;
+      if (fs.endDate && typeof window.startFlashTimer === 'function') {
+        window.startFlashTimer(fs.endDate);
+      }
+      /* Flash sale products */
+      const q    = query(collection(db, 'products'), where('flashSale', '==', true), limit(4));
+      const pSnap = await getDocs(q);
+      const flashGrid = document.getElementById('flashGrid');
+      if (flashGrid) {
+        if (pSnap.empty) {
+          flashGrid.innerHTML = `<div class="empty-msg">Flash sale products নেই</div>`;
+        } else {
+          const fps = [];
+          pSnap.forEach(d => fps.push({ id: d.id, ...d.data() }));
+          flashGrid.innerHTML = fps.map(p => window.buildProductCard(p)).join('');
+        }
+      }
+    } catch(e) { console.warn('Flash sale load error:', e); }
   }
 
-  /* ── Settings (Happy Customers) ── */
-  async function loadSettings() {
-    try {
-      const snap = await getDoc(doc(db,'settings','site'));
-      if (!snap.exists()) return;
-      const s = snap.data();
-      if (s.happyCustomers) updateCountTarget('.count-up[data-target="500"]', s.happyCustomers);
-      if (s.products)       updateCountTarget('.count-up[data-target="100"]', s.products);
-      if (s.reviews)        updateCountTarget('.count-up[data-target="300"]', s.reviews);
-      if (s.years)          updateCountTarget('.count-up[data-target="3"]',   s.years);
-    } catch(e){}
-  }
-
-  function updateCountTarget(sel, val) {
-    const el = document.querySelector(sel);
-    if (el) el.setAttribute('data-target', val);
-  }
-
-  window._loadProducts = loadProducts;
-
-  /* Init */
-  loadHeroBanners();
+  /* ── Init all loads ── */
+  window._allProducts = [];
+  loadBanners();
+  loadProducts('watches',    'watchGrid',    8);
+  loadProducts('sunglasses', 'sunglassGrid', 8);
+  loadProducts('gift',       'giftGrid',     8);
   loadFlashSale();
-  loadSettings();
-  loadProducts('watches','all','watchGrid');
-  loadProducts('sunglasses','all','sunglassGrid');
-  loadProducts('gifts','all','giftGrid');
 </script>
 
 <!-- ══ MAIN JS ══ -->
 <script src="main.js"></script>
-
-<script>
-/* ── Product Card Builder ── */
-function buildProductCard(p) {
-  const disc = p.oldPrice ? Math.round((1 - p.price/p.oldPrice)*100) : 0;
-  return `
-  <div class="product-card" onclick="openQuickView('${p.id}')">
-    <div class="p-img-wrap">
-      <img src="${p.images?.[0]||'https://via.placeholder.com/300x300/1a1a1a/c9a84c?text=RS+SHOP'}" alt="${p.name}" loading="lazy"/>
-      ${disc > 0 ? `<span class="p-badge">-${disc}%</span>` : ''}
-      <div class="p-hover"><button onclick="event.stopPropagation();addToCart('${p.id}')"><i class="fas fa-shopping-bag"></i> Add to Cart</button></div>
-    </div>
-    <div class="p-info">
-      <h3>${p.name}</h3>
-      <div class="p-price">
-        <span class="p-current">৳${p.price?.toLocaleString()}</span>
-        ${p.oldPrice ? `<span class="p-old">৳${p.oldPrice?.toLocaleString()}</span>` : ''}
-      </div>
-      <button class="p-cart-btn" onclick="event.stopPropagation();addToCart('${p.id}')"><i class="fas fa-shopping-bag"></i> Add to Cart</button>
-    </div>
-  </div>`;
-}
-
-/* ── Hero Banner Slider ── */
-window._heroIndex  = 0;
-window._heroTotal  = 1;
-window._heroTimer  = null;
-
-function goHeroSlide(idx) {
-  const slides = document.querySelectorAll('.hero-slide');
-  const dots   = document.querySelectorAll('.hero-slide-dot');
-  if (!slides.length) return;
-  slides[window._heroIndex]?.classList.remove('active');
-  dots[window._heroIndex]?.classList.remove('active');
-  window._heroIndex = (idx + slides.length) % slides.length;
-  slides[window._heroIndex]?.classList.add('active');
-  dots[window._heroIndex]?.classList.add('active');
-}
-window.heroNext = function() { goHeroSlide(window._heroIndex + 1); resetHeroTimer(); };
-window.heroPrev = function() { goHeroSlide(window._heroIndex - 1); resetHeroTimer(); };
-window.goHeroSlide = goHeroSlide;
-
-function startHeroAutoSlide() {
-  window._heroTimer = setInterval(() => goHeroSlide(window._heroIndex + 1), 4000);
-}
-function resetHeroTimer() {
-  clearInterval(window._heroTimer);
-  startHeroAutoSlide();
-}
-startHeroAutoSlide();
-
-/* ── Flash Sale Timer ── */
-function startFlashTimer(endDate) {
-  function update() {
-    const diff = endDate - new Date();
-    if (diff <= 0) { clearInterval(t); return; }
-    const d = Math.floor(diff / 86400000);
-    const h = Math.floor((diff % 86400000) / 3600000);
-    const m = Math.floor((diff % 3600000) / 60000);
-    const s = Math.floor((diff % 60000) / 1000);
-    document.getElementById('fDays').textContent  = String(d).padStart(2,'0');
-    document.getElementById('fHours').textContent = String(h).padStart(2,'0');
-    document.getElementById('fMins').textContent  = String(m).padStart(2,'0');
-    document.getElementById('fSecs').textContent  = String(s).padStart(2,'0');
-  }
-  const t = setInterval(update, 1000);
-  update();
-}
-
-/* ── toggleTheme ── */
-window.toggleTheme = function() {
-  const cur  = document.documentElement.getAttribute('data-theme');
-  const next = cur === 'light' ? 'dark' : 'light';
-  document.documentElement.setAttribute('data-theme', next);
-  const icon = document.getElementById('themeIcon');
-  if (icon) icon.className = next === 'light' ? 'fas fa-moon' : 'fas fa-sun';
-  localStorage.setItem('rs_theme', next);
-};
-(function(){
-  const saved = localStorage.getItem('rs_theme');
-  if (saved) {
-    document.documentElement.setAttribute('data-theme', saved);
-    const icon = document.getElementById('themeIcon');
-    if (icon) icon.className = saved === 'light' ? 'fas fa-moon' : 'fas fa-sun';
-  }
-})();
-
-/* ── handleSearch ── */
-window.handleSearch = function(q) {
-  const box = document.getElementById('searchResults');
-  if (!q || q.trim().length < 2) { box.classList.remove('show'); return; }
-  const all = window._allProducts || [];
-  const res = all.filter(p => p.name?.toLowerCase().includes(q.toLowerCase()));
-  if (!res.length) {
-    box.innerHTML = '<div class="search-no-result">কোনো পণ্য পাওয়া যায়নি</div>';
-  } else {
-    box.innerHTML = res.slice(0,6).map(p => `
-      <div class="search-item" onclick="window.location='product.html?id=${p.id}'">
-        <img src="${p.images?.[0]||''}" alt="${p.name}"/>
-        <div class="search-item-info"><h4>${p.name}</h4><span>৳${p.price?.toLocaleString()}</span></div>
-      </div>`).join('');
-  }
-  box.classList.add('show');
-};
-document.addEventListener('click', e => {
-  if (!e.target.closest('.search-section'))
-    document.getElementById('searchResults')?.classList.remove('show');
-});
-
-/* ── filterCat ── */
-window.filterCat = function(cat, gender, btn) {
-  const tabsId = cat === 'watches' ? 'watchTabs' : 'sunglassTabs';
-  const gridId = cat === 'watches' ? 'watchGrid' : 'sunglassGrid';
-  document.querySelectorAll(`#${tabsId} .cat-tab`).forEach(t => t.classList.remove('active'));
-  btn.classList.add('active');
-  if (window._loadProducts) window._loadProducts(cat, gender, gridId);
-};
-
-/* ── Quick View ── */
-window.openQuickView = async function(id) {
-  const all = window._allProducts || [];
-  const p   = all.find(x => x.id === id);
-  if (!p) return;
-  document.getElementById('qvImg').src        = p.images?.[0] || '';
-  document.getElementById('qvCat').textContent = p.category || '';
-  document.getElementById('qvName').textContent = p.name || '';
-  document.getElementById('qvPrice').textContent = '৳' + (p.price?.toLocaleString() || '');
-  document.getElementById('qvOld').textContent   = p.oldPrice ? '৳' + p.oldPrice.toLocaleString() : '';
-  document.getElementById('qvDesc').textContent  = p.description || '';
-  document.getElementById('qvViewBtn').href      = `product.html?id=${id}`;
-  document.getElementById('qvCartBtn').onclick   = () => { addToCart(id); closeQuickView(); };
-  document.getElementById('quickviewOverlay').classList.add('open');
-  document.body.style.overflow = 'hidden';
-};
-window.closeQuickView = function() {
-  document.getElementById('quickviewOverlay').classList.remove('open');
-  document.body.style.overflow = 'auto';
-};
-
-/* ── Add to Cart ── */
-window.addToCart = function(id) {
-  const all  = window._allProducts || [];
-  const p    = all.find(x => x.id === id);
-  if (!p) return;
-  const cart = JSON.parse(localStorage.getItem('rs_cart') || '[]');
-  const idx  = cart.findIndex(x => x.id === id);
-  if (idx > -1) cart[idx].qty = (cart[idx].qty || 1) + 1;
-  else cart.push({ id, name: p.name, price: p.price, image: p.images?.[0]||'', qty: 1 });
-  localStorage.setItem('rs_cart', JSON.stringify(cart));
-  updateCartCount();
-  showToast('Cart-এ যোগ হয়েছে! 🛒');
-};
-
-function showToast(msg) {
-  let t = document.getElementById('rs-toast');
-  if (!t) {
-    t = document.createElement('div');
-    t.id = 'rs-toast';
-    t.style.cssText = 'position:fixed;bottom:100px;right:24px;background:var(--gold);color:#000;padding:12px 20px;border-radius:8px;font-size:13px;font-weight:700;z-index:9999;opacity:0;transition:opacity .3s;pointer-events:none';
-    document.body.appendChild(t);
-  }
-  t.textContent = msg;
-  t.style.opacity = '1';
-  setTimeout(() => t.style.opacity = '0', 2500);
-}
-
-/* ── Count-up Animation ── */
-function animateCounters() {
-  document.querySelectorAll('.count-up').forEach(el => {
-    const target = parseInt(el.getAttribute('data-target')) || 0;
-    let current  = 0;
-    const step   = Math.ceil(target / 60);
-    const timer  = setInterval(() => {
-      current += step;
-      if (current >= target) { current = target; clearInterval(timer); }
-      el.textContent = current.toLocaleString();
-    }, 30);
-  });
-}
-
-/* observe happy section */
-const happyObs = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) { animateCounters(); happyObs.disconnect(); } });
-}, { threshold: 0.3 });
-const happySec = document.querySelector('.happy-section');
-if (happySec) happyObs.observe(happySec);
-</script>
 
 </body>
 </html>

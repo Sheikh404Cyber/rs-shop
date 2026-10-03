@@ -9,11 +9,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <style>
-        /* ══════════════════════════════════════
-           CONTACT PAGE STYLES
-        ══════════════════════════════════════ */
-
-        /* ── Hero ── */
         .page-hero{background:linear-gradient(135deg,#0a0a0a 0%,#111 50%,#0a0a0a 100%);padding:130px 0 65px;text-align:center;border-bottom:1px solid rgba(201,168,76,0.15);position:relative;overflow:hidden}
         .page-hero::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(201,168,76,0.04) 0%,transparent 70%);pointer-events:none}
         [data-theme="light"] .page-hero{background:linear-gradient(135deg,#f8f6f0 0%,#ede8db 100%);border-bottom-color:rgba(0,0,0,0.08)}
@@ -22,12 +17,8 @@
         .breadcrumb{color:#666;font-size:0.9rem}
         .breadcrumb a{color:var(--gold,#C9A84C);text-decoration:none;transition:opacity .3s}
         .breadcrumb a:hover{opacity:.7}
-
-        /* ── Contact Section ── */
         .contact-section{padding:70px 0 80px;background:var(--bg,#0a0a0a)}
         .contact-container{max-width:1160px;margin:0 auto;padding:0 20px}
-
-        /* ── Stats Bar ── */
         .stats-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:50px}
         .stat-item{background:var(--bg2,#111);border:1px solid var(--border,rgba(201,168,76,0.15));border-radius:14px;padding:24px 16px;text-align:center;transition:all .3s}
         .stat-item:hover{transform:translateY(-4px);box-shadow:0 10px 30px rgba(0,0,0,0.3);border-color:var(--gold,#C9A84C)}
@@ -38,11 +29,7 @@
         .stat-icon.pink{background:rgba(220,0,100,0.1);color:#dc0064;border:1px solid rgba(220,0,100,0.25)}
         .stat-value{font-family:'Cinzel',serif;font-size:1.5rem;font-weight:800;color:var(--text,#e0e0e0);margin-bottom:4px}
         .stat-label{font-size:0.82rem;color:var(--text-muted,#999)}
-
-        /* ── Contact Grid ── */
         .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:36px;margin-bottom:60px}
-
-        /* Info Card */
         .info-card{background:var(--bg2,#111);border:1px solid var(--border,rgba(201,168,76,0.15));border-radius:16px;padding:32px}
         .card-title{font-family:'Cinzel',serif;font-size:1.2rem;color:var(--gold,#C9A84C);margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid var(--border,rgba(201,168,76,0.15));display:flex;align-items:center;gap:10px}
         .info-item{display:flex;align-items:flex-start;gap:16px;margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid rgba(255,255,255,0.04);transition:all .3s;border-radius:8px;padding-left:8px;padding-right:8px}
@@ -54,8 +41,6 @@
         .info-text h4{color:var(--text,#e0e0e0);font-size:0.95rem;font-weight:700;margin-bottom:4px}
         .info-text p,.info-text a{color:var(--text-muted,#999);font-size:0.9rem;text-decoration:none;line-height:1.7;display:block}
         .info-text a:hover{color:var(--gold,#C9A84C)}
-
-        /* Social & Quick Actions */
         .social-block{margin-top:24px;padding-top:20px;border-top:1px solid var(--border,rgba(201,168,76,0.15))}
         .social-block-title{font-size:0.78rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted,#999);margin-bottom:12px}
         .social-links{display:flex;gap:10px;flex-wrap:wrap}
@@ -67,9 +52,6 @@
         .social-wa:hover{background:rgba(37,211,102,0.2)}
         .social-ig{background:rgba(225,48,108,0.1);color:#e1306c;border:1px solid rgba(225,48,108,0.25)}
         .social-ig:hover{background:rgba(225,48,108,0.2)}
-        .social-yt{background:rgba(255,0,0,0.1);color:#ff0000;border:1px solid rgba(255,0,0,0.25)}
-        .social-yt:hover{background:rgba(255,0,0,0.2)}
-
         .quick-btns{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
         .q-btn{padding:11px 20px;border-radius:10px;font-size:0.88rem;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .3s;font-family:inherit;border:none;cursor:pointer}
         .q-btn:hover{transform:translateY(-2px)}
@@ -79,8 +61,6 @@
         .q-btn-call:hover{background:rgba(30,144,255,0.2)}
         .q-btn-fb{background:rgba(24,119,242,0.12);color:#1877f2;border:1px solid rgba(24,119,242,0.3)}
         .q-btn-fb:hover{background:rgba(24,119,242,0.2)}
-
-        /* ── Form Card ── */
         .form-card{background:var(--bg2,#111);border:1px solid var(--border,rgba(201,168,76,0.15));border-radius:16px;padding:32px}
         .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
         .form-field{margin-bottom:16px}
@@ -90,7 +70,6 @@
         .form-field select option{background:#1a1a1a}
         .form-field textarea{resize:vertical;min-height:130px}
         .char-count{font-size:0.76rem;color:#555;text-align:right;margin-top:4px}
-        .form-field.full{grid-column:1/-1}
         .send-btn{width:100%;padding:15px;background:linear-gradient(135deg,#C9A84C,#f0c040);border:none;border-radius:10px;color:#000;font-size:1rem;font-weight:800;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:10px;transition:all .3s;letter-spacing:0.5px;margin-top:4px}
         .send-btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(201,168,76,0.3)}
         .send-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
@@ -101,8 +80,6 @@
         .success-screen .msg-id{display:inline-block;background:rgba(201,168,76,0.12);border:1px solid rgba(201,168,76,0.25);color:var(--gold,#C9A84C);padding:8px 20px;border-radius:8px;font-size:0.95rem;font-weight:800;margin:14px 0 20px;letter-spacing:1.5px;font-family:'Cinzel',serif}
         .reset-btn{padding:12px 28px;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.25);color:var(--gold,#C9A84C);border-radius:8px;cursor:pointer;font-family:inherit;font-size:0.9rem;font-weight:700;transition:all .3s;display:inline-flex;align-items:center;gap:8px}
         .reset-btn:hover{background:rgba(201,168,76,0.15)}
-
-        /* ── FAQ ── */
         .faq-section{margin-bottom:60px}
         .section-title{font-family:'Cinzel',serif;font-size:1.8rem;color:var(--gold,#C9A84C);text-align:center;margin-bottom:12px;letter-spacing:2px}
         .section-subtitle{text-align:center;color:var(--text-muted,#888);font-size:0.95rem;margin-bottom:36px}
@@ -116,15 +93,11 @@
         .faq-item.open .faq-answer{max-height:300px;padding:0 20px 18px}
         .faq-item.open .faq-question i{transform:rotate(180deg)}
         .faq-item.open{border-color:rgba(201,168,76,0.35)}
-
-        /* ── Location Banner ── */
         .location-banner{background:var(--bg2,#111);border:1px solid var(--border,rgba(201,168,76,0.15));border-radius:16px;padding:36px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;margin-bottom:60px}
         .loc-info h3{font-family:'Cinzel',serif;color:var(--gold,#C9A84C);font-size:1.2rem;margin-bottom:14px;display:flex;align-items:center;gap:10px}
         .loc-detail{display:flex;align-items:center;gap:10px;color:var(--text-muted,#999);font-size:0.9rem;margin-bottom:8px}
         .loc-detail i{color:var(--gold,#C9A84C);width:18px;text-align:center}
         .loc-actions{display:flex;flex-direction:column;gap:10px}
-
-        /* ── Trust Section ── */
         .trust-section{margin-bottom:60px}
         .trust-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:900px;margin:0 auto}
         .trust-card{text-align:center;padding:28px 20px;background:var(--bg2,#111);border:1px solid var(--border,rgba(201,168,76,0.15));border-radius:14px;transition:all .3s}
@@ -132,31 +105,15 @@
         .trust-card i{font-size:2rem;color:var(--gold,#C9A84C);margin-bottom:14px;display:block}
         .trust-card h4{font-family:'Cinzel',serif;color:var(--text,#e0e0e0);font-size:0.95rem;margin-bottom:8px}
         .trust-card p{color:var(--text-muted,#999);font-size:0.85rem;line-height:1.6}
-
-        /* ── Toast ── */
         .toast{position:fixed;bottom:24px;right:24px;background:var(--bg2,#111);border:1px solid var(--border,rgba(201,168,76,0.3));border-radius:12px;padding:14px 22px;z-index:9999;display:none;font-size:0.92rem;box-shadow:0 10px 40px rgba(0,0,0,0.5);min-width:220px;animation:slideUp .4s ease}
         .toast.show{display:flex;align-items:center;gap:10px}
         @keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
-
-        /* ── Responsive ── */
-        @media(max-width:900px){
-            .contact-grid{grid-template-columns:1fr}
-            .stats-bar{grid-template-columns:repeat(2,1fr)}
-            .location-banner{grid-template-columns:1fr}
-            .trust-grid{grid-template-columns:1fr}
-        }
-        @media(max-width:480px){
-            .page-hero h1{font-size:2rem}
-            .stats-bar{grid-template-columns:1fr 1fr}
-            .form-row{grid-template-columns:1fr}
-            .quick-btns{flex-direction:column}
-            .pay-method-grid{grid-template-columns:repeat(2,1fr)}
-        }
+        @media(max-width:900px){.contact-grid{grid-template-columns:1fr}.stats-bar{grid-template-columns:repeat(2,1fr)}.location-banner{grid-template-columns:1fr}.trust-grid{grid-template-columns:1fr}}
+        @media(max-width:480px){.page-hero h1{font-size:2rem}.stats-bar{grid-template-columns:1fr 1fr}.form-row{grid-template-columns:1fr}.quick-btns{flex-direction:column}}
     </style>
 </head>
 <body>
 
-<!-- LOADER -->
 <div class="loader" id="loader">
     <div class="loader-inner">
         <div class="loader-logo"><span class="logo-rs">RS</span><span class="logo-shop">SHOP</span></div>
@@ -165,11 +122,9 @@
     </div>
 </div>
 
-<!-- CURSOR -->
 <div class="cursor" id="cursor"></div>
 <div class="cursor-follower" id="cursorFollower"></div>
 
-<!-- NAVBAR -->
 <nav class="navbar" id="navbar">
     <div class="nav-container">
         <a href="index.html" class="nav-logo"><span class="logo-rs">RS</span><span class="logo-shop">SHOP</span></a>
@@ -189,94 +144,50 @@
     </div>
 </nav>
 
-<!-- PAGE HERO -->
 <section class="page-hero">
     <h1><i class="fas fa-headset"></i> যোগাযোগ করুন</h1>
     <p class="subtitle">আমরা সবসময় আপনার পাশে আছি</p>
     <div class="breadcrumb"><a href="index.html">হোম</a> / যোগাযোগ</div>
 </section>
 
-<!-- MAIN CONTACT SECTION -->
 <section class="contact-section">
     <div class="contact-container">
-
-        <!-- ── Stats Bar ── -->
         <div class="stats-bar">
-            <div class="stat-item">
-                <div class="stat-icon green"><i class="fas fa-headset"></i></div>
-                <div class="stat-value">24/7</div>
-                <div class="stat-label">WhatsApp সাপোর্ট</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-icon gold"><i class="fas fa-truck"></i></div>
-                <div class="stat-value">১-৫ দিন</div>
-                <div class="stat-label">সারাদেশে ডেলিভারি</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-icon blue"><i class="fas fa-undo"></i></div>
-                <div class="stat-value">৭ দিন</div>
-                <div class="stat-label">রিটার্ন পলিসি</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-icon pink"><i class="fas fa-shield-alt"></i></div>
-                <div class="stat-value">100%</div>
-                <div class="stat-label">অরিজিনাল পণ্য</div>
-            </div>
+            <div class="stat-item"><div class="stat-icon green"><i class="fas fa-headset"></i></div><div class="stat-value">24/7</div><div class="stat-label">WhatsApp সাপোর্ট</div></div>
+            <div class="stat-item"><div class="stat-icon gold"><i class="fas fa-truck"></i></div><div class="stat-value">১-৫ দিন</div><div class="stat-label">সারাদেশে ডেলিভারি</div></div>
+            <div class="stat-item"><div class="stat-icon blue"><i class="fas fa-undo"></i></div><div class="stat-value">৭ দিন</div><div class="stat-label">রিটার্ন পলিসি</div></div>
+            <div class="stat-item"><div class="stat-icon pink"><i class="fas fa-shield-alt"></i></div><div class="stat-value">100%</div><div class="stat-label">অরিজিনাল পণ্য</div></div>
         </div>
 
-        <!-- ── Contact Grid ── -->
         <div class="contact-grid">
-
-            <!-- LEFT: Contact Info -->
             <div class="info-card">
                 <div class="card-title"><i class="fas fa-address-book"></i> যোগাযোগের তথ্য</div>
-
                 <div class="info-item">
                     <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
-                    <div class="info-text">
-                        <h4>ঠিকানা</h4>
-                        <p>Purbadhala Station Road</p>
-                        <p>নেত্রকোণা, বাংলাদেশ</p>
-                    </div>
+                    <div class="info-text"><h4>ঠিকানা</h4><p>Purbadhala Station Road</p><p>নেত্রকোণা, বাংলাদেশ</p></div>
                 </div>
                 <div class="info-item">
                     <div class="info-icon"><i class="fas fa-phone-alt"></i></div>
-                    <div class="info-text">
-                        <h4>ফোন</h4>
-                        <a href="tel:+8801996283245">+880 1996-283245</a>
-                    </div>
+                    <div class="info-text"><h4>ফোন</h4><a href="tel:+8801996283245">+880 1996-283245</a></div>
                 </div>
                 <div class="info-item">
                     <div class="info-icon"><i class="fab fa-whatsapp"></i></div>
-                    <div class="info-text">
-                        <h4>WhatsApp</h4>
-                        <a href="https://wa.me/8801996283245" target="_blank">+880 1996-283245</a>
-                        <p style="font-size:0.8rem;color:#2ed573;margin-top:2px"><i class="fas fa-circle" style="font-size:0.5rem;vertical-align:middle"></i> সবসময় অনলাইন</p>
-                    </div>
+                    <div class="info-text"><h4>WhatsApp</h4><a href="https://wa.me/8801996283245" target="_blank">+880 1996-283245</a><p style="font-size:0.8rem;color:#2ed573;margin-top:2px"><i class="fas fa-circle" style="font-size:0.5rem;vertical-align:middle"></i> সবসময় অনলাইন</p></div>
                 </div>
                 <div class="info-item">
                     <div class="info-icon"><i class="fab fa-facebook"></i></div>
-                    <div class="info-text">
-                        <h4>Facebook</h4>
-                        <a href="https://web.facebook.com/sojib.islam.739215" target="_blank">RS SHOP — Facebook Page</a>
-                    </div>
+                    <div class="info-text"><h4>Facebook</h4><a href="https://web.facebook.com/sojib.islam.739215" target="_blank">RS SHOP — Facebook Page</a></div>
                 </div>
                 <div class="info-item">
                     <div class="info-icon"><i class="fas fa-clock"></i></div>
-                    <div class="info-text">
-                        <h4>সময়সূচি</h4>
-                        <p>শনি — বৃহস্পতি: সকাল ৯টা – রাত ১০টা</p>
-                        <p>শুক্রবার: দুপুর ২টা – রাত ১০টা</p>
-                    </div>
+                    <div class="info-text"><h4>সময়সূচি</h4><p>শনি — বৃহস্পতি: সকাল ৯টা – রাত ১০টা</p><p>শুক্রবার: দুপুর ২টা – রাত ১০টা</p></div>
                 </div>
-
-                <!-- Social + Quick Actions -->
                 <div class="social-block">
                     <div class="social-block-title">সোশ্যাল মিডিয়া</div>
                     <div class="social-links">
-                        <a href="https://web.facebook.com/sojib.islam.739215" target="_blank" class="social-link social-fb" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-                        <a href="https://wa.me/8801996283245" target="_blank" class="social-link social-wa" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                        <a href="#" class="social-link social-ig" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://web.facebook.com/sojib.islam.739215" target="_blank" class="social-link social-fb"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://wa.me/8801996283245" target="_blank" class="social-link social-wa"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#" class="social-link social-ig"><i class="fab fa-instagram"></i></a>
                     </div>
                     <div class="quick-btns">
                         <a href="https://wa.me/8801996283245" target="_blank" class="q-btn q-btn-wa"><i class="fab fa-whatsapp"></i> WhatsApp করুন</a>
@@ -286,26 +197,15 @@
                 </div>
             </div>
 
-            <!-- RIGHT: Contact Form -->
             <div class="form-card">
                 <div class="card-title"><i class="fas fa-paper-plane"></i> বার্তা পাঠান</div>
-
                 <div id="contactForm">
                     <div class="form-row">
-                        <div class="form-field">
-                            <label>আপনার নাম *</label>
-                            <input type="text" id="msgName" placeholder="পূর্ণ নাম লিখুন">
-                        </div>
-                        <div class="form-field">
-                            <label>ফোন নম্বর *</label>
-                            <input type="tel" id="msgPhone" placeholder="01XXXXXXXXX">
-                        </div>
+                        <div class="form-field"><label>আপনার নাম *</label><input type="text" id="msgName" placeholder="পূর্ণ নাম লিখুন"></div>
+                        <div class="form-field"><label>ফোন নম্বর *</label><input type="tel" id="msgPhone" placeholder="01XXXXXXXXX"></div>
                     </div>
                     <div class="form-row">
-                        <div class="form-field">
-                            <label>ইমেইল (ঐচ্ছিক)</label>
-                            <input type="email" id="msgEmail" placeholder="your@email.com">
-                        </div>
+                        <div class="form-field"><label>ইমেইল (ঐচ্ছিক)</label><input type="email" id="msgEmail" placeholder="your@email.com"></div>
                         <div class="form-field">
                             <label>বিষয়</label>
                             <select id="msgSubject">
@@ -315,42 +215,22 @@
                                 <option value="delivery">ডেলিভারি সম্পর্কিত</option>
                                 <option value="return">রিটার্ন/রিফান্ড</option>
                                 <option value="complaint">অভিযোগ</option>
-                                <option value="bulk">পাইকারি অর্ডার</option>
                                 <option value="other">অন্যান্য</option>
                             </select>
                         </div>
                     </div>
-
-                    <!-- Order ID (optional) -->
-                    <div class="form-field">
-                        <label>অর্ডার আইডি (যদি থাকে)</label>
-                        <input type="text" id="msgOrderId" placeholder="RS-XXXX (ঐচ্ছিক)">
-                    </div>
-
+                    <div class="form-field"><label>অর্ডার আইডি (যদি থাকে)</label><input type="text" id="msgOrderId" placeholder="RS-XXXX (ঐচ্ছিক)"></div>
                     <div class="form-field">
                         <label>বার্তা *</label>
                         <textarea id="msgText" placeholder="আপনার বার্তা বিস্তারিত লিখুন..." maxlength="1000" oninput="updateCharCount(this)"></textarea>
                         <div class="char-count" id="charCount">0 / 1000</div>
                     </div>
-
-                    <!-- Priority -->
-                    <div class="form-field">
-                        <label>গুরুত্ব</label>
-                        <select id="msgPriority">
-                            <option value="normal">সাধারণ</option>
-                            <option value="urgent">জরুরি</option>
-                        </select>
-                    </div>
-
                     <button class="send-btn" id="sendBtn" onclick="sendMessage()"><i class="fas fa-paper-plane"></i> বার্তা পাঠান</button>
                 </div>
-
-                <!-- Success Screen -->
                 <div class="success-screen" id="successScreen">
                     <span class="success-icon">✅</span>
                     <h3>বার্তা সফলভাবে পাঠানো হয়েছে!</h3>
                     <p>আমরা শীঘ্রই আপনার সাথে যোগাযোগ করবো।</p>
-                    <p>সাধারণত ১-২ ঘন্টার মধ্যে রিপ্লাই দেওয়া হয়।</p>
                     <div class="msg-id" id="msgIdBadge">MSG-000000</div>
                     <br>
                     <button class="reset-btn" onclick="resetForm()"><i class="fas fa-redo"></i> আরেকটি বার্তা পাঠান</button>
@@ -358,47 +238,21 @@
             </div>
         </div>
 
-        <!-- ── FAQ Section ── -->
+        <!-- FAQ -->
         <div class="faq-section">
             <div class="section-title">সাধারণ প্রশ্নোত্তর</div>
             <div class="section-subtitle">আমাদের কাছে সবচেয়ে বেশি জিজ্ঞাসিত প্রশ্ন ও উত্তর</div>
             <div class="faq-list">
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFaq(this)"><span><i class="fas fa-truck" style="color:var(--gold);margin-right:10px"></i> ডেলিভারি কতদিন লাগে?</span><i class="fas fa-chevron-down"></i></div>
-                    <div class="faq-answer">ঢাকার মধ্যে সাধারণত ১–২ কার্যদিবস এবং ঢাকার বাইরে ৩–৫ কার্যদিবস সময় লাগে। বিশেষ পরিস্থিতিতে (যেমন: ঈদ, পূজা) একটু বেশি সময় লাগতে পারে।</div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFaq(this)"><span><i class="fas fa-undo" style="color:var(--gold);margin-right:10px"></i> পণ্য কি রিটার্ন করা যাবে?</span><i class="fas fa-chevron-down"></i></div>
-                    <div class="faq-answer">হ্যাঁ, পণ্য পাওয়ার ৭ দিনের মধ্যে রিটার্ন করা যাবে। পণ্যটি অবশ্যই অব্যবহৃত এবং অক্ষত অবস্থায় থাকতে হবে। রিটার্ন শিপিং চার্জ ক্রেতার দায়িত্বে।</div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFaq(this)"><span><i class="fas fa-credit-card" style="color:var(--gold);margin-right:10px"></i> কোন পেমেন্ট পদ্ধতি গ্রহণ করা হয়?</span><i class="fas fa-chevron-down"></i></div>
-                    <div class="faq-answer">bKash, Nagad, Rocket এবং Cash on Delivery (COD) — এই চারটি পদ্ধতি গ্রহণ করা হয়। অনলাইন পেমেন্টে অগ্রিম Send Money করতে হবে এবং Transaction ID দিতে হবে।</div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFaq(this)"><span><i class="fas fa-gem" style="color:var(--gold);margin-right:10px"></i> পণ্যগুলো কি আসল/অরিজিনাল?</span><i class="fas fa-chevron-down"></i></div>
-                    <div class="faq-answer">হ্যাঁ, RS SHOP শুধুমাত্র ১০০% অরিজিনাল পণ্য বিক্রি করে। প্রতিটি পণ্যে ব্র্যান্ড গ্যারান্টি দেওয়া হয়। নকল পণ্য পেলে পুরো টাকা ফেরত দেওয়া হবে।</div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFaq(this)"><span><i class="fas fa-money-bill-wave" style="color:var(--gold);margin-right:10px"></i> ডেলিভারি চার্জ কত?</span><i class="fas fa-chevron-down"></i></div>
-                    <div class="faq-answer">ঢাকার ভেতরে সাধারণত ৳৬০ এবং ঢাকার বাইরে ৳১২০। তবে এডমিন প্যানেল থেকে চার্জ পরিবর্তন হতে পারে — চেকআউটে সঠিক চার্জ দেখতে পাবেন।</div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFaq(this)"><span><i class="fas fa-search" style="color:var(--gold);margin-right:10px"></i> অর্ডার ট্র্যাক করা যায়?</span><i class="fas fa-chevron-down"></i></div>
-                    <div class="faq-answer">হ্যাঁ! অর্ডার দেওয়ার পর আপনি একটি Order ID পাবেন। সেটি দিয়ে আমাদের <a href="track.html" style="color:var(--gold)">অর্ডার ট্র্যাক</a> পেজ থেকে অর্ডারের বর্তমান অবস্থা দেখতে পারবেন।</div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFaq(this)"><span><i class="fas fa-gift" style="color:var(--gold);margin-right:10px"></i> গিফট প্যাকিং কি আছে?</span><i class="fas fa-chevron-down"></i></div>
-                    <div class="faq-answer">হ্যাঁ! আমাদের গিফট কালেকশন থেকে অর্ডার করলে বিশেষ প্রিমিয়াম গিফট বক্সে প্যাক করে পাঠানো হয়। আলাদা গিফট র‍্যাপিং ও পাওয়া যায় — অর্ডারের সময় নোটে লিখুন।</div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFaq(this)"><span><i class="fas fa-tag" style="color:var(--gold);margin-right:10px"></i> কুপন কোড কিভাবে পাবো?</span><i class="fas fa-chevron-down"></i></div>
-                    <div class="faq-answer">আমাদের Facebook পেজে নিয়মিত কুপন কোড দেওয়া হয়। এছাড়া বিশেষ দিনে (ঈদ, ভালোবাসা দিবস) স্পেশাল ডিসকাউন্ট কোড দেওয়া হয়। কার্ট পেজে কুপন কোড প্রয়োগ করতে পারবেন।</div>
-                </div>
+                <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span><i class="fas fa-truck" style="color:var(--gold);margin-right:10px"></i> ডেলিভারি কতদিন লাগে?</span><i class="fas fa-chevron-down"></i></div><div class="faq-answer">ঢাকার মধ্যে সাধারণত ১–২ কার্যদিবস এবং ঢাকার বাইরে ৩–৫ কার্যদিবস সময় লাগে।</div></div>
+                <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span><i class="fas fa-undo" style="color:var(--gold);margin-right:10px"></i> পণ্য কি রিটার্ন করা যাবে?</span><i class="fas fa-chevron-down"></i></div><div class="faq-answer">হ্যাঁ, পণ্য পাওয়ার ৭ দিনের মধ্যে রিটার্ন করা যাবে। পণ্যটি অবশ্যই অব্যবহৃত ও অক্ষত অবস্থায় থাকতে হবে।</div></div>
+                <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span><i class="fas fa-credit-card" style="color:var(--gold);margin-right:10px"></i> কোন পেমেন্ট পদ্ধতি গ্রহণ করা হয়?</span><i class="fas fa-chevron-down"></i></div><div class="faq-answer">bKash, Nagad, Rocket এবং Cash on Delivery (COD) — এই চারটি পদ্ধতি গ্রহণ করা হয়।</div></div>
+                <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span><i class="fas fa-gem" style="color:var(--gold);margin-right:10px"></i> পণ্যগুলো কি আসল/অরিজিনাল?</span><i class="fas fa-chevron-down"></i></div><div class="faq-answer">হ্যাঁ, RS SHOP শুধুমাত্র ১০০% অরিজিনাল পণ্য বিক্রি করে।</div></div>
+                <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span><i class="fas fa-search" style="color:var(--gold);margin-right:10px"></i> অর্ডার ট্র্যাক করা যায়?</span><i class="fas fa-chevron-down"></i></div><div class="faq-answer">হ্যাঁ! অর্ডার ID দিয়ে <a href="track.html" style="color:var(--gold)">অর্ডার ট্র্যাক</a> পেজ থেকে অর্ডারের অবস্থা দেখতে পারবেন।</div></div>
+                <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)"><span><i class="fas fa-money-bill-wave" style="color:var(--gold);margin-right:10px"></i> ডেলিভারি চার্জ কত?</span><i class="fas fa-chevron-down"></i></div><div class="faq-answer">ঢাকার ভেতরে সাধারণত ৳৬০ এবং ঢাকার বাইরে ৳১২০।</div></div>
             </div>
         </div>
 
-        <!-- ── Location Banner ── -->
+        <!-- Location Banner -->
         <div class="location-banner">
             <div class="loc-info">
                 <h3><i class="fas fa-store"></i> আমাদের শপ</h3>
@@ -413,29 +267,15 @@
             </div>
         </div>
 
-        <!-- ── Trust Badges ── -->
+        <!-- Trust -->
         <div class="trust-section">
-            <div class="section-title">কেন RS SHOP?</div>
-            <div class="section-subtitle">আপনার বিশ্বাস আমাদের শক্তি</div>
+            <div class="section-title" style="font-size:1.4rem;margin-bottom:24px">আমাদের প্রতিশ্রুতি</div>
             <div class="trust-grid">
-                <div class="trust-card">
-                    <i class="fas fa-shield-alt"></i>
-                    <h4>১০০% অরিজিনাল</h4>
-                    <p>প্রতিটি পণ্য ব্র্যান্ড অথেনটিক। নকল পণ্য পেলে সম্পূর্ণ টাকা ফেরত।</p>
-                </div>
-                <div class="trust-card">
-                    <i class="fas fa-truck"></i>
-                    <h4>দ্রুত ডেলিভারি</h4>
-                    <p>সারাদেশে ১–৫ কার্যদিবসে পণ্য পৌঁছে যায়। ঢাকায় ১-২ দিনে।</p>
-                </div>
-                <div class="trust-card">
-                    <i class="fas fa-undo"></i>
-                    <h4>সহজ রিটার্ন</h4>
-                    <p>৭ দিনের মধ্যে যেকোনো কারণে রিটার্ন করতে পারবেন। ঝামেলামুক্ত প্রসেস।</p>
-                </div>
+                <div class="trust-card"><i class="fas fa-shield-alt"></i><h4>১০০% অরিজিনাল</h4><p>সব পণ্য ব্র্যান্ড গ্যারান্টিসহ</p></div>
+                <div class="trust-card"><i class="fas fa-truck"></i><h4>দ্রুত ডেলিভারি</h4><p>সারাদেশে নিরাপদ ডেলিভারি</p></div>
+                <div class="trust-card"><i class="fas fa-headset"></i><h4>২৪/৭ সাপোর্ট</h4><p>যেকোনো সমস্যায় সবসময় পাশে</p></div>
             </div>
         </div>
-
     </div>
 </section>
 
@@ -446,10 +286,10 @@
             <div class="footer-grid">
                 <div class="f-brand">
                     <div class="footer-logo"><span class="logo-rs">RS</span><span class="logo-shop">SHOP</span></div>
-                    <p>প্রিমিয়াম ঘড়ি ও সানগ্লাসের সেরা গন্তব্য।</p>
+                    <p>প্রিমিয়াম ঘড়ি, সানগ্লাস ও গিফটের সেরা গন্তব্য।</p>
                     <div class="f-social">
-                        <a href="https://web.facebook.com/sojib.islam.739215" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                        <a href="https://wa.me/8801996283245" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://web.facebook.com/sojib.islam.739215" target="_blank" class="fb-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://wa.me/8801996283245" target="_blank" class="wa-icon"><i class="fab fa-whatsapp"></i></a>
                     </div>
                 </div>
                 <div class="f-links">
@@ -465,20 +305,21 @@
                 <div class="f-links">
                     <h4>সাপোর্ট</h4>
                     <ul>
+                        <li><a href="#">ডেলিভারি পলিসি</a></li>
+                        <li><a href="#">রিটার্ন পলিসি</a></li>
+                        <li><a href="#">প্রাইভেসি পলিসি</a></li>
                         <li><a href="contact.html">যোগাযোগ</a></li>
-                        <li><a href="wishlist.html">উইশলিস্ট</a></li>
-                        <li><a href="cart.html">কার্ট</a></li>
                     </ul>
                 </div>
                 <div class="f-contact">
                     <h4>যোগাযোগ</h4>
-                    <p><i class="fas fa-map-marker-alt"></i> Purbadhala Station Road</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Purbadhala Station Road, Kazi Super Market</p>
                     <p><i class="fas fa-phone"></i> 01996283245</p>
                     <p><i class="fab fa-whatsapp"></i> 01996283245</p>
                     <div class="payment-methods">
-                        <span class="pay bkash">bKash</span>
-                        <span class="pay nagad">Nagad</span>
-                        <span class="pay rocket">Rocket</span>
+                        <img class="pay-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Bkash_Logo.png/320px-Bkash_Logo.png" alt="bKash"/>
+                        <img class="pay-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Nagad_Logo.png/320px-Nagad_Logo.png" alt="Nagad"/>
+                        <img class="pay-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Rocket_bKash_logo.png/320px-Rocket_bKash_logo.png" alt="Rocket"/>
                         <span class="pay cod">COD</span>
                     </div>
                 </div>
@@ -487,184 +328,106 @@
     </div>
     <div class="footer-bottom">
         <div class="container">
-            <p>© 2024 RS SHOP. All Rights Reserved | Developed by <strong>AMIN SHEIKH</strong></p>
+            <p>© 2026 RS SHOP. All Rights Reserved | Developed by <a href="https://web.facebook.com/AMIN.SHEIKH.01" target="_blank" style="color:var(--gold);text-decoration:none;font-weight:700;transition:opacity .3s" onmouseover="this.style.opacity='.7'" onmouseout="this.style.opacity='1'">AMIN SHEIKH</a></p>
         </div>
     </div>
 </footer>
 
-<!-- WhatsApp Float -->
-<a href="https://wa.me/8801996283245" class="wa-float" target="_blank">
-    <i class="fab fa-whatsapp"></i><span class="wa-tip">Chat Now</span>
-</a>
-
-<!-- TOAST -->
+<a href="https://wa.me/8801996283245" class="wa-float" target="_blank"><i class="fab fa-whatsapp"></i><span class="wa-tip">WhatsApp করুন</span></a>
 <div class="toast" id="toast"></div>
 
-<!-- ══════════════════════════════════════
-     FIREBASE + ALL JAVASCRIPT
-══════════════════════════════════════ -->
 <script type="module">
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js';
-import { getFirestore, collection, addDoc, serverTimestamp }
-    from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js';
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-const firebaseConfig = {
-    apiKey: "AIzaSyAerNu3OWe2bCejiGXxnQeXr9yiDR1FysU",
-    authDomain: "sojib-shop.firebaseapp.com",
-    projectId: "sojib-shop",
-    storageBucket: "sojib-shop.firebasestorage.app",
-    messagingSenderId: "1061639520028",
-    appId: "1:1061639520028:web:d164fdf6f3d0bbd79304d9"
-};
+  const firebaseConfig = {
+    apiKey:"AIzaSyBWUHpKt5oU3e00RWZRn8HnH0YWXV4MNQE",
+    authDomain:"rs-shop-bd.firebaseapp.com",
+    projectId:"rs-shop-bd",
+    storageBucket:"rs-shop-bd.appspot.com",
+    messagingSenderId:"1069750407537",
+    appId:"1:1069750407537:web:abc123"
+  };
+  const app = initializeApp(firebaseConfig);
+  const db  = getFirestore(app);
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const WA_NUMBER = '8801996283245';
-
-/* ══ TOAST ══ */
-function showToast(msg, icon = '✅') {
-    const t = document.getElementById('toast');
-    t.innerHTML = `<span>${icon}</span> <span>${msg}</span>`;
-    t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 3000);
-}
-
-/* ══ CHARACTER COUNT ══ */
-window.updateCharCount = function(el) {
-    const len = el.value.length;
-    document.getElementById('charCount').textContent = len + ' / 1000';
-}
-
-/* ══ GENERATE MESSAGE ID ══ */
-function generateMsgId() {
-    const now = new Date();
-    const d = String(now.getDate()).padStart(2, '0');
-    const m = String(now.getMonth() + 1).padStart(2, '0');
-    const rand = Math.floor(1000 + Math.random() * 9000);
-    return `MSG-${d}${m}${rand}`;
-}
-
-/* ══ SEND MESSAGE ══ */
-window.sendMessage = async function() {
-    const name = document.getElementById('msgName').value.trim();
-    const phone = document.getElementById('msgPhone').value.trim();
-    const email = document.getElementById('msgEmail').value.trim();
+  window.sendMessage = async function() {
+    const name    = document.getElementById('msgName').value.trim();
+    const phone   = document.getElementById('msgPhone').value.trim();
+    const email   = document.getElementById('msgEmail').value.trim();
     const subject = document.getElementById('msgSubject').value;
     const orderId = document.getElementById('msgOrderId').value.trim();
     const message = document.getElementById('msgText').value.trim();
-    const priority = document.getElementById('msgPriority').value;
 
-    /* Validation */
-    if (!name) { showToast('আপনার নাম দিন!', '⚠️'); return; }
-    if (!phone || phone.length < 11) { showToast('সঠিক ফোন নম্বর দিন!', '⚠️'); return; }
-    if (!message) { showToast('বার্তা লিখুন!', '⚠️'); return; }
+    if (!name)    { showToast('❌ নাম দিন!'); return; }
+    if (!phone)   { showToast('❌ ফোন নম্বর দিন!'); return; }
+    if (!message) { showToast('❌ বার্তা লিখুন!'); return; }
 
     const btn = document.getElementById('sendBtn');
     btn.disabled = true;
     btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> পাঠানো হচ্ছে...';
 
-    const msgId = generateMsgId();
-
+    const msgId = 'MSG-' + Date.now().toString().slice(-6);
     try {
-        await addDoc(collection(db, 'messages'), {
-            msgId,
-            name,
-            phone,
-            email: email || '',
-            subject: subject || 'other',
-            orderId: orderId || '',
-            message,
-            priority,
-            status: 'unread',
-            createdAt: serverTimestamp()
-        });
-
-        /* Show success */
-        document.getElementById('contactForm').style.display = 'none';
-        document.getElementById('successScreen').style.display = 'block';
-        document.getElementById('msgIdBadge').textContent = msgId;
-
-        showToast('বার্তা সফলভাবে পাঠানো হয়েছে!', '✅');
-
-        /* WhatsApp auto-notify to shop owner */
-        const subjectMap = {
-            'product': 'পণ্য জিজ্ঞাসা',
-            'order': 'অর্ডার সম্পর্কিত',
-            'delivery': 'ডেলিভারি',
-            'return': 'রিটার্ন/রিফান্ড',
-            'complaint': 'অভিযোগ',
-            'bulk': 'পাইকারি অর্ডার',
-            'other': 'অন্যান্য'
-        };
-        let waMsg = `📩 *নতুন বার্তা — RS SHOP*\n\n`;
-        waMsg += `📋 ID: ${msgId}\n`;
-        waMsg += `👤 নাম: ${name}\n📞 ফোন: ${phone}\n`;
-        if (email) waMsg += `📧 ইমেইল: ${email}\n`;
-        waMsg += `📌 বিষয়: ${subjectMap[subject] || 'অন্যান্য'}\n`;
-        if (orderId) waMsg += `🆔 Order ID: ${orderId}\n`;
-        if (priority === 'urgent') waMsg += `🔴 গুরুত্ব: জরুরি\n`;
-        waMsg += `\n💬 বার্তা:\n${message}`;
-
-        setTimeout(() => {
-            window.open('https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(waMsg), '_blank');
-        }, 1500);
-
+      await addDoc(collection(db, 'messages'), {
+        msgId, name, phone, email, subject, orderId, message,
+        createdAt: serverTimestamp()
+      });
+      document.getElementById('msgIdBadge').textContent = msgId;
+      document.getElementById('contactForm').style.display  = 'none';
+      document.getElementById('successScreen').style.display = 'block';
     } catch(e) {
-        console.error(e);
-        showToast('বার্তা পাঠাতে সমস্যা হয়েছে! আবার চেষ্টা করুন।', '❌');
-    } finally {
-        btn.disabled = false;
-        btn.innerHTML = '<i class="fas fa-paper-plane"></i> বার্তা পাঠান';
+      showToast('❌ পাঠানো হয়নি! আবার চেষ্টা করুন।');
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fas fa-paper-plane"></i> বার্তা পাঠান';
     }
-}
-
-/* ══ RESET FORM ══ */
-window.resetForm = function() {
-    document.getElementById('msgName').value = '';
-    document.getElementById('msgPhone').value = '';
-    document.getElementById('msgEmail').value = '';
-    document.getElementById('msgSubject').value = '';
-    document.getElementById('msgOrderId').value = '';
-    document.getElementById('msgText').value = '';
-    document.getElementById('msgPriority').value = 'normal';
-    document.getElementById('charCount').textContent = '0 / 1000';
-    document.getElementById('contactForm').style.display = 'block';
-    document.getElementById('successScreen').style.display = 'none';
-}
-
-/* ══ FAQ TOGGLE (Smooth) ══ */
-window.toggleFaq = function(el) {
-    const item = el.parentElement;
-    /* Close others */
-    document.querySelectorAll('.faq-item').forEach(f => {
-        if (f !== item) f.classList.remove('open');
-    });
-    item.classList.toggle('open');
-}
-
-/* ══ UPDATE COUNTS ══ */
-function updateCounts() {
-    const cart = JSON.parse(localStorage.getItem('rs_cart') || '[]');
-    const count = cart.reduce((s, i) => s + (i.qty || 1), 0);
-    const cartBadge = document.getElementById('cartCount');
-    if (cartBadge) cartBadge.textContent = count;
-
-    const wl = JSON.parse(localStorage.getItem('rs_wishlist') || '[]');
-    const wlBadge = document.getElementById('wishlistCount');
-    if (wlBadge) wlBadge.textContent = wl.length;
-}
-
-/* ══ THEME DETECTION ══ */
-function detectTheme() {
-    const saved = localStorage.getItem('rs_theme');
-    if (saved) document.documentElement.setAttribute('data-theme', saved);
-}
-
-/* ══ INIT ══ */
-detectTheme();
-updateCounts();
+  };
 </script>
 
+<script>
+  window.updateCharCount = function(el) {
+    const c = document.getElementById('charCount');
+    if (c) c.textContent = el.value.length + ' / 1000';
+  };
+
+  window.resetForm = function() {
+    document.getElementById('contactForm').style.display  = 'block';
+    document.getElementById('successScreen').style.display = 'none';
+    ['msgName','msgPhone','msgEmail','msgOrderId','msgText'].forEach(id => {
+      const el = document.getElementById(id); if (el) el.value = '';
+    });
+    const btn = document.getElementById('sendBtn');
+    if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-paper-plane"></i> বার্তা পাঠান'; }
+    const cc = document.getElementById('charCount');
+    if (cc) cc.textContent = '0 / 1000';
+  };
+
+  window.toggleFaq = function(el) {
+    const item = el.closest('.faq-item');
+    document.querySelectorAll('.faq-item.open').forEach(o => { if (o !== item) o.classList.remove('open'); });
+    item.classList.toggle('open');
+  };
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    if (!t) return;
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+  }
+
+  function updateCounts() {
+    const cart = JSON.parse(localStorage.getItem('rs_cart') || '[]');
+    const wish = JSON.parse(localStorage.getItem('rs_wishlist') || '[]');
+    const cEl = document.getElementById('cartCount');
+    const wEl = document.getElementById('wishlistCount');
+    if (cEl) cEl.textContent = cart.reduce((s,i) => s + (i.qty||1), 0);
+    if (wEl) wEl.textContent = wish.length;
+  }
+
+  if (localStorage.getItem('rs_theme') === 'light') document.documentElement.setAttribute('data-theme','light');
+  updateCounts();
+</script>
 <script src="main.js"></script>
 </body>
 </html>

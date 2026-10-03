@@ -3,130 +3,284 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cart — RS SHOP</title>
+    <title>কার্ট — RS SHOP</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Raleway:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <style>
-        .page-hero { background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%); padding: 120px 0 60px; text-align: center; border-bottom: 1px solid rgba(201,168,76,0.2); }
-        .page-hero h1 { font-family: 'Cinzel', serif; font-size: 2.5rem; color: #C9A84C; margin-bottom: 12px; }
-        .breadcrumb { color: #666; font-size: 0.9rem; }
-        .breadcrumb a { color: #C9A84C; text-decoration: none; }
-        .cart-section { padding: 60px 0; background: #0a0a0a; min-height: 60vh; }
-        .cart-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: grid; grid-template-columns: 1fr 380px; gap: 32px; }
-        .cart-items-wrap { background: #111; border: 1px solid rgba(201,168,76,0.2); border-radius: 16px; padding: 24px; }
-        .cart-title { font-family: 'Cinzel', serif; font-size: 1.3rem; color: #C9A84C; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid rgba(201,168,76,0.2); }
-        .cart-item { display: grid; grid-template-columns: 80px 1fr auto; gap: 16px; align-items: center; padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .cart-item-img { width: 80px; height: 80px; object-fit: cover; border-radius: 8px; background: #1a1a1a; display: flex; align-items: center; justify-content: center; color: #555; font-size: 1.5rem; }
-        .cart-item-img img { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; }
-        .item-category { font-size: 0.75rem; color: #C9A84C; text-transform: uppercase; letter-spacing: 1px; }
-        .item-name { font-size: 1rem; font-weight: 600; color: #e0e0e0; margin: 4px 0; }
-        .item-sku { font-size: 0.8rem; color: #666; }
-        .item-price { font-size: 0.95rem; color: #C9A84C; font-weight: 600; margin-top: 4px; }
-        .qty-controls { display: flex; align-items: center; gap: 12px; margin-top: 8px; }
-        .qty-btn { width: 28px; height: 28px; border: 1px solid rgba(201,168,76,0.4); background: transparent; color: #C9A84C; border-radius: 4px; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; }
-        .qty-btn:hover { background: rgba(201,168,76,0.1); }
-        .qty-num { color: #e0e0e0; font-size: 0.95rem; min-width: 24px; text-align: center; }
-        .item-subtotal { font-size: 1rem; font-weight: 700; color: #f0c040; white-space: nowrap; }
-        .remove-btn { background: none; border: none; color: #ff4757; cursor: pointer; font-size: 1.1rem; padding: 4px; transition: transform 0.2s; }
-        .remove-btn:hover { transform: scale(1.2); }
-        .item-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
-        .clear-btn { margin-top: 16px; background: rgba(255,71,87,0.1); border: 1px solid rgba(255,71,87,0.3); color: #ff4757; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-family: inherit; transition: all 0.3s; }
-        .clear-btn:hover { background: rgba(255,71,87,0.2); }
-        .empty-cart { text-align: center; padding: 60px 20px; color: #555; }
-        .empty-cart i { font-size: 4rem; margin-bottom: 16px; display: block; }
-        .empty-cart p { font-size: 1.1rem; margin-bottom: 20px; }
-        .empty-cart a { color: #C9A84C; text-decoration: none; border: 1px solid #C9A84C; padding: 10px 24px; border-radius: 8px; }
-        .order-summary { background: #111; border: 1px solid rgba(201,168,76,0.2); border-radius: 16px; padding: 24px; height: fit-content; position: sticky; top: 100px; }
-        .summary-title { font-family: 'Cinzel', serif; font-size: 1.2rem; color: #C9A84C; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid rgba(201,168,76,0.2); }
-        .summary-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; color: #aaa; font-size: 0.95rem; }
-        .summary-row.total { border-top: 1px solid rgba(201,168,76,0.3); margin-top: 8px; padding-top: 16px; color: #e0e0e0; font-size: 1.1rem; font-weight: 700; }
-        .summary-row.total span:last-child { color: #C9A84C; font-size: 1.3rem; }
-        .discount-row { color: #2ed573 !important; }
-        .coupon-wrap { margin: 20px 0; }
-        .coupon-input { display: flex; gap: 8px; }
-        .coupon-input input { flex: 1; padding: 10px 14px; background: #1a1a1a; border: 1px solid rgba(201,168,76,0.3); border-radius: 8px; color: #e0e0e0; font-size: 0.9rem; outline: none; font-family: inherit; }
-        .coupon-input button { padding: 10px 16px; background: rgba(201,168,76,0.15); border: 1px solid rgba(201,168,76,0.4); color: #C9A84C; border-radius: 8px; cursor: pointer; font-size: 0.85rem; font-family: inherit; white-space: nowrap; }
-        .coupon-msg { font-size: 0.82rem; margin-top: 6px; }
-        .coupon-msg.ok { color: #2ed573; }
-        .coupon-msg.err { color: #ff4757; }
-        .whatsapp-btn { width: 100%; padding: 14px; background: #25d366; border: none; border-radius: 10px; color: #fff; font-size: 1rem; font-weight: 700; cursor: pointer; font-family: inherit; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; gap: 8px; transition: opacity 0.3s; }
-        .whatsapp-btn:hover { opacity: 0.9; }
-        .checkout-btn { width: 100%; padding: 14px; background: linear-gradient(135deg, #C9A84C, #f0c040); border: none; border-radius: 10px; color: #000; font-size: 1rem; font-weight: 700; cursor: pointer; font-family: inherit; display: flex; align-items: center; justify-content: center; gap: 8px; transition: opacity 0.3s; }
-        .checkout-btn:hover { opacity: 0.9; }
-        .payment-badges { display: flex; gap: 8px; margin-top: 16px; justify-content: center; flex-wrap: wrap; }
-        .payment-badge { padding: 6px 12px; border-radius: 6px; font-size: 0.78rem; font-weight: 700; }
-        .badge-bkash { background: rgba(230,0,115,0.15); color: #e60073; border: 1px solid rgba(230,0,115,0.3); }
-        .badge-nagad { background: rgba(255,90,0,0.15); color: #ff5a00; border: 1px solid rgba(255,90,0,0.3); }
-        .badge-rocket { background: rgba(130,50,200,0.15); color: #8232c8; border: 1px solid rgba(130,50,200,0.3); }
-        .badge-cod { background: rgba(46,213,115,0.15); color: #2ed573; border: 1px solid rgba(46,213,115,0.3); }
-        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
-        .modal-overlay.open { display: flex; }
-        .modal { background: #111; border: 1px solid rgba(201,168,76,0.3); border-radius: 16px; padding: 32px; width: 100%; max-width: 520px; max-height: 90vh; overflow-y: auto; }
-        .modal-title { font-family: 'Cinzel', serif; font-size: 1.3rem; color: #C9A84C; margin-bottom: 20px; }
-        .modal-summary { background: #1a1a1a; border-radius: 10px; padding: 16px; margin-bottom: 20px; }
-        .modal-summary-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 0.9rem; color: #aaa; }
-        .modal-summary-row.total { color: #C9A84C; font-weight: 700; font-size: 1rem; border-top: 1px solid rgba(201,168,76,0.2); margin-top: 6px; padding-top: 10px; }
-        .form-field { margin-bottom: 16px; }
-        .form-field label { display: block; font-size: 0.85rem; color: #999; margin-bottom: 6px; }
-        .form-field input, .form-field select, .form-field textarea { width: 100%; padding: 12px 14px; background: #1a1a1a; border: 1px solid rgba(201,168,76,0.2); border-radius: 8px; color: #e0e0e0; font-size: 0.95rem; font-family: inherit; outline: none; }
-        .form-field input:focus, .form-field select:focus, .form-field textarea:focus { border-color: #C9A84C; }
-        .form-field textarea { resize: vertical; min-height: 80px; }
-        .modal-btns { display: flex; gap: 12px; margin-top: 20px; }
-        .confirm-btn { flex: 1; padding: 14px; background: linear-gradient(135deg, #C9A84C, #f0c040); border: none; border-radius: 10px; color: #000; font-size: 1rem; font-weight: 700; cursor: pointer; font-family: inherit; }
-        .cancel-btn { padding: 14px 20px; background: rgba(255,71,87,0.1); border: 1px solid rgba(255,71,87,0.3); border-radius: 10px; color: #ff4757; cursor: pointer; font-family: inherit; font-size: 0.95rem; }
-        @media(max-width:768px) { .cart-container { grid-template-columns: 1fr; } .order-summary { position: static; } }
+        /* ══════════════════════════════════════
+           CART PAGE STYLES
+        ══════════════════════════════════════ */
+        .page-hero{background:linear-gradient(135deg,#0a0a0a 0%,#1a1a1a 100%);padding:120px 0 60px;text-align:center;border-bottom:1px solid rgba(201,168,76,0.2)}
+        [data-theme="light"] .page-hero{background:linear-gradient(135deg,#f8f6f0 0%,#ede8db 100%);border-bottom-color:rgba(0,0,0,0.08)}
+        .page-hero h1{font-family:'Cinzel',serif;font-size:2.5rem;color:var(--gold,#C9A84C);margin-bottom:12px;letter-spacing:2px}
+        .page-hero .breadcrumb{color:#666;font-size:0.9rem}
+        .page-hero .breadcrumb a{color:var(--gold,#C9A84C);text-decoration:none;transition:opacity .3s}
+        .page-hero .breadcrumb a:hover{opacity:.7}
+
+        .cart-section{padding:60px 0 80px;background:var(--bg,#0a0a0a);min-height:60vh}
+        .cart-container{max-width:1200px;margin:0 auto;padding:0 20px;display:grid;grid-template-columns:1fr 400px;gap:32px;align-items:start}
+
+        /* ── Cart Items ── */
+        .cart-items-wrap{background:var(--bg2,#111);border:1px solid var(--border,rgba(201,168,76,0.2));border-radius:16px;padding:24px}
+        .cart-title{font-family:'Cinzel',serif;font-size:1.2rem;color:var(--gold,#C9A84C);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border,rgba(201,168,76,0.2));display:flex;align-items:center;gap:10px}
+        .cart-item{display:grid;grid-template-columns:80px 1fr auto;gap:16px;align-items:center;padding:16px 0;border-bottom:1px solid rgba(255,255,255,0.05);transition:background .3s}
+        [data-theme="light"] .cart-item{border-bottom-color:rgba(0,0,0,0.06)}
+        .cart-item:hover{background:rgba(201,168,76,0.03);border-radius:8px;padding-left:8px;padding-right:8px}
+        .cart-item-img{width:80px;height:80px;border-radius:10px;overflow:hidden;background:var(--bg3,#1a1a1a);display:flex;align-items:center;justify-content:center;color:#555;font-size:1.5rem;flex-shrink:0;border:1px solid var(--border,rgba(201,168,76,0.2))}
+        .cart-item-img img{width:100%;height:100%;object-fit:cover}
+        .item-category{font-size:0.7rem;color:var(--gold,#C9A84C);text-transform:uppercase;letter-spacing:1.5px;font-weight:700}
+        .item-name{font-size:1rem;font-weight:600;color:var(--text,#e0e0e0);margin:4px 0}
+        .item-sku{font-size:0.78rem;color:#666}
+        .item-price{font-size:0.9rem;color:var(--gold,#C9A84C);font-weight:600;margin-top:4px}
+        .qty-controls{display:flex;align-items:center;gap:8px;margin-top:8px}
+        .qty-btn{width:30px;height:30px;border:1px solid rgba(201,168,76,0.4);background:transparent;color:var(--gold,#C9A84C);border-radius:6px;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all .3s;user-select:none}
+        .qty-btn:hover{background:rgba(201,168,76,0.15);transform:scale(1.1)}
+        .qty-num{color:var(--text,#e0e0e0);font-size:0.95rem;min-width:28px;text-align:center;font-weight:700}
+        .item-right{display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+        .item-subtotal{font-size:1rem;font-weight:800;color:#f0c040;white-space:nowrap;font-family:'Cinzel',serif}
+        .remove-btn{background:none;border:none;color:#ff4757;cursor:pointer;font-size:1rem;padding:6px;transition:all .3s;border-radius:6px}
+        .remove-btn:hover{background:rgba(255,71,87,0.1);transform:scale(1.15)}
+        .clear-btn{margin-top:16px;background:rgba(255,71,87,0.08);border:1px solid rgba(255,71,87,0.25);color:#ff4757;padding:10px 20px;border-radius:8px;cursor:pointer;font-size:0.88rem;font-family:inherit;transition:all .3s;display:inline-flex;align-items:center;gap:8px}
+        .clear-btn:hover{background:rgba(255,71,87,0.18)}
+        .empty-cart{text-align:center;padding:60px 20px;color:#555}
+        .empty-cart i{font-size:4rem;margin-bottom:16px;display:block;color:rgba(201,168,76,0.3)}
+        .empty-cart p{font-size:1.1rem;margin-bottom:20px;color:var(--text-muted,#999)}
+        .empty-cart a{color:var(--gold,#C9A84C);text-decoration:none;border:1px solid var(--gold,#C9A84C);padding:12px 28px;border-radius:8px;font-weight:600;transition:all .3s;display:inline-block}
+        .empty-cart a:hover{background:rgba(201,168,76,0.1)}
+
+        /* ── Order Summary ── */
+        .order-summary{background:var(--bg2,#111);border:1px solid var(--border,rgba(201,168,76,0.2));border-radius:16px;padding:24px;position:sticky;top:100px}
+        .summary-title{font-family:'Cinzel',serif;font-size:1.1rem;color:var(--gold,#C9A84C);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border,rgba(201,168,76,0.2));display:flex;align-items:center;gap:10px}
+        .delivery-area-wrap{margin-bottom:16px}
+        .delivery-area-wrap label{display:block;font-size:0.78rem;color:var(--text-muted,#999);margin-bottom:6px;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+        .delivery-area-wrap select{width:100%;padding:10px 14px;background:var(--bg3,#1a1a1a);border:1px solid var(--border,rgba(201,168,76,0.2));border-radius:8px;color:var(--text,#e0e0e0);font-size:0.9rem;font-family:inherit;outline:none;cursor:pointer}
+        .delivery-area-wrap select:focus{border-color:var(--gold,#C9A84C)}
+        .delivery-area-wrap select option{background:#1a1a1a}
+        .summary-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;color:var(--text-muted,#aaa);font-size:0.92rem}
+        .summary-row.total{border-top:2px solid rgba(201,168,76,0.3);margin-top:8px;padding-top:16px;color:var(--text,#e0e0e0);font-size:1.15rem;font-weight:800}
+        .summary-row.total span:last-child{color:var(--gold,#C9A84C);font-size:1.4rem;font-family:'Cinzel',serif}
+        .discount-row{color:#2ed573 !important}
+        .coupon-wrap{margin:16px 0;padding:16px;background:var(--bg3,#1a1a1a);border-radius:10px;border:1px solid var(--border,rgba(201,168,76,0.2))}
+        .coupon-wrap-title{font-size:0.78rem;color:var(--text-muted,#999);margin-bottom:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+        .coupon-input{display:flex;gap:8px}
+        .coupon-input input{flex:1;padding:10px 14px;background:var(--bg,#0a0a0a);border:1px solid var(--border,rgba(201,168,76,0.3));border-radius:8px;color:var(--text,#e0e0e0);font-size:0.9rem;outline:none;font-family:inherit}
+        .coupon-input input:focus{border-color:var(--gold,#C9A84C)}
+        .coupon-input button{padding:10px 18px;background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.4);color:var(--gold,#C9A84C);border-radius:8px;cursor:pointer;font-size:0.85rem;font-family:inherit;white-space:nowrap;font-weight:700;transition:all .3s}
+        .coupon-input button:hover{background:rgba(201,168,76,0.25)}
+        .coupon-msg{font-size:0.82rem;margin-top:8px;min-height:18px}
+        .coupon-msg.ok{color:#2ed573}
+        .coupon-msg.err{color:#ff4757}
+        .coupon-applied{display:none;align-items:center;justify-content:space-between;padding:8px 12px;background:rgba(46,213,115,0.08);border:1px solid rgba(46,213,115,0.25);border-radius:8px;margin-top:8px;font-size:0.85rem;color:#2ed573}
+        .coupon-applied.show{display:flex}
+        .coupon-remove{background:none;border:none;color:#ff4757;cursor:pointer;font-size:0.85rem;padding:2px 6px}
+        .action-buttons{display:flex;flex-direction:column;gap:10px;margin-top:20px}
+        .whatsapp-btn{width:100%;padding:14px;background:#25d366;border:none;border-radius:10px;color:#fff;font-size:0.95rem;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:10px;transition:all .3s}
+        .whatsapp-btn:hover{opacity:.9;transform:translateY(-2px)}
+        .checkout-btn{width:100%;padding:14px;background:linear-gradient(135deg,#C9A84C,#f0c040);border:none;border-radius:10px;color:#000;font-size:0.95rem;font-weight:800;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:10px;transition:all .3s;letter-spacing:0.5px}
+        .checkout-btn:hover{opacity:.9;transform:translateY(-2px);box-shadow:0 10px 30px rgba(201,168,76,0.3)}
+        .payment-badges{display:flex;gap:8px;margin-top:16px;justify-content:center;flex-wrap:wrap}
+        .payment-badge{padding:6px 14px;border-radius:6px;font-size:0.75rem;font-weight:800;letter-spacing:0.5px}
+        .badge-bkash{background:rgba(220,0,100,0.12);color:#dc0064;border:1px solid rgba(220,0,100,0.3)}
+        .badge-nagad{background:rgba(240,90,40,0.12);color:#f05a28;border:1px solid rgba(240,90,40,0.3)}
+        .badge-rocket{background:rgba(142,47,201,0.12);color:#8b2fc9;border:1px solid rgba(142,47,201,0.3)}
+        .badge-cod{background:rgba(46,213,115,0.12);color:#2ed573;border:1px solid rgba(46,213,115,0.3)}
+
+        /* ── Suggestions ── */
+        .suggestions-section{max-width:1200px;margin:0 auto;padding:40px 20px 0}
+        .suggestions-title{font-family:'Cinzel',serif;font-size:1.2rem;color:var(--gold,#C9A84C);margin-bottom:20px;display:flex;align-items:center;gap:10px}
+        .suggestions-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+        .suggest-card{background:var(--bg2,#111);border:1px solid var(--border,rgba(201,168,76,0.2));border-radius:12px;overflow:hidden;transition:all .3s;cursor:pointer;text-decoration:none;color:inherit}
+        .suggest-card:hover{transform:translateY(-4px);box-shadow:0 10px 30px rgba(0,0,0,0.3);border-color:var(--gold,#C9A84C)}
+        .suggest-card img{width:100%;height:160px;object-fit:cover}
+        .suggest-card-info{padding:12px}
+        .suggest-card-name{font-size:0.88rem;font-weight:600;color:var(--text,#e0e0e0);margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+        .suggest-card-price{font-size:0.95rem;font-weight:800;color:var(--gold,#C9A84C);font-family:'Cinzel',serif}
+
+        /* ── Checkout Modal ── */
+        .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.88);display:none;align-items:center;justify-content:center;z-index:1000;padding:20px;backdrop-filter:blur(6px)}
+        .modal-overlay.open{display:flex}
+        .modal{background:var(--bg2,#111);border:1px solid var(--border,rgba(201,168,76,0.3));border-radius:16px;padding:28px;width:100%;max-width:560px;max-height:92vh;overflow-y:auto}
+        .modal::-webkit-scrollbar{width:4px}
+        .modal::-webkit-scrollbar-thumb{background:rgba(201,168,76,0.3);border-radius:4px}
+        .modal-title{font-family:'Cinzel',serif;font-size:1.2rem;color:var(--gold,#C9A84C);margin-bottom:20px;display:flex;align-items:center;gap:10px}
+        .modal-summary{background:var(--bg3,#1a1a1a);border-radius:10px;padding:16px;margin-bottom:20px;border:1px solid var(--border,rgba(201,168,76,0.2))}
+        .modal-summary-items{max-height:120px;overflow-y:auto;margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--border,rgba(201,168,76,0.2))}
+        .modal-item-row{display:flex;justify-content:space-between;padding:4px 0;font-size:0.85rem;color:var(--text-muted,#aaa)}
+        .modal-item-row span:last-child{color:var(--text,#e0e0e0);font-weight:600}
+        .modal-summary-row{display:flex;justify-content:space-between;padding:5px 0;font-size:0.88rem;color:var(--text-muted,#aaa)}
+        .modal-summary-row.total{color:var(--gold,#C9A84C);font-weight:800;font-size:1.05rem;border-top:1px solid var(--border,rgba(201,168,76,0.2));margin-top:6px;padding-top:10px}
+        .form-field{margin-bottom:14px}
+        .form-field label{display:block;font-size:0.78rem;color:var(--text-muted,#999);margin-bottom:6px;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+        .form-field input,.form-field select,.form-field textarea{width:100%;padding:12px 14px;background:var(--bg3,#1a1a1a);border:1px solid var(--border,rgba(201,168,76,0.2));border-radius:8px;color:var(--text,#e0e0e0);font-size:0.95rem;font-family:inherit;outline:none;box-sizing:border-box}
+        .form-field input:focus,.form-field select:focus,.form-field textarea:focus{border-color:var(--gold,#C9A84C)}
+        .form-field select option{background:#1a1a1a}
+        .form-field textarea{resize:vertical;min-height:70px}
+
+        /* Payment method in modal */
+        .pay-method-label{font-size:0.78rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted,#999);margin-bottom:10px;display:block}
+        .pay-method-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
+        .pay-method-btn{padding:12px 6px;border:1px solid var(--border,rgba(201,168,76,0.2));border-radius:10px;background:var(--bg3,#1a1a1a);color:var(--text-muted,#999);font-size:0.8rem;font-weight:700;text-align:center;cursor:pointer;transition:all .3s;user-select:none}
+        .pay-method-btn:hover{border-color:var(--gold,#C9A84C);color:var(--gold,#C9A84C)}
+        .pay-method-btn.selected{background:rgba(201,168,76,0.1);border-color:var(--gold,#C9A84C);color:var(--gold,#C9A84C)}
+        .pay-method-btn.bkash.selected{background:rgba(220,0,100,0.08);border-color:#dc0064;color:#dc0064}
+        .pay-method-btn.nagad.selected{background:rgba(240,90,40,0.08);border-color:#f05a28;color:#f05a28}
+        .pay-method-btn.rocket.selected{background:rgba(142,47,201,0.08);border-color:#8b2fc9;color:#8b2fc9}
+        .pay-method-btn.cod.selected{background:rgba(74,222,128,0.08);border-color:#4ade80;color:#4ade80}
+        .pay-method-btn .pay-icon{font-size:1.2rem;display:block;margin-bottom:4px}
+
+        /* Payment info box */
+        .payment-info-box{display:none;border-radius:10px;padding:14px 16px;margin-bottom:14px;border:1px solid;font-size:0.88rem}
+        .payment-info-box.show{display:block}
+        .payment-info-box.bkash{background:rgba(220,0,100,0.06);border-color:rgba(220,0,100,0.25)}
+        .payment-info-box.nagad{background:rgba(240,90,40,0.06);border-color:rgba(240,90,40,0.25)}
+        .payment-info-box.rocket{background:rgba(142,47,201,0.06);border-color:rgba(142,47,201,0.25)}
+        .payment-info-box.cod{background:rgba(74,222,128,0.06);border-color:rgba(74,222,128,0.25)}
+        .pay-info-title{font-size:0.78rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px}
+        .pay-info-title.bkash{color:#dc0064}
+        .pay-info-title.nagad{color:#f05a28}
+        .pay-info-title.rocket{color:#8b2fc9}
+        .pay-info-title.cod{color:#4ade80}
+        .pay-number-display{font-size:1.4rem;font-weight:900;font-family:'Cinzel',serif;letter-spacing:2px;margin-bottom:6px}
+        .pay-number-display.bkash{color:#dc0064}
+        .pay-number-display.nagad{color:#f05a28}
+        .pay-number-display.rocket{color:#8b2fc9}
+        .pay-instruction{font-size:0.82rem;color:var(--text-muted,#999);line-height:1.7}
+
+        .txn-group{display:none;margin-bottom:14px}
+        .txn-group.show{display:block}
+        .txn-group label{display:block;font-size:0.78rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted,#999);margin-bottom:6px}
+        .txn-input-wrap{position:relative}
+        .txn-input-wrap input{width:100%;padding:12px 40px 12px 14px;background:var(--bg3,#1a1a1a);border:1px solid var(--border,rgba(201,168,76,0.2));border-radius:8px;color:var(--text,#e0e0e0);font-size:0.95rem;font-family:inherit;outline:none;box-sizing:border-box}
+        .txn-input-wrap input:focus{border-color:var(--gold,#C9A84C)}
+        .txn-input-wrap i{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--text-muted,#999)}
+
+        .modal-btns{display:flex;gap:12px;margin-top:20px}
+        .confirm-btn{flex:1;padding:15px;background:linear-gradient(135deg,#C9A84C,#f0c040);border:none;border-radius:10px;color:#000;font-size:1rem;font-weight:800;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:8px;transition:all .3s;letter-spacing:0.5px}
+        .confirm-btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(201,168,76,0.3)}
+        .confirm-btn:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
+        .cancel-btn{padding:15px 22px;background:rgba(255,71,87,0.08);border:1px solid rgba(255,71,87,0.25);border-radius:10px;color:#ff4757;cursor:pointer;font-family:inherit;font-size:0.92rem;transition:all .3s}
+        .cancel-btn:hover{background:rgba(255,71,87,0.18)}
+
+        /* ── Order Success ── */
+        .order-success{display:none;text-align:center;padding:40px 20px}
+        .order-success.show{display:block}
+        .order-success .success-icon{font-size:5rem;display:block;margin-bottom:16px}
+        .order-success h3{font-family:'Cinzel',serif;font-size:1.5rem;color:var(--text,#e0e0e0);margin-bottom:10px}
+        .order-success p{font-size:0.95rem;color:var(--text-muted,#999);margin-bottom:6px}
+        .order-id-badge{display:inline-block;background:rgba(201,168,76,0.15);border:1px solid var(--border,rgba(201,168,76,0.2));color:var(--gold,#C9A84C);padding:10px 22px;border-radius:8px;font-size:1rem;font-weight:800;margin:16px 0 20px;letter-spacing:2px;font-family:'Cinzel',serif}
+        .btn-continue{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#C9A84C,#f0c040);color:#000;padding:12px 28px;border-radius:8px;font-weight:800;font-size:0.9rem;letter-spacing:1px;text-decoration:none;transition:all .3s}
+        .btn-continue:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(201,168,76,0.3)}
+
+        /* ── Toast ── */
+        .toast{position:fixed;bottom:24px;right:24px;background:var(--bg2,#111);border:1px solid var(--border,rgba(201,168,76,0.3));border-radius:12px;padding:14px 22px;z-index:9999;display:none;font-size:0.92rem;box-shadow:0 10px 40px rgba(0,0,0,0.5);min-width:220px;animation:slideUp .4s ease}
+        .toast.show{display:flex;align-items:center;gap:10px}
+        @keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+
+        /* ── Responsive ── */
+        @media(max-width:900px){
+            .cart-container{grid-template-columns:1fr}
+            .order-summary{position:static}
+            .suggestions-grid{grid-template-columns:repeat(2,1fr)}
+        }
+        @media(max-width:480px){
+            .page-hero h1{font-size:1.8rem}
+            .suggestions-grid{grid-template-columns:1fr 1fr}
+            .pay-method-grid{grid-template-columns:repeat(2,1fr)}
+        }
     </style>
 </head>
 <body>
-<div id="loader" class="loader"><div class="loader-inner"><div class="loader-logo">RS</div><div class="loader-bar"><div class="loader-progress"></div></div></div></div>
-<div id="cursor" class="custom-cursor"></div>
 
+<!-- LOADER -->
+<div class="loader" id="loader">
+    <div class="loader-inner">
+        <div class="loader-logo"><span class="logo-rs">RS</span><span class="logo-shop">SHOP</span></div>
+        <div class="loader-bar"><div class="loader-fill"></div></div>
+        <div class="loader-text">LOADING...</div>
+    </div>
+</div>
+
+<!-- CURSOR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-follower" id="cursorFollower"></div>
+
+<!-- NAVBAR -->
 <nav class="navbar" id="navbar">
     <div class="nav-container">
-        <a href="index.html" class="nav-logo">RS <span>SHOP</span></a>
+        <a href="index.html" class="nav-logo"><span class="logo-rs">RS</span><span class="logo-shop">SHOP</span></a>
         <ul class="nav-links" id="navLinks">
             <li><a href="index.html">হোম</a></li>
             <li><a href="watches.html">ঘড়ি</a></li>
             <li><a href="sunglasses.html">সানগ্লাস</a></li>
-            <li><a href="about.html">আমাদের সম্পর্কে</a></li>
+            <li><a href="gift.html">গিফট</a></li>
+            <li><a href="track.html">অর্ডার ট্র্যাক</a></li>
             <li><a href="contact.html">যোগাযোগ</a></li>
         </ul>
         <div class="nav-actions">
-            <a href="cart.html" class="cart-icon"><i class="fas fa-shopping-cart"></i><span class="cart-count" id="cartCount">0</span></a>
-            <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+            <a href="wishlist.html" class="wishlist-icon" title="Wishlist"><i class="fas fa-heart"></i><span class="wishlist-badge" id="wishlistCount">0</span></a>
+            <a href="cart.html" class="cart-icon active"><i class="fas fa-shopping-bag"></i><span class="cart-badge" id="cartCount">0</span></a>
+            <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
         </div>
     </div>
 </nav>
 
+<!-- PAGE HERO -->
 <section class="page-hero">
-    <h1>Your Cart</h1>
+    <h1><i class="fas fa-shopping-cart"></i> আপনার কার্ট</h1>
     <div class="breadcrumb"><a href="index.html">হোম</a> / কার্ট</div>
 </section>
 
+<!-- CART SECTION -->
 <section class="cart-section">
     <div class="cart-container">
+
+        <!-- LEFT: Cart Items -->
         <div class="cart-items-wrap">
-            <div class="cart-title"><i class="fas fa-shopping-cart"></i> কার্ট আইটেম</div>
+            <div class="cart-title"><i class="fas fa-shopping-bag"></i> কার্ট আইটেম (<span id="itemCountLabel">0</span>)</div>
             <div id="cartItemsList"></div>
         </div>
+
+        <!-- RIGHT: Summary -->
         <div class="order-summary">
             <div class="summary-title"><i class="fas fa-receipt"></i> অর্ডার সারাংশ</div>
+
+            <!-- Delivery Area -->
+            <div class="delivery-area-wrap">
+                <label>ডেলিভারি এলাকা</label>
+                <select id="deliveryArea" onchange="updateSummary()">
+                    <option value="inside">ঢাকার ভেতরে</option>
+                    <option value="outside">ঢাকার বাইরে</option>
+                </select>
+            </div>
+
             <div class="summary-row"><span>মোট আইটেম</span><span id="summaryCount">0</span></div>
             <div class="summary-row"><span>সাবটোটাল</span><span id="summarySubtotal">৳0</span></div>
-            <div class="summary-row"><span>ডেলিভারি চার্জ</span><span>৳60</span></div>
+            <div class="summary-row"><span>ডেলিভারি চার্জ</span><span id="summaryDelivery">৳60</span></div>
             <div class="summary-row discount-row" id="discountRow" style="display:none"><span>ডিসকাউন্ট</span><span id="discountAmount">-৳0</span></div>
             <div class="summary-row total"><span>সর্বমোট</span><span id="summaryTotal">৳0</span></div>
+
+            <!-- Coupon -->
             <div class="coupon-wrap">
-                <div class="coupon-input">
+                <div class="coupon-wrap-title"><i class="fas fa-tag"></i> কুপন কোড</div>
+                <div class="coupon-input" id="couponInputWrap">
                     <input type="text" id="couponInput" placeholder="কুপন কোড দিন">
                     <button onclick="applyCoupon()">প্রয়োগ</button>
                 </div>
                 <div class="coupon-msg" id="couponMsg"></div>
+                <div class="coupon-applied" id="couponApplied">
+                    <span><i class="fas fa-check-circle"></i> <span id="appliedCouponText"></span></span>
+                    <button class="coupon-remove" onclick="removeCoupon()"><i class="fas fa-times"></i> সরান</button>
+                </div>
             </div>
-            <button class="whatsapp-btn" onclick="openWhatsApp()"><i class="fab fa-whatsapp"></i> WhatsApp এ অর্ডার করুন</button>
-            <button class="checkout-btn" onclick="openCheckout()"><i class="fas fa-lock"></i> চেকআউট করুন</button>
+
+            <!-- Buttons -->
+            <div class="action-buttons">
+                <button class="checkout-btn" onclick="openCheckout()"><i class="fas fa-lock"></i> চেকআউট করুন</button>
+                <button class="whatsapp-btn" onclick="openWhatsApp()"><i class="fab fa-whatsapp"></i> WhatsApp এ অর্ডার</button>
+            </div>
+
             <div class="payment-badges">
                 <span class="payment-badge badge-bkash">bKash</span>
                 <span class="payment-badge badge-nagad">Nagad</span>
@@ -135,231 +289,656 @@
             </div>
         </div>
     </div>
+
+    <!-- Suggestions -->
+    <div class="suggestions-section" id="suggestionsSection" style="display:none">
+        <div class="suggestions-title"><i class="fas fa-heart"></i> আপনি পছন্দ করতে পারেন</div>
+        <div class="suggestions-grid" id="suggestionsGrid"></div>
+    </div>
 </section>
 
-<footer class="footer">
-    <div class="footer-container">
-        <div class="footer-brand">
-            <div class="footer-logo">RS <span>SHOP</span></div>
-            <p>প্রিমিয়াম ঘড়ি ও সানগ্লাসের সেরা গন্তব্য।</p>
-            <div class="footer-social">
-                <a href="https://web.facebook.com/sojib.islam.739215" target="_blank"><i class="fab fa-facebook"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-whatsapp"></i></a>
-            </div>
-        </div>
-        <div class="footer-links">
-            <h4>দ্রুত লিংক</h4>
-            <ul>
-                <li><a href="index.html">হোম</a></li>
-                <li><a href="watches.html">ঘড়ি</a></li>
-                <li><a href="sunglasses.html">সানগ্লাস</a></li>
-                <li><a href="about.html">আমাদের সম্পর্কে</a></li>
-            </ul>
-        </div>
-        <div class="footer-links">
-            <h4>সাপোর্ট</h4>
-            <ul>
-                <li><a href="contact.html">যোগাযোগ</a></li>
-                <li><a href="#">রিটার্ন পলিসি</a></li>
-                <li><a href="#">ডেলিভারি তথ্য</a></li>
-            </ul>
-        </div>
-        <div class="footer-contact">
-            <h4>যোগাযোগ</h4>
-            <p><i class="fas fa-phone"></i> 01XXXXXXXXX</p>
-            <p><i class="fab fa-whatsapp"></i> 01XXXXXXXXX</p>
-            <p><i class="fab fa-facebook"></i> RS SHOP</p>
-        </div>
-    </div>
-    <div class="footer-bottom"><p>© 2024 RS SHOP. All rights reserved.</p></div>
-</footer>
-
-<a href="https://wa.me/880XXXXXXXXXX" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
-
+<!-- CHECKOUT MODAL -->
 <div class="modal-overlay" id="checkoutModal">
     <div class="modal">
-        <div class="modal-title"><i class="fas fa-lock"></i> চেকআউট</div>
-        <div class="modal-summary">
-            <div class="modal-summary-row"><span>সাবটোটাল</span><span id="modalSubtotal">৳0</span></div>
-            <div class="modal-summary-row"><span>ডেলিভারি</span><span>৳60</span></div>
-            <div class="modal-summary-row total"><span>সর্বমোট</span><span id="modalTotal">৳0</span></div>
+
+        <!-- Order Success -->
+        <div class="order-success" id="orderSuccess">
+            <span class="success-icon">✅</span>
+            <h3>অর্ডার সফল হয়েছে!</h3>
+            <p>আপনার অর্ডার সফলভাবে পাওয়া গেছে।</p>
+            <p>আমরা শীঘ্রই আপনার সাথে যোগাযোগ করবো।</p>
+            <div class="order-id-badge" id="successOrderId">RS-000000</div>
+            <br>
+            <a href="index.html" class="btn-continue"><i class="fas fa-arrow-left"></i> শপিং চালিয়ে যান</a>
         </div>
-        <div class="form-field"><label>পূর্ণ নাম *</label><input type="text" id="oName" placeholder="আপনার নাম"></div>
-        <div class="form-field"><label>ফোন নম্বর *</label><input type="tel" id="oPhone" placeholder="01XXXXXXXXX"></div>
-        <div class="form-field"><label>ডেলিভারি ঠিকানা *</label><textarea id="oAddress" placeholder="বিস্তারিত ঠিকানা লিখুন..."></textarea></div>
-        <div class="form-field"><label>পেমেন্ট পদ্ধতি *</label>
-            <select id="oPayment">
-                <option value="">পেমেন্ট পদ্ধতি বেছে নিন</option>
-                <option value="bKash">bKash</option>
-                <option value="Nagad">Nagad</option>
-                <option value="Rocket">Rocket</option>
-                <option value="COD">Cash on Delivery</option>
-            </select>
-        </div>
-        <div class="form-field"><label>বিশেষ নির্দেশনা</label><textarea id="oNote" placeholder="কোনো বিশেষ নির্দেশনা থাকলে লিখুন..."></textarea></div>
-        <div class="modal-btns">
-            <button class="confirm-btn" onclick="placeOrder()"><i class="fas fa-check"></i> অর্ডার নিশ্চিত করুন</button>
-            <button class="cancel-btn" onclick="closeCheckout()">বাতিল</button>
+
+        <!-- Checkout Form -->
+        <div id="checkoutForm">
+            <div class="modal-title"><i class="fas fa-lock"></i> চেকআউট</div>
+
+            <!-- Order Summary in modal -->
+            <div class="modal-summary">
+                <div class="modal-summary-items" id="modalItems"></div>
+                <div class="modal-summary-row"><span>সাবটোটাল</span><span id="modalSubtotal">৳0</span></div>
+                <div class="modal-summary-row"><span>ডেলিভারি</span><span id="modalDelivery">৳60</span></div>
+                <div class="modal-summary-row" id="modalDiscountRow" style="display:none"><span>ডিসকাউন্ট</span><span id="modalDiscount">-৳0</span></div>
+                <div class="modal-summary-row total"><span>সর্বমোট</span><span id="modalTotal">৳0</span></div>
+            </div>
+
+            <div class="form-field"><label>পূর্ণ নাম *</label><input type="text" id="oName" placeholder="আপনার নাম"></div>
+            <div class="form-field"><label>ফোন নম্বর *</label><input type="tel" id="oPhone" placeholder="01XXXXXXXXX"></div>
+            <div class="form-field"><label>ডেলিভারি ঠিকানা *</label><textarea id="oAddress" placeholder="বাড়ি, গ্রাম, উপজেলা, জেলা..."></textarea></div>
+
+            <!-- Payment Method -->
+            <span class="pay-method-label">পেমেন্ট পদ্ধতি *</span>
+            <div class="pay-method-grid" id="payMethodGrid">
+                <div class="pay-method-btn bkash" onclick="selectPayMethod('bKash',this)"><span class="pay-icon">💳</span>bKash</div>
+                <div class="pay-method-btn nagad" onclick="selectPayMethod('Nagad',this)"><span class="pay-icon">💰</span>Nagad</div>
+                <div class="pay-method-btn rocket" onclick="selectPayMethod('Rocket',this)"><span class="pay-icon">🚀</span>Rocket</div>
+                <div class="pay-method-btn cod" onclick="selectPayMethod('Cash on Delivery',this)"><span class="pay-icon">🏠</span>COD</div>
+            </div>
+
+            <!-- Payment Info Boxes -->
+            <div class="payment-info-box bkash" id="infoBox-bKash">
+                <div class="pay-info-title bkash"><i class="fas fa-mobile-alt"></i> bKash এ Send Money করুন</div>
+                <div class="pay-number-display bkash" id="bkashNumber">লোড হচ্ছে...</div>
+                <div class="pay-instruction">উপরের নম্বরে Send Money করুন এবং Transaction ID নিচে দিন।</div>
+            </div>
+            <div class="payment-info-box nagad" id="infoBox-Nagad">
+                <div class="pay-info-title nagad"><i class="fas fa-mobile-alt"></i> Nagad এ Send Money করুন</div>
+                <div class="pay-number-display nagad" id="nagadNumber">লোড হচ্ছে...</div>
+                <div class="pay-instruction">উপরের নম্বরে Send Money করুন এবং Transaction ID নিচে দিন।</div>
+            </div>
+            <div class="payment-info-box rocket" id="infoBox-Rocket">
+                <div class="pay-info-title rocket"><i class="fas fa-mobile-alt"></i> Rocket এ Send Money করুন</div>
+                <div class="pay-number-display rocket" id="rocketNumber">লোড হচ্ছে...</div>
+                <div class="pay-instruction">উপরের নম্বরে Send Money করুন এবং Transaction ID নিচে দিন।</div>
+            </div>
+            <div class="payment-info-box cod" id="infoBox-COD">
+                <div class="pay-info-title cod"><i class="fas fa-truck"></i> Cash on Delivery</div>
+                <div class="pay-instruction" style="color:#4ade80;font-weight:700">পণ্য পাওয়ার পরে টাকা দিন!</div>
+                <div class="pay-instruction">ডেলিভারি ম্যান পণ্য পৌঁছে দিবে, তখন নগদ টাকা দিন।</div>
+            </div>
+
+            <!-- Transaction ID -->
+            <div class="txn-group" id="txnGroup">
+                <label>Transaction ID *</label>
+                <div class="txn-input-wrap">
+                    <input type="text" id="transactionId" placeholder="যেমন: 8N7A6B5C4D">
+                    <i class="fas fa-receipt"></i>
+                </div>
+            </div>
+
+            <div class="form-field"><label>বিশেষ নির্দেশনা (ঐচ্ছিক)</label><textarea id="oNote" placeholder="কোনো বিশেষ নির্দেশনা থাকলে লিখুন..."></textarea></div>
+
+            <div class="modal-btns">
+                <button class="confirm-btn" id="confirmBtn" onclick="placeOrder()"><i class="fas fa-check-circle"></i> অর্ডার নিশ্চিত করুন</button>
+                <button class="cancel-btn" onclick="closeCheckout()">বাতিল</button>
+            </div>
         </div>
     </div>
 </div>
 
-<script type="module">
-    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js';
-    import { getFirestore, collection, addDoc } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js';
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
 
-    const firebaseConfig = {
-        apiKey: "AIzaSyAerNu3OWe2bCejiGXxnQeXr9yiDR1FysU",
-        authDomain: "sojib-shop.firebaseapp.com",
-        projectId: "sojib-shop",
-        storageBucket: "sojib-shop.firebasestorage.app",
-        messagingSenderId: "1061639520028",
-        appId: "1:1061639520028:web:d164fdf6f3d0bbd79304d9"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    const DELIVERY = 60;
-    let cartItems = JSON.parse(localStorage.getItem('rs_cart') || '[]');
-    let discount = 0;
-    let discountPercent = 0;
-
-    function renderCart() {
-        const list = document.getElementById('cartItemsList');
-        if (!cartItems.length) {
-            list.innerHTML = `<div class="empty-cart"><i class="fas fa-shopping-cart"></i><p>কার্ট খালি!</p><a href="index.html">কেনাকাটা শুরু করুন</a></div>`;
-            updateSummary();
-            return;
-        }
-        list.innerHTML = cartItems.map((item, i) => `
-            <div class="cart-item">
-                <div class="cart-item-img">${item.image ? `<img src="${item.image}" alt="${item.name}">` : '<i class="fas fa-box"></i>'}</div>
-                <div>
-                    <div class="item-category">${item.category || ''}</div>
-                    <div class="item-name">${item.name}</div>
-                    <div class="item-sku">SKU: ${item.sku || 'N/A'}</div>
-                    <div class="item-price">৳${item.price}</div>
-                    <div class="qty-controls">
-                        <button class="qty-btn" onclick="changeQty(${i}, -1)">−</button>
-                        <span class="qty-num">${item.qty}</span>
-                        <button class="qty-btn" onclick="changeQty(${i}, 1)">+</button>
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="footer-inner">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="f-brand">
+                    <div class="footer-logo"><span class="logo-rs">RS</span><span class="logo-shop">SHOP</span></div>
+                    <p>প্রিমিয়াম ঘড়ি ও সানগ্লাসের সেরা গন্তব্য।</p>
+                    <div class="f-social">
+                        <a href="https://web.facebook.com/sojib.islam.739215" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://wa.me/8801996283245" target="_blank"><i class="fab fa-whatsapp"></i></a>
                     </div>
                 </div>
-                <div class="item-right">
-                    <button class="remove-btn" onclick="removeItem(${i})"><i class="fas fa-trash"></i></button>
-                    <div class="item-subtotal">৳${(item.price * item.qty).toLocaleString()}</div>
+                <div class="f-links">
+                    <h4>দ্রুত লিংক</h4>
+                    <ul>
+                        <li><a href="index.html">হোম</a></li>
+                        <li><a href="watches.html">ঘড়ি</a></li>
+                        <li><a href="sunglasses.html">সানগ্লাস</a></li>
+                        <li><a href="gift.html">গিফট কালেকশন</a></li>
+                        <li><a href="track.html">অর্ডার ট্র্যাক</a></li>
+                    </ul>
                 </div>
+                <div class="f-links">
+                    <h4>সাপোর্ট</h4>
+                    <ul>
+                        <li><a href="contact.html">যোগাযোগ</a></li>
+                        <li><a href="#">রিটার্ন পলিসি</a></li>
+                        <li><a href="#">ডেলিভারি তথ্য</a></li>
+                    </ul>
+                </div>
+                <div class="f-contact">
+                    <h4>যোগাযোগ</h4>
+                    <p><i class="fas fa-map-marker-alt"></i> Purbadhala Station Road</p>
+                    <p><i class="fas fa-phone"></i> 01996283245</p>
+                    <p><i class="fab fa-whatsapp"></i> 01996283245</p>
+                    <div class="payment-methods">
+                        <span class="pay bkash">bKash</span>
+                        <span class="pay nagad">Nagad</span>
+                        <span class="pay rocket">Rocket</span>
+                        <span class="pay cod">COD</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <div class="container">
+            <p>© 2024 RS SHOP. All Rights Reserved | Developed by <strong>AMIN SHEIKH</strong></p>
+        </div>
+    </div>
+</footer>
+
+<!-- WhatsApp Float -->
+<a href="https://wa.me/8801996283245" class="wa-float" target="_blank">
+    <i class="fab fa-whatsapp"></i><span class="wa-tip">Chat Now</span>
+</a>
+
+<!-- ══════════════════════════════════════
+     FIREBASE + ALL JAVASCRIPT
+══════════════════════════════════════ -->
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js';
+import { getFirestore, doc, getDoc, collection, getDocs, query, where, limit, addDoc, serverTimestamp }
+    from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js';
+
+const firebaseConfig = {
+    apiKey: "AIzaSyAerNu3OWe2bCejiGXxnQeXr9yiDR1FysU",
+    authDomain: "sojib-shop.firebaseapp.com",
+    projectId: "sojib-shop",
+    storageBucket: "sojib-shop.firebasestorage.app",
+    messagingSenderId: "1061639520028",
+    appId: "1:1061639520028:web:d164fdf6f3d0bbd79304d9"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+/* ══ STATE ══ */
+let cartItems = JSON.parse(localStorage.getItem('rs_cart') || '[]');
+let deliverySettings = { insideDhaka: 60, outsideDhaka: 120 };
+let paymentNumbers = { bkash: '', nagad: '', rocket: '' };
+let paymentConfig = {};
+let coupons = [];
+let discount = 0;
+let discountPercent = 0;
+let appliedCoupon = '';
+let selectedPayment = '';
+const WA_NUMBER = '8801996283245';
+
+/* ══ TOAST ══ */
+function showToast(msg, icon = '✅') {
+    const t = document.getElementById('toast');
+    t.innerHTML = `<span>${icon}</span> <span>${msg}</span>`;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+/* ══ LOAD SETTINGS FROM FIREBASE ══ */
+async function loadSettings() {
+    try {
+        const [paySnap, delSnap, couponSnap] = await Promise.all([
+            getDoc(doc(db, 'settings', 'payment')),
+            getDoc(doc(db, 'settings', 'delivery')),
+            getDoc(doc(db, 'settings', 'coupons'))
+        ]);
+
+        if (paySnap.exists()) {
+            const p = paySnap.data();
+            paymentConfig = p;
+            paymentNumbers.bkash = p.bkash || '';
+            paymentNumbers.nagad = p.nagad || '';
+            paymentNumbers.rocket = p.rocket || '';
+
+            document.getElementById('bkashNumber').textContent = p.bkash || 'নম্বর সেট হয়নি';
+            document.getElementById('nagadNumber').textContent = p.nagad || 'নম্বর সেট হয়নি';
+            document.getElementById('rocketNumber').textContent = p.rocket || 'নম্বর সেট হয়নি';
+
+            /* Hide disabled payment methods */
+            const grid = document.getElementById('payMethodGrid');
+            if (p.bkashOn === false) { const el = grid.querySelector('.bkash'); if(el) el.style.display = 'none'; }
+            if (p.nagadOn === false) { const el = grid.querySelector('.nagad'); if(el) el.style.display = 'none'; }
+            if (p.rocketOn === false) { const el = grid.querySelector('.rocket'); if(el) el.style.display = 'none'; }
+            if (p.codOn === false) { const el = grid.querySelector('.cod'); if(el) el.style.display = 'none'; }
+        }
+
+        if (delSnap.exists()) {
+            const d = delSnap.data();
+            deliverySettings.insideDhaka = parseInt(d.insideDhaka) || 60;
+            deliverySettings.outsideDhaka = parseInt(d.outsideDhaka) || 120;
+        }
+
+        if (couponSnap.exists()) {
+            const c = couponSnap.data();
+            coupons = c.list || [];
+            /* Expected format: [{code:"RS10", percent:10, active:true}, ...] */
+        }
+    } catch(e) {
+        console.error('Settings load error:', e);
+    }
+}
+
+/* ══ DELIVERY CHARGE ══ */
+function getDeliveryCharge() {
+    const area = document.getElementById('deliveryArea').value;
+    return area === 'inside' ? deliverySettings.insideDhaka : deliverySettings.outsideDhaka;
+}
+
+/* ══ RENDER CART ══ */
+function renderCart() {
+    const list = document.getElementById('cartItemsList');
+    document.getElementById('itemCountLabel').textContent = cartItems.length;
+
+    if (!cartItems.length) {
+        list.innerHTML = `
+            <div class="empty-cart">
+                <i class="fas fa-shopping-cart"></i>
+                <p>আপনার কার্ট খালি!</p>
+                <a href="index.html"><i class="fas fa-arrow-left"></i> কেনাকাটা শুরু করুন</a>
+            </div>`;
+        updateSummary();
+        return;
+    }
+
+    list.innerHTML = cartItems.map((item, i) => `
+        <div class="cart-item">
+            <div class="cart-item-img">
+                ${item.image ? `<img src="${item.image}" alt="${item.name}">` : '<i class="fas fa-box"></i>'}
+            </div>
+            <div>
+                <div class="item-category">${item.category || 'Product'}</div>
+                <div class="item-name">${item.name}</div>
+                ${item.sku ? `<div class="item-sku">SKU: ${item.sku}</div>` : ''}
+                <div class="item-price">৳${Number(item.price).toLocaleString()}</div>
+                <div class="qty-controls">
+                    <button class="qty-btn" data-action="minus" data-index="${i}">−</button>
+                    <span class="qty-num">${item.qty}</span>
+                    <button class="qty-btn" data-action="plus" data-index="${i}">+</button>
+                </div>
+            </div>
+            <div class="item-right">
+                <button class="remove-btn" data-index="${i}" title="সরান"><i class="fas fa-trash-alt"></i></button>
+                <div class="item-subtotal">৳${(item.price * item.qty).toLocaleString()}</div>
+            </div>
+        </div>`).join('');
+
+    /* Clear all button */
+    const clearDiv = document.createElement('div');
+    clearDiv.style.textAlign = 'right';
+    clearDiv.innerHTML = `<button class="clear-btn" id="clearCartBtn"><i class="fas fa-trash"></i> সব সরান</button>`;
+    list.appendChild(clearDiv);
+
+    /* Event delegation for qty & remove */
+    list.querySelectorAll('.qty-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const idx = parseInt(btn.dataset.index);
+            const action = btn.dataset.action;
+            if (action === 'plus') cartItems[idx].qty++;
+            else if (action === 'minus') cartItems[idx].qty = Math.max(1, cartItems[idx].qty - 1);
+            saveCart();
+            renderCart();
+        });
+    });
+
+    list.querySelectorAll('.remove-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const idx = parseInt(btn.dataset.index);
+            const removedName = cartItems[idx].name;
+            cartItems.splice(idx, 1);
+            saveCart();
+            renderCart();
+            showToast(`"${removedName}" কার্ট থেকে সরানো হয়েছে`, '🗑️');
+        });
+    });
+
+    document.getElementById('clearCartBtn').addEventListener('click', () => {
+        if (confirm('সব আইটেম কার্ট থেকে সরাবেন?')) {
+            cartItems = [];
+            saveCart();
+            renderCart();
+            showToast('কার্ট খালি করা হয়েছে', '🗑️');
+        }
+    });
+
+    updateSummary();
+}
+
+function saveCart() {
+    localStorage.setItem('rs_cart', JSON.stringify(cartItems));
+    updateCounts();
+}
+
+/* ══ UPDATE SUMMARY ══ */
+window.updateSummary = function() {
+    const subtotal = cartItems.reduce((s, i) => s + i.price * i.qty, 0);
+    const count = cartItems.reduce((s, i) => s + i.qty, 0);
+    const delivery = cartItems.length ? getDeliveryCharge() : 0;
+    discount = discountPercent ? Math.round(subtotal * discountPercent / 100) : 0;
+    const total = subtotal + delivery - discount;
+
+    document.getElementById('summaryCount').textContent = count;
+    document.getElementById('summarySubtotal').textContent = '৳' + subtotal.toLocaleString();
+    document.getElementById('summaryDelivery').textContent = '৳' + delivery.toLocaleString();
+    document.getElementById('summaryTotal').textContent = '৳' + (total > 0 ? total : 0).toLocaleString();
+
+    /* Modal summary */
+    document.getElementById('modalSubtotal').textContent = '৳' + subtotal.toLocaleString();
+    document.getElementById('modalDelivery').textContent = '৳' + delivery.toLocaleString();
+    document.getElementById('modalTotal').textContent = '৳' + (total > 0 ? total : 0).toLocaleString();
+
+    /* Modal items list */
+    const modalItemsEl = document.getElementById('modalItems');
+    if (modalItemsEl) {
+        modalItemsEl.innerHTML = cartItems.map(i => `
+            <div class="modal-item-row">
+                <span>${i.name} × ${i.qty}</span>
+                <span>৳${(i.price * i.qty).toLocaleString()}</span>
             </div>`).join('');
-        const clearBtn = document.createElement('button');
-        clearBtn.className = 'clear-btn';
-        clearBtn.innerHTML = '<i class="fas fa-trash"></i> কার্ট খালি করুন';
-        clearBtn.onclick = clearCart;
-        list.appendChild(clearBtn);
-        updateSummary();
     }
 
-    function updateSummary() {
-        const subtotal = cartItems.reduce((s, i) => s + i.price * i.qty, 0);
-        const count = cartItems.reduce((s, i) => s + i.qty, 0);
-        discount = discountPercent ? Math.round(subtotal * discountPercent / 100) : 0;
-        const total = subtotal + DELIVERY - discount;
-        document.getElementById('summaryCount').textContent = count;
-        document.getElementById('summarySubtotal').textContent = '৳' + subtotal.toLocaleString();
-        document.getElementById('summaryTotal').textContent = '৳' + total.toLocaleString();
-        document.getElementById('modalSubtotal').textContent = '৳' + subtotal.toLocaleString();
-        document.getElementById('modalTotal').textContent = '৳' + total.toLocaleString();
-        if (discount > 0) {
-            document.getElementById('discountRow').style.display = 'flex';
-            document.getElementById('discountAmount').textContent = '-৳' + discount.toLocaleString();
-        } else {
-            document.getElementById('discountRow').style.display = 'none';
-        }
-        document.getElementById('cartCount').textContent = count;
+    /* Discount row */
+    if (discount > 0) {
+        document.getElementById('discountRow').style.display = 'flex';
+        document.getElementById('discountAmount').textContent = '-৳' + discount.toLocaleString();
+        document.getElementById('modalDiscountRow').style.display = 'flex';
+        document.getElementById('modalDiscount').textContent = '-৳' + discount.toLocaleString();
+    } else {
+        document.getElementById('discountRow').style.display = 'none';
+        document.getElementById('modalDiscountRow').style.display = 'none';
     }
 
-    window.changeQty = function(i, d) {
-        cartItems[i].qty = Math.max(1, cartItems[i].qty + d);
-        localStorage.setItem('rs_cart', JSON.stringify(cartItems));
-        renderCart();
-    }
+    document.getElementById('cartCount').textContent = count;
+}
 
-    window.removeItem = function(i) {
-        cartItems.splice(i, 1);
-        localStorage.setItem('rs_cart', JSON.stringify(cartItems));
-        renderCart();
-    }
+/* ══ COUPON SYSTEM (Firebase dynamic) ══ */
+window.applyCoupon = function() {
+    const code = document.getElementById('couponInput').value.trim().toUpperCase();
+    const msg = document.getElementById('couponMsg');
 
-    window.clearCart = function() {
-        if (confirm('কার্ট খালি করবেন?')) {
-            cartItems = [];
-            localStorage.removeItem('rs_cart');
-            renderCart();
-        }
-    }
+    if (!code) { msg.className = 'coupon-msg err'; msg.textContent = '❌ কুপন কোড দিন!'; return; }
 
-    window.applyCoupon = function() {
-        const code = document.getElementById('couponInput').value.trim().toUpperCase();
-        const msg = document.getElementById('couponMsg');
-        if (code === 'RS10') { discountPercent = 10; msg.className = 'coupon-msg ok'; msg.textContent = '✅ ১০% ছাড় প্রয়োগ হয়েছে!'; }
-        else if (code === 'RSVIP') { discountPercent = 15; msg.className = 'coupon-msg ok'; msg.textContent = '✅ ১৫% ছাড় প্রয়োগ হয়েছে!'; }
-        else { discountPercent = 0; msg.className = 'coupon-msg err'; msg.textContent = '❌ কুপন কোড সঠিক নয়!'; }
-        updateSummary();
-    }
+    /* Check from Firebase coupons first */
+    const found = coupons.find(c => c.code && c.code.toUpperCase() === code && c.active !== false);
 
-    window.openWhatsApp = function() {
-        if (!cartItems.length) { alert('কার্ট খালি!'); return; }
-        const subtotal = cartItems.reduce((s, i) => s + i.price * i.qty, 0);
-        const total = subtotal + DELIVERY - discount;
-        let msg = '🛒 *নতুন অর্ডার — RS SHOP*\n\n';
-        cartItems.forEach(i => { msg += `▪ ${i.name} × ${i.qty} = ৳${i.price * i.qty}\n`; });
-        msg += `\nসাবটোটাল: ৳${subtotal}\nডেলিভারি: ৳${DELIVERY}`;
-        if (discount) msg += `\nডিসকাউন্ট: -৳${discount}`;
-        msg += `\n*সর্বমোট: ৳${total}*`;
-        window.open('https://wa.me/880XXXXXXXXXX?text=' + encodeURIComponent(msg), '_blank');
+    if (found) {
+        discountPercent = parseInt(found.percent) || 0;
+        appliedCoupon = code;
+        msg.className = 'coupon-msg ok';
+        msg.textContent = '';
+        document.getElementById('couponInputWrap').style.display = 'none';
+        document.getElementById('couponApplied').classList.add('show');
+        document.getElementById('appliedCouponText').textContent = `"${code}" — ${discountPercent}% ছাড়!`;
+        showToast(`${discountPercent}% ডিসকাউন্ট প্রয়োগ হয়েছে!`, '🎉');
     }
-
-    window.openCheckout = function() {
-        if (!cartItems.length) { alert('কার্ট খালি!'); return; }
-        document.getElementById('checkoutModal').classList.add('open');
+    /* Fallback hardcoded coupons if Firebase has none */
+    else if (code === 'RS10') {
+        discountPercent = 10; appliedCoupon = code;
+        msg.textContent = '';
+        document.getElementById('couponInputWrap').style.display = 'none';
+        document.getElementById('couponApplied').classList.add('show');
+        document.getElementById('appliedCouponText').textContent = `"RS10" — ১০% ছাড়!`;
+        showToast('১০% ডিসকাউন্ট প্রয়োগ হয়েছে!', '🎉');
     }
-
-    window.closeCheckout = function() {
-        document.getElementById('checkoutModal').classList.remove('open');
+    else if (code === 'RSVIP') {
+        discountPercent = 15; appliedCoupon = code;
+        msg.textContent = '';
+        document.getElementById('couponInputWrap').style.display = 'none';
+        document.getElementById('couponApplied').classList.add('show');
+        document.getElementById('appliedCouponText').textContent = `"RSVIP" — ১৫% ছাড়!`;
+        showToast('১৫% VIP ডিসকাউন্ট প্রয়োগ হয়েছে!', '🎉');
     }
+    else {
+        discountPercent = 0; appliedCoupon = '';
+        msg.className = 'coupon-msg err';
+        msg.textContent = '❌ কুপন কোড সঠিক নয়!';
+    }
+    updateSummary();
+}
 
-    window.placeOrder = async function() {
-        const name = document.getElementById('oName').value.trim();
-        const phone = document.getElementById('oPhone').value.trim();
-        const address = document.getElementById('oAddress').value.trim();
-        const payment = document.getElementById('oPayment').value;
-        if (!name || !phone || !address || !payment) { alert('সব তথ্য পূরণ করুন!'); return; }
-        const subtotal = cartItems.reduce((s, i) => s + i.price * i.qty, 0);
-        const total = subtotal + DELIVERY - discount;
-        try {
-            await addDoc(collection(db, 'orders'), {
-                name, phone, address, payment,
-                note: document.getElementById('oNote').value,
-                items: cartItems,
-                subtotal, delivery: DELIVERY, discount, total,
-                status: 'pending',
-                createdAt: new Date().toISOString()
+window.removeCoupon = function() {
+    discountPercent = 0; discount = 0; appliedCoupon = '';
+    document.getElementById('couponApplied').classList.remove('show');
+    document.getElementById('couponInputWrap').style.display = 'flex';
+    document.getElementById('couponInput').value = '';
+    document.getElementById('couponMsg').textContent = '';
+    updateSummary();
+    showToast('কুপন সরানো হয়েছে', '🏷️');
+}
+
+/* ══ WHATSAPP ORDER ══ */
+window.openWhatsApp = function() {
+    if (!cartItems.length) { showToast('কার্ট খালি!', '⚠️'); return; }
+    const subtotal = cartItems.reduce((s, i) => s + i.price * i.qty, 0);
+    const delivery = getDeliveryCharge();
+    const total = subtotal + delivery - discount;
+    const area = document.getElementById('deliveryArea').value === 'inside' ? 'ঢাকার ভেতরে' : 'ঢাকার বাইরে';
+
+    let msg = '🛒 *নতুন অর্ডার — RS SHOP*\n\n';
+    cartItems.forEach(i => { msg += `▪ ${i.name} × ${i.qty} = ৳${(i.price * i.qty).toLocaleString()}\n`; });
+    msg += `\n📍 ডেলিভারি: ${area}`;
+    msg += `\nসাবটোটাল: ৳${subtotal.toLocaleString()}`;
+    msg += `\nডেলিভারি চার্জ: ৳${delivery}`;
+    if (discount) msg += `\nডিসকাউন্ট: -৳${discount.toLocaleString()} (${appliedCoupon})`;
+    msg += `\n\n*সর্বমোট: ৳${total.toLocaleString()}*`;
+
+    window.open('https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg), '_blank');
+}
+
+/* ══ CHECKOUT MODAL ══ */
+window.openCheckout = function() {
+    if (!cartItems.length) { showToast('কার্ট খালি!', '⚠️'); return; }
+    updateSummary();
+    document.getElementById('checkoutForm').style.display = 'block';
+    document.getElementById('orderSuccess').classList.remove('show');
+    document.getElementById('checkoutModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
+
+window.closeCheckout = function() {
+    document.getElementById('checkoutModal').classList.remove('open');
+    document.body.style.overflow = '';
+}
+
+/* Close on overlay click */
+document.getElementById('checkoutModal').addEventListener('click', function(e) {
+    if (e.target === this) closeCheckout();
+});
+
+/* ══ PAYMENT METHOD SELECTION ══ */
+window.selectPayMethod = function(method, el) {
+    selectedPayment = method;
+
+    /* Toggle selected class */
+    document.querySelectorAll('.pay-method-btn').forEach(b => b.classList.remove('selected'));
+    el.classList.add('selected');
+
+    /* Hide all info boxes */
+    document.querySelectorAll('.payment-info-box').forEach(b => { b.classList.remove('show'); });
+
+    /* Show relevant info box */
+    const mapId = {
+        'bKash': 'infoBox-bKash',
+        'Nagad': 'infoBox-Nagad',
+        'Rocket': 'infoBox-Rocket',
+        'Cash on Delivery': 'infoBox-COD'
+    };
+    const box = document.getElementById(mapId[method]);
+    if (box) box.classList.add('show');
+
+    /* Show/hide transaction ID field */
+    const txn = document.getElementById('txnGroup');
+    if (method === 'Cash on Delivery') {
+        txn.classList.remove('show');
+    } else {
+        txn.classList.add('show');
+    }
+}
+
+/* ══ GENERATE ORDER ID ══ */
+function generateOrderId() {
+    const now = new Date();
+    const d = String(now.getDate()).padStart(2, '0');
+    const m = String(now.getMonth() + 1).padStart(2, '0');
+    const rand = Math.floor(1000 + Math.random() * 9000);
+    return `RS-${d}${m}${rand}`;
+}
+
+/* ══ PLACE ORDER ══ */
+window.placeOrder = async function() {
+    const name = document.getElementById('oName').value.trim();
+    const phone = document.getElementById('oPhone').value.trim();
+    const address = document.getElementById('oAddress').value.trim();
+    const note = document.getElementById('oNote').value.trim();
+    const txnId = document.getElementById('transactionId').value.trim();
+
+    /* Validation */
+    if (!name) { showToast('আপনার নাম দিন!', '⚠️'); return; }
+    if (!phone || phone.length < 11) { showToast('সঠিক ফোন নম্বর দিন!', '⚠️'); return; }
+    if (!address) { showToast('ডেলিভারি ঠিকানা দিন!', '⚠️'); return; }
+    if (!selectedPayment) { showToast('পেমেন্ট পদ্ধতি বেছে নিন!', '⚠️'); return; }
+    if (selectedPayment !== 'Cash on Delivery' && !txnId) { showToast('Transaction ID দিন!', '⚠️'); return; }
+
+    const btn = document.getElementById('confirmBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> প্রসেসিং...';
+
+    const subtotal = cartItems.reduce((s, i) => s + i.price * i.qty, 0);
+    const delivery = getDeliveryCharge();
+    const total = subtotal + delivery - discount;
+    const area = document.getElementById('deliveryArea').value === 'inside' ? 'ঢাকার ভেতরে' : 'ঢাকার বাইরে';
+    const orderId = generateOrderId();
+
+    try {
+        await addDoc(collection(db, 'orders'), {
+            orderId,
+            customerName: name,
+            customerPhone: phone,
+            address,
+            deliveryArea: area,
+            payment: selectedPayment,
+            transactionId: txnId || '',
+            note,
+            items: cartItems.map(i => ({
+                name: i.name,
+                price: i.price,
+                qty: i.qty,
+                image: i.image || '',
+                category: i.category || '',
+                productId: i.id || ''
+            })),
+            subtotal,
+            delivery,
+            discount,
+            coupon: appliedCoupon,
+            total,
+            status: 'pending',
+            source: 'cart',
+            createdAt: serverTimestamp()
+        });
+
+        /* Clear cart */
+        cartItems = [];
+        localStorage.removeItem('rs_cart');
+        updateCounts();
+
+        /* Show success */
+        document.getElementById('checkoutForm').style.display = 'none';
+        document.getElementById('orderSuccess').classList.add('show');
+        document.getElementById('successOrderId').textContent = orderId;
+
+        /* WhatsApp auto-notify to shop owner */
+        let waMsg = `✅ *নতুন অর্ডার — RS SHOP*\n\n`;
+        waMsg += `📋 Order ID: ${orderId}\n`;
+        waMsg += `👤 নাম: ${name}\n📞 ফোন: ${phone}\n📍 ঠিকানা: ${address}\n🚚 এলাকা: ${area}\n💳 পেমেন্ট: ${selectedPayment}`;
+        if (txnId) waMsg += `\n🧾 TXN ID: ${txnId}`;
+        if (appliedCoupon) waMsg += `\n🎟️ কুপন: ${appliedCoupon} (-৳${discount})`;
+        waMsg += `\n\n*সর্বমোট: ৳${total.toLocaleString()}*`;
+
+        setTimeout(() => {
+            window.open('https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(waMsg), '_blank');
+        }, 1500);
+
+    } catch(e) {
+        console.error(e);
+        showToast('অর্ডার দিতে সমস্যা হয়েছে! আবার চেষ্টা করুন।', '❌');
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-check-circle"></i> অর্ডার নিশ্চিত করুন';
+    }
+}
+
+/* ══ LOAD SUGGESTIONS (Bundle / Related Products) ══ */
+async function loadSuggestions() {
+    try {
+        /* Get categories from cart items */
+        const categories = [...new Set(cartItems.map(i => i.category).filter(Boolean))];
+        if (!categories.length) return;
+
+        const cartIds = cartItems.map(i => i.id).filter(Boolean);
+        let products = [];
+
+        for (const cat of categories) {
+            const q = query(collection(db, 'products'), where('category', '==', cat), limit(8));
+            const snap = await getDocs(q);
+            snap.forEach(d => {
+                if (!cartIds.includes(d.id) && products.length < 4) {
+                    products.push({ id: d.id, ...d.data() });
+                }
             });
-            localStorage.removeItem('rs_cart');
-            cartItems = [];
-            closeCheckout();
-            let waMsg = `✅ *অর্ডার নিশ্চিত — RS SHOP*\n\nনাম: ${name}\nফোন: ${phone}\nঠিকানা: ${address}\nপেমেন্ট: ${payment}\n*সর্বমোট: ৳${total}*`;
-            window.open('https://wa.me/880XXXXXXXXXX?text=' + encodeURIComponent(waMsg), '_blank');
-            alert('✅ অর্ডার সফলভাবে দেওয়া হয়েছে!');
-            renderCart();
-        } catch(e) {
-            alert('❌ অর্ডার দিতে সমস্যা হয়েছে! আবার চেষ্টা করুন।');
         }
-    }
 
+        if (!products.length) return;
+
+        document.getElementById('suggestionsSection').style.display = 'block';
+        document.getElementById('suggestionsGrid').innerHTML = products.slice(0, 4).map(p => `
+            <a href="product.html?id=${p.id}" class="suggest-card">
+                <img src="${p.image || p.imageUrl || ''}" alt="${p.name}" onerror="this.src='https://via.placeholder.com/300x200?text=RS+SHOP'">
+                <div class="suggest-card-info">
+                    <div class="suggest-card-name">${p.name}</div>
+                    <div class="suggest-card-price">৳${Number(p.price).toLocaleString()}</div>
+                </div>
+            </a>`).join('');
+    } catch(e) { console.error('Suggestions error:', e); }
+}
+
+/* ══ UPDATE COUNTS ══ */
+function updateCounts() {
+    const cart = JSON.parse(localStorage.getItem('rs_cart') || '[]');
+    const count = cart.reduce((s, i) => s + (i.qty || 1), 0);
+    document.getElementById('cartCount').textContent = count;
+
+    const wl = JSON.parse(localStorage.getItem('rs_wishlist') || '[]');
+    const wlBadge = document.getElementById('wishlistCount');
+    if (wlBadge) wlBadge.textContent = wl.length;
+}
+
+/* ══ THEME DETECTION ══ */
+function detectTheme() {
+    const saved = localStorage.getItem('rs_theme');
+    if (saved) document.documentElement.setAttribute('data-theme', saved);
+}
+
+/* ══ INIT ══ */
+async function init() {
+    detectTheme();
+    updateCounts();
     renderCart();
+    await loadSettings();
+    updateSummary(); /* Re-calc with Firebase delivery charges */
+    loadSuggestions();
+}
+
+init();
 </script>
+
 <script src="main.js"></script>
 </body>
 </html>

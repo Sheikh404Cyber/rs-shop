@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Order Track — RS SHOP</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Raleway:wght@300;400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    .page-header {
+      padding: 140px 0 60px;
+      background: radial-gradient(ellipse at 30% 50%, rgba(30,144,255,0.06) 0%, transparent 60%),
+                  radial-gradient(ellipse at 70% 30%, rgba(201,168,76,0.05) 0%, transparent 50%),
+                  var(--bg);
+      text-align: center; border-bottom: 1px solid var(--border);
+      position: relative; overflow: hidden;
+    }
+    .page-header::before {
+      content: '📦'; position: absolute; font-size: 280px; opacity: 0.02;
+      top: 50%; left: 50%; transform: translate(-50%,-50%); pointer-events: none;
+    }
+    .page-header .section-tag { margin-bottom: 12px; border-color: rgba(30,144,255,0.3); color: #1e90ff; }
+    .page-header h1 {
+      font-family: 'Cinzel', serif; font-size: clamp(32px,5vw,56px);
+      font-weight: 900; color: var(--text); margin-bottom: 12px;
+    }
+    .page-header h1 span { color: #1e90ff; }
+    .page-header p { font-size: 14px; color: var(--text-muted); letter-spacing: 1px; max-width: 500px; margin: 0 auto; }
+    .breadcrumb {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      margin-top: 20px; font-size: 12px; color: var(--text-muted);
+    }
+    .breadcrumb a { color: var(--gold); transition: opacity 0.3s; }
+    .breadcrumb i { font-size: 8px; }
+
+    .track-section { padding: 80px 0 120px; min-height: 60vh; }
+
+    /* ── Search Box ── */
+    .track-search-box {
+      max-width: 560px; margin: 0 auto 60px; text-align: center;
+    }
+    .track-search-box label {
+      display: block; font-size: 14px; color: var(--text-muted); margin-bottom: 16px; letter-spacing: 0.5px;
+    }
+    .track-input-wrap {
+      display: flex; gap: 0; background: var(--bg3);
+      border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
+      transition: border-color 0.3s;
+    }
+    .track-input-wrap:focus-within { border-color: var(--gold); }
+    .track-input-wrap input {
+      flex: 1; padding: 18px 24px; background: none; border: none; outline: none;
+      color: var(--text); font-size: 16px; font-family: 'Raleway', sans-serif;
+      letter-spacing: 1px;
+    }
+    .track-input-wrap input::placeholder { color: var(--text-muted); font-size: 14px; }
+    .track-input-wrap button {
+      padding: 18px 32px; background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+      border: none; color: #000; font-size: 13px; font-weight: 800;
+      letter-spacing: 1px; cursor: pointer; transition: all 0.3s;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .track-input-wrap button:hover { background: var(--gold-light); }
+    .track-hint {
+      margin-top: 12px; font-size: 12px; color: var(--text-muted);
+    }
+    .track-hint code {
+      background: var(--bg4); padding: 2px 8px; border-radius: 4px;
+      color: var(--gold); font-size: 11px;
+    }
+
+    /* ── Result ── */
+    .track-result { max-width: 640px; margin: 0 auto; display: none; }
+    .track-result.show { display: block; }
+
+    .track-card {
+      background: var(--bg3); border: 1px solid var(--border); border-radius: 16px;
+      padding: 32px; overflow: hidden;
+    }
+    .track-card-header {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px; margin-bottom: 28px;
+      padding-bottom: 20px; border-bottom: 1px solid var(--border);
+    }
+    .track-order-id {
+      font-family: 'Cinzel', serif; font-size: 20px; font-weight: 900; color: var(--gold);
+    }
+    .track-status-badge {
+      padding: 6px 18px; border-radius: 50px; font-size: 11px; font-weight: 800;
+      letter-spacing: 1px; text-transform: uppercase;
+    }
+    .status-pending { background: rgba(255,165,2,0.15); color: #ffa502; }
+    .status-confirmed { background: rgba(30,144,255,0.15); color: #1e90ff; }
+    .status-shipped { background: rgba(155,89,182,0.15); color: #9b59b6; }
+    .status-delivered { background: rgba(46,213,115,0.15); color: #2ed573; }
+    .status-cancelled { background: rgba(255,71,87,0.15); color: #ff4757; }
+
+    /* ── Timeline ── */
+    .track-timeline { position: relative; margin: 30px 0; padding-left: 40px; }
+    .track-timeline::before {
+      content: ''; position: absolute; left: 14px; top: 0; bottom: 0;
+      width: 2px; background: var(--border);
+    }
+    .timeline-step {
+      position: relative; margin-bottom: 28px; padding-bottom: 4px;
+    }
+    .timeline-step:last-child { margin-bottom: 0; }
+    .timeline-dot {
+      position: absolute; left: -40px; top: 2px;
+      width: 30px; height: 30px; border-radius: 50%;
+      background: var(--bg4); border: 2px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; color: var(--text-muted); z-index: 2; transition: all 0.3s;
+    }
+    .timeline-step.active .timeline-dot {
+      background: var(--gold); border-color: var(--gold); color: #000;
+      box-shadow: 0 0 12px rgba(201,168,76,0.4);
+    }
+    .timeline-step.active .timeline-dot.green {
+      background: #2ed573; border-color: #2ed573;
+      box-shadow: 0 0 12px rgba(46,213,115,0.4);
+    }
+    .timeline-step.active .timeline-dot.red {
+      background: #ff4757; border-color: #ff4757;
+      box-shadow: 0 0 12px rgba(255,71,87,0.4);
+    }
+    .timeline-content h4 { font-size: 14px; color: var(--text); margin-bottom: 4px; }
+    .timeline-content p { font-size: 12px; color: var(--text-muted); }
+    .timeline-step:not(.active) .timeline-content h4 { color: var(--text-muted); }
+
+    /* ── Order Info ── */
+    .track-info-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 28px;
+      padding-top: 24px; border-top: 1px solid var(--border);
+    }
+    .track-info-item label { display: block; font-size: 10px; letter-spacing: 2px; color: var(--text-muted); text-transform: uppercase; margin-bottom: 4px; }
+    .track-info-item span { font-size: 14px; color: var(--text); font-weight: 600; }
+    .track-info-item.full { grid-column: 1 / -1; }
+
+    /* ── Not Found ── */
+    .track-not-found {
+      text-align: center; padding: 60px 20px; display: none;
+    }
+    .track-not-found.show { display: block; }
+    .track-not-found i { font-size: 48px; color: #ff4757; margin-bottom: 16px; display: block; }
+    .track-not-found h3 { font-size: 18px; color: var(--text); margin-bottom: 8px; }
+    .track-not-found p { font-size: 13px; color: var(--text-muted); }
+
+    /* ── Loading ── */
+    .track-loading { text-align: center; padding: 40px; display: none; }
+    .track-loading.show { display: block; }
+
+    /* ── Nav dropdown ── */
+    .nav-links li { position: relative; }
+    .nav-dropdown {
+      position: absolute; top: 100%; left: 50%; transform: translateX(-50%) translateY(10px);
+      background: rgba(10,10,10,0.97); backdrop-filter: blur(20px);
+      border: 1px solid var(--border); border-radius: 10px;
+      padding: 12px 0; min-width: 170px; opacity: 0; visibility: hidden;
+      transition: all 0.3s ease; z-index: 100; box-shadow: 0 20px 50px rgba(0,0,0,0.7);
+    }
+    .nav-links li:hover .nav-dropdown { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(4px); }
+    .nav-dropdown a {
+      display: block !important; padding: 8px 22px !important; font-size: 12px !important;
+      color: var(--text-muted) !important; letter-spacing: 1px !important; transition: all 0.3s !important; white-space: nowrap;
+    }
+    .nav-dropdown a:hover { color: var(--gold) !important; background: rgba(201,168,76,0.06); padding-left: 28px !important; }
+    .nav-dropdown a::after { display: none !important; }
+    .has-dropdown > a .drop-arrow { font-size: 8px; margin-left: 4px; transition: transform 0.3s; }
+    .has-dropdown:hover > a .drop-arrow { transform: rotate(180deg); }
+
+    @media(max-width:768px) {
+      .track-info-grid { grid-template-columns: 1fr; }
+      .track-input-wrap { flex-direction: column; }
+      .track-input-wrap button { justify-content: center; }
+      .nav-dropdown { display: none !important; }
+      .has-dropdown > a .drop-arrow { display: none; }
+      .page-header { padding: 120px 0 40px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ LOADER ══ -->
+<div class="loader" id="loader">
+  <div class="loader-inner">
+    <div class="loader-logo"><span class="logo-rs">RS</span><span class="logo-shop">SHOP</span></div>
+    <div class="loader-bar"><div class="loader-fill"></div></div>
+    <div class="loader-text">LOADING EXPERIENCE...</div>
+  </div>
+</div>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-follower" id="cursorFollower"></div>
+
+<!-- ══ NAVBAR ══ -->
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo"><span class="logo-rs">RS</span><span class="logo-shop">SHOP</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li class="has-dropdown">
+        <a href="watches.html">Watches <i class="fas fa-chevron-down drop-arrow"></i></a>
+        <div class="nav-dropdown">
+          <a href="watches.html?gender=men"><i class="fas fa-male" style="width:16px;margin-right:6px"></i>Men</a>
+          <a href="watches.html?gender=women"><i class="fas fa-female" style="width:16px;margin-right:6px"></i>Women</a>
+          <a href="watches.html?gender=kids"><i class="fas fa-child" style="width:16px;margin-right:6px"></i>Kids</a>
+          <a href="watches.html"><i class="fas fa-th" style="width:16px;margin-right:6px"></i>All Watches</a>
+        </div>
+      </li>
+      <li class="has-dropdown">
+        <a href="sunglasses.html">Sunglasses <i class="fas fa-chevron-down drop-arrow"></i></a>
+        <div class="nav-dropdown">
+          <a href="sunglasses.html?gender=men"><i class="fas fa-male" style="width:16px;margin-right:6px"></i>Men</a>
+          <a href="sunglasses.html?gender=women"><i class="fas fa-female" style="width:16px;margin-right:6px"></i>Women</a>
+          <a href="sunglasses.html?gender=kids"><i class="fas fa-child" style="width:16px;margin-right:6px"></i>Kids</a>
+          <a href="sunglasses.html"><i class="fas fa-th" style="width:16px;margin-right:6px"></i>All Sunglasses</a>
+        </div>
+      </li>
+      <li><a href="gift.html">🎁 Gift Collection</a></li>
+      <li><a href="track.html" class="active">Order Track</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="wishlist.html" class="cart-icon" title="Wishlist" style="margin-right:4px">
+        <i class="fas fa-heart"></i>
+        <span class="cart-badge" id="wishCount" style="background:#ff4757">0</span>
+      </a>
+      <a href="cart.html" class="cart-icon" title="Cart">
+        <i class="fas fa-shopping-bag"></i>
+        <span class="cart-badge" id="cartCount">0</span>
+      </a>
+      <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+    </div>
+  </div>
+</nav>
+
+<!-- ══ PAGE HEADER ══ -->
+<section class="page-header">
+  <div class="container">
+    <span class="section-tag">📦 Track</span>
+    <h1>Order <span>Tracking</span></h1>
+    <p>আপনার অর্ডার এর বর্তমান অবস্থা জানুন</p>
+    <div class="breadcrumb">
+      <a href="index.html">Home</a>
+      <i class="fas fa-chevron-right"></i>
+      <span>Order Track</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TRACK SECTION ══ -->
+<section class="track-section">
+  <div class="container">
+
+    <!-- Search -->
+    <div class="track-search-box">
+      <label>আপনার Order ID দিন</label>
+      <div class="track-input-wrap">
+        <input type="text" id="trackInput" placeholder="যেমন: abc123" onkeypress="if(event.key==='Enter')trackOrder()"/>
+        <button onclick="trackOrder()"><i class="fas fa-search"></i> Track</button>
+      </div>
+      <p class="track-hint">Order করার পর যে ID পেয়েছিলেন সেটা দিন। যেমন: <code>#a1b2c3</code></p>
+    </div>
+
+    <!-- Loading -->
+    <div class="track-loading" id="trackLoading">
+      <div class="spinner"></div>
+      <p style="color:var(--text-muted);margin-top:12px">অর্ডার খুঁজছি...</p>
+    </div>
+
+    <!-- Not Found -->
+    <div class="track-not-found" id="trackNotFound">
+      <i class="fas fa-exclamation-circle"></i>
+      <h3>অর্ডার পাওয়া যায়নি</h3>
+      <p>এই Order ID তে কোনো অর্ডার নেই। সঠিক ID দিয়ে আবার চেষ্টা করুন।</p>
+    </div>
+
+    <!-- Result -->
+    <div class="track-result" id="trackResult">
+      <div class="track-card">
+        <div class="track-card-header">
+          <span class="track-order-id" id="trOrderId">#------</span>
+          <span class="track-status-badge" id="trStatus">---</span>
+        </div>
+
+        <!-- Timeline -->
+        <div class="track-timeline" id="trTimeline"></div>
+
+        <!-- Order Info -->
+        <div class="track-info-grid">
+          <div class="track-info-item">
+            <label>নাম</label>
+            <span id="trName">---</span>
+          </div>
+          <div class="track-info-item">
+            <label>ফোন</label>
+            <span id="trPhone">---</span>
+          </div>
+          <div class="track-info-item full">
+            <label>ঠিকানা</label>
+            <span id="trAddress">---</span>
+          </div>
+          <div class="track-info-item">
+            <label>পণ্য</label>
+            <span id="trProduct">---</span>
+          </div>
+          <div class="track-info-item">
+            <label>মোট টাকা</label>
+            <span id="trTotal" style="color:var(--gold)">---</span>
+          </div>
+          <div class="track-info-item">
+            <label>পেমেন্ট</label>
+            <span id="trPayment">---</span>
+          </div>
+          <div class="track-info-item">
+            <label>তারিখ</label>
+            <span id="trDate">---</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="f-brand">
+          <div class="footer-logo"><span class="logo-rs">RS</span><span class="logo-shop">SHOP</span></div>
+          <p>The best premium watch, sunglass & gift shop in Purbadhala. Quality products at the best price.</p>
+          <div class="f-social">
+            <a href="https://web.facebook.com/sojib.islam.739215" target="_blank"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://wa.me/8801996283245" target="_blank"><i class="fab fa-whatsapp"></i></a>
+          </div>
+        </div>
+        <div class="f-links">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="watches.html">Watches</a></li>
+            <li><a href="sunglasses.html">Sunglasses</a></li>
+            <li><a href="gift.html">Gift Collection</a></li>
+            <li><a href="track.html">Order Track</a></li>
+          </ul>
+        </div>
+        <div class="f-links">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="#">Delivery Policy</a></li>
+            <li><a href="#">Return Policy</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+          </ul>
+        </div>
+        <div class="f-contact">
+          <h4>Contact Us</h4>
+          <p><i class="fas fa-map-marker-alt"></i> Purbadhala Station Road, Kazi Super Market</p>
+          <p><i class="fas fa-phone"></i> 01996283245</p>
+          <p><i class="fab fa-whatsapp"></i> 01996283245</p>
+          <div class="payment-methods">
+            <span class="pay bkash">bKash</span>
+            <span class="pay nagad">Nagad</span>
+            <span class="pay rocket">Rocket</span>
+            <span class="pay cod">Cash on Delivery</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container"><p>© 2025 RS SHOP. All Rights Reserved | Developed by <strong>AMIN SHEIKH</strong></p></div>
+  </div>
+</footer>
+
+<a href="https://wa.me/8801996283245" class="wa-float" target="_blank">
+  <i class="fab fa-whatsapp"></i>
+  <span class="wa-tip">Order Now</span>
+</a>
+
+<!-- ══ FIREBASE + SCRIPTS ══ -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+  import { getFirestore, collection, getDocs, query, where, doc, getDoc, orderBy }
+    from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAerNu3OWe2bCejiGXxnQeXr9yiDR1FysU",
+    authDomain: "sojib-shop.firebaseapp.com",
+    projectId: "sojib-shop",
+    storageBucket: "sojib-shop.firebasestorage.app",
+    messagingSenderId: "1061639520028",
+    appId: "1:1061639520028:web:d164fdf6f3d0bbd79304d9"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db  = getFirestore(app);
+
+  const statusSteps = [
+    { key: 'pending',   label: 'অর্ডার গ্রহণ', desc: 'আপনার অর্ডার সফলভাবে গ্রহণ করা হয়েছে', icon: 'fa-check', dotClass: '' },
+    { key: 'confirmed', label: 'অর্ডার নিশ্চিত', desc: 'আপনার অর্ডার নিশ্চিত করা হয়েছে', icon: 'fa-thumbs-up', dotClass: '' },
+    { key: 'shipped',   label: 'শিপিং হচ্ছে',  desc: 'আপনার পণ্য ডেলিভারি হচ্ছে', icon: 'fa-truck', dotClass: '' },
+    { key: 'delivered', label: 'ডেলিভারি সম্পন্ন', desc: 'আপনার পণ্য সফলভাবে পৌঁছে গেছে', icon: 'fa-box-open', dotClass: 'green' },
+  ];
+
+  window.trackOrder = async function() {
+    const input = document.getElementById('trackInput').value.trim().replace('#', '');
+    if (!input) { alert('অর্ডার ID দিন'); return; }
+
+    const loading  = document.getElementById('trackLoading');
+    const result   = document.getElementById('trackResult');
+    const notFound = document.getElementById('trackNotFound');
+
+    loading.classList.add('show');
+    result.classList.remove('show');
+    notFound.classList.remove('show');
+
+    try {
+      // Try direct doc fetch first
+      let orderData = null;
+      let orderId = input;
+
+      const docRef = doc(db, 'orders', input);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        orderData = docSnap.data();
+        orderId = docSnap.id;
+      } else {
+        // Search by last 6 chars of ID
+        const allOrders = await getDocs(collection(db, 'orders'));
+        allOrders.forEach(d => {
+          if (d.id.slice(-6) === input || d.id.includes(input)) {
+            orderData = d.data();
+            orderId = d.id;
+          }
+        });
+      }
+
+      loading.classList.remove('show');
+
+      if (!orderData) {
+        notFound.classList.add('show');
+        return;
+      }
+
+      // Fill data
+      document.getElementById('trOrderId').textContent = '#' + orderId.slice(-6);
+
+      const status = orderData.status || 'pending';
+      const statusEl = document.getElementById('trStatus');
+      const statusLabels = {
+        pending: 'অপেক্ষমান', confirmed: 'নিশ্চিত',
+        shipped: 'শিপিং হচ্ছে', delivered: 'ডেলিভারি সম্পন্ন', cancelled: 'বাতিল'
+      };
+      statusEl.textContent = statusLabels[status] || status;
+      statusEl.className = 'track-status-badge status-' + status;
+
+      // Timeline
+      const timeline = document.getElementById('trTimeline');
+      if (status === 'cancelled') {
+        timeline.innerHTML = `
+          <div class="timeline-step active">
+            <div class="timeline-dot red"><i class="fas fa-times"></i></div>
+            <div class="timeline-content">
+              <h4>অর্ডার বাতিল করা হয়েছে</h4>
+              <p>দুঃখিত, আপনার অর্ডার বাতিল করা হয়েছে</p>
+            </div>
+          </div>`;
+      } else {
+        const statusOrder = ['pending', 'confirmed', 'shipped', 'delivered'];
+        const currentIdx = statusOrder.indexOf(status);
+
+        timeline.innerHTML = statusSteps.map((step, i) => {
+          const isActive = i <= currentIdx;
+          return `
+            <div class="timeline-step ${isActive ? 'active' : ''}">
+              <div class="timeline-dot ${step.dotClass}"><i class="fas ${step.icon}"></i></div>
+              <div class="timeline-content">
+                <h4>${step.label}</h4>
+                <p>${step.desc}</p>
+              </div>
+            </div>`;
+        }).join('');
+      }
+
+      // Info
+      document.getElementById('trName').textContent = orderData.customerName || orderData.name || '---';
+      document.getElementById('trPhone').textContent = orderData.customerPhone || orderData.phone || '---';
+      document.getElementById('trAddress').textContent = orderData.customerAddress || orderData.address || '---';
+      document.getElementById('trProduct').textContent = orderData.productName || orderData.product?.name || '---';
+      document.getElementById('trTotal').textContent = '৳' + Number(orderData.total || 0).toLocaleString();
+      document.getElementById('trPayment').textContent = (orderData.paymentMethod || '---').toUpperCase();
+
+      if (orderData.createdAt) {
+        const d = orderData.createdAt.toDate ? orderData.createdAt.toDate() : new Date(orderData.createdAt);
+        document.getElementById('trDate').textContent = d.toLocaleDateString('bn-BD', {
+          year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit'
+        });
+      }
+
+      result.classList.add('show');
+
+    } catch(e) {
+      console.error('Track error:', e);
+      loading.classList.remove('show');
+      notFound.classList.add('show');
+    }
+  };
+
+  // Check URL param
+  const params = new URLSearchParams(window.location.search);
+  const oid = params.get('id');
+  if (oid) {
+    document.getElementById('trackInput').value = oid;
+    trackOrder();
+  }
+
+  // ===== COUNTS =====
+  function updateCounts() {
+    const cart = JSON.parse(localStorage.getItem('rs_cart') || '[]');
+    const wish = JSON.parse(localStorage.getItem('rs_wishlist') || '[]');
+    document.querySelectorAll('#cartCount').forEach(el => el.textContent = cart.reduce((s,i) => s + i.qty, 0));
+    document.querySelectorAll('#wishCount').forEach(el => el.textContent = wish.length);
+  }
+
+  if (localStorage.getItem('rs_theme') === 'light') document.body.setAttribute('data-theme', 'light');
+  updateCounts();
+</script>
+
+<script src="main.js"></script>
+</body>
+</html>

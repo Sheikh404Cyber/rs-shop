@@ -1,1006 +1,195 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RS SHOP — Premium Watch, Sunglass & Gift Collection</title>
-  <link rel="stylesheet" href="style.css"/>
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Raleway:wght@300;400;600;700;800&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-  <style>
-    /* ══ INDEX-ONLY STYLES ══ */
-    .nav-links li{position:relative}
-    .nav-dropdown{position:absolute;top:100%;left:50%;transform:translateX(-50%) translateY(10px);background:rgba(10,10,10,0.97);backdrop-filter:blur(20px);border:1px solid var(--border);border-radius:10px;padding:12px 0;min-width:170px;opacity:0;visibility:hidden;transition:all .3s ease;z-index:100;box-shadow:0 20px 50px rgba(0,0,0,0.7)}
-    .nav-links li:hover .nav-dropdown{opacity:1;visibility:visible;transform:translateX(-50%) translateY(4px)}
-    .nav-dropdown a{display:block!important;padding:8px 22px!important;font-size:12px!important;color:var(--text-muted)!important;letter-spacing:1px!important;transition:all .3s!important;white-space:nowrap}
-    .nav-dropdown a:hover{color:var(--gold)!important;background:rgba(201,168,76,0.06);padding-left:28px!important}
-    .nav-dropdown a::after{display:none!important}
-    .has-dropdown>a .drop-arrow{font-size:8px;margin-left:4px;transition:transform .3s}
-    .has-dropdown:hover>a .drop-arrow{transform:rotate(180deg)}
-
-    /* ══ HERO ══ */
-    .hero{
-      position:relative;
-      height:100vh;
-      min-height:600px;
-      max-height:900px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      overflow:hidden;
-      background:#000;
-    }
-    .hero-slides{position:absolute;inset:0;z-index:0}
-    .hero-slide{position:absolute;inset:0;opacity:0;transition:opacity 1.2s ease;background-size:cover;background-position:center}
-    .hero-slide.active{opacity:1}
-    .hero-slide-dots{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:3}
-    .hero-slide-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.4);border:1px solid rgba(255,255,255,0.5);cursor:pointer;transition:all .3s}
-    .hero-slide-dot.active{background:var(--gold);border-color:var(--gold);width:24px;border-radius:4px}
-    .hero-slide-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:3;background:rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.2);color:#fff;width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .3s;font-size:16px}
-    .hero-slide-arrow:hover{background:var(--gold);color:#000;border-color:var(--gold)}
-    .hero-arrow-prev{left:20px}
-    .hero-arrow-next{right:20px}
-    .hero-particles{position:absolute;inset:0;z-index:1;pointer-events:none}
-    .hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0.3) 0%,rgba(0,0,0,0.7) 100%);z-index:1}
-    .hero-content{
-      position:relative;
-      z-index:2;
-      text-align:center;
-      max-width:800px;
-      padding:0 20px;
-    }
-    .hero-eyebrow{font-size:clamp(11px,1.5vw,13px);letter-spacing:5px;color:var(--gold);text-transform:uppercase;font-weight:700;margin-bottom:18px;display:block}
-    .hero-title{margin-bottom:16px}
-    .hero-title .line1{display:block;font-family:'Cinzel',serif;font-size:clamp(28px,4vw,56px);font-weight:900;color:#fff;letter-spacing:3px;line-height:1.1}
-    .hero-title .line2{display:block;font-family:'Cinzel',serif;font-size:clamp(36px,6vw,72px);font-weight:900;color:var(--gold);letter-spacing:5px;line-height:1.1;text-transform:uppercase}
-    .hero-sub{font-size:clamp(12px,1.6vw,16px);color:rgba(255,255,255,0.7);letter-spacing:1px;margin-bottom:36px;font-weight:300}
-
-    /* ══ HERO BUTTONS — COMPACT ROW ══ */
-    .hero-btns{
-      display:flex;
-      gap:12px;
-      justify-content:center;
-      align-items:center;
-      flex-wrap:wrap;
-    }
-    .hero-btns .btn-primary{
-      padding:13px 28px;
-      font-size:12px;
-      letter-spacing:1.5px;
-      white-space:nowrap;
-    }
-    .hero-btns .btn-outline{
-      padding:13px 22px;
-      font-size:12px;
-      letter-spacing:1.5px;
-      white-space:nowrap;
-    }
-    .hero-btns .btn-gift{
-      padding:13px 22px;
-      font-size:12px;
-      letter-spacing:1.5px;
-      white-space:nowrap;
-      border:1px solid #ff6b81;
-      color:#ff6b81;
-      background:transparent;
-      border-radius:50px;
-      font-family:'Raleway',sans-serif;
-      font-weight:700;
-      text-decoration:none;
-      transition:all .3s;
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-    }
-    .hero-btns .btn-gift:hover{background:#ff6b81;color:#fff}
-
-    /* ══ HERO SEARCH BAR (inside hero, bottom) ══ */
-    .hero-search{
-      margin-top:32px;
-      display:flex;
-      align-items:center;
-      background:rgba(255,255,255,0.08);
-      backdrop-filter:blur(16px);
-      border:1px solid rgba(255,255,255,0.15);
-      border-radius:50px;
-      padding:6px 6px 6px 20px;
-      max-width:480px;
-      margin-left:auto;
-      margin-right:auto;
-    }
-    .hero-search i{color:rgba(255,255,255,0.5);font-size:15px;margin-right:10px;flex-shrink:0}
-    .hero-search input{
-      flex:1;background:none;border:none;outline:none;
-      color:#fff;font-size:13px;font-family:'Raleway',sans-serif;
-      min-width:0;
-    }
-    .hero-search input::placeholder{color:rgba(255,255,255,0.4)}
-    .hero-search .hs-btn{
-      background:linear-gradient(135deg,var(--gold-dark),var(--gold));
-      color:#000;border:none;padding:10px 22px;border-radius:50px;
-      font-size:11px;font-weight:800;letter-spacing:1px;
-      cursor:pointer;transition:all .3s;white-space:nowrap;flex-shrink:0;
-    }
-    .hero-search .hs-btn:hover{box-shadow:0 6px 20px rgba(201,168,76,0.4)}
-    .search-results{
-      display:none;position:absolute;
-      top:calc(100% + 8px);left:0;right:0;
-      background:rgba(10,10,10,0.98);backdrop-filter:blur(16px);
-      border:1px solid var(--border);border-radius:12px;
-      max-height:380px;overflow-y:auto;z-index:100;padding:8px;
-    }
-    .search-results.show{display:block}
-    .search-item{display:flex;align-items:center;gap:14px;padding:10px 14px;border-radius:8px;cursor:pointer;transition:background .3s}
-    .search-item:hover{background:rgba(201,168,76,0.06)}
-    .search-item img{width:48px;height:48px;object-fit:cover;border-radius:8px;border:1px solid var(--border)}
-    .search-item-info h4{font-size:13px;color:var(--text);font-weight:600}
-    .search-item-info span{font-size:12px;color:var(--gold);font-weight:700}
-    .search-no-result{text-align:center;padding:20px;color:var(--text-muted);font-size:13px}
-    .hero-search-wrap{position:relative;max-width:480px;margin:32px auto 0}
-
-    .hero-scroll-hint{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);z-index:2;text-align:center}
-    .hero-scroll-hint span{font-size:9px;letter-spacing:3px;color:rgba(255,255,255,0.4);text-transform:uppercase;display:block;margin-bottom:5px}
-    .scroll-line{width:1px;height:26px;background:linear-gradient(to bottom,var(--gold),transparent);margin:0 auto;animation:scrollPulse 2s ease infinite}
-    @keyframes scrollPulse{0%,100%{opacity:1}50%{opacity:0.3}}
-
-    /* ══ FLASH SALE ══ */
-    .flash-sale-section{padding:60px 0;background:linear-gradient(135deg,rgba(255,71,87,0.06),rgba(255,165,2,0.04));border-top:1px solid rgba(255,71,87,0.15);border-bottom:1px solid rgba(255,71,87,0.15)}
-    .flash-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:40px}
-    .flash-title-wrap{display:flex;align-items:center;gap:14px}
-    .flash-icon{font-size:28px;animation:flash-pulse 1s ease infinite}
-    @keyframes flash-pulse{0%,100%{opacity:1}50%{opacity:0.4}}
-    .flash-title{font-family:'Cinzel',serif;font-size:clamp(20px,3vw,32px);color:#ff4757}
-    .flash-sub{font-size:12px;color:var(--text-muted);letter-spacing:1px}
-    .flash-timer-wrap{display:flex;gap:10px}
-    .flash-time-box{background:rgba(255,71,87,0.1);border:1px solid rgba(255,71,87,0.3);border-radius:10px;padding:10px 14px;text-align:center;min-width:64px}
-    .flash-time-box .num{font-family:'Cinzel',serif;font-size:24px;font-weight:900;color:#ff4757;display:block}
-    .flash-time-box .lbl{font-size:9px;letter-spacing:2px;color:var(--text-muted);text-transform:uppercase}
-
-    /* ══ CATEGORY TABS ══ */
-    .cat-tabs{display:flex;gap:10px;margin-bottom:30px;flex-wrap:wrap}
-    .cat-tab{padding:8px 22px;border:1px solid var(--border);border-radius:50px;font-size:12px;font-weight:700;letter-spacing:1px;color:var(--text-muted);background:transparent;cursor:pointer;transition:all .3s;text-transform:uppercase;font-family:'Raleway',sans-serif}
-    .cat-tab:hover{border-color:var(--gold);color:var(--gold)}
-    .cat-tab.active{background:var(--gold);color:#000;border-color:var(--gold)}
-
-    /* ══ PRODUCTS SECTION ══ */
-    .products-section{padding:100px 0}
-    .products-section .section-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:20px}
-
-    /* ══ 3 CATEGORY CARDS ══ */
-    .cat-showcase-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-    .cat-showcase-card{position:relative;background:var(--bg3);border:1px solid var(--border);border-radius:16px;padding:40px 30px;text-align:center;overflow:hidden;transition:all .4s;min-height:240px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-decoration:none;color:inherit}
-    .cat-showcase-card:hover{transform:translateY(-8px);border-color:var(--gold);box-shadow:0 30px 60px rgba(0,0,0,0.5)}
-    .cat-showcase-icon{font-size:48px;margin-bottom:16px;display:block}
-    .cat-showcase-card h3{font-family:'Cinzel',serif;font-size:18px;color:var(--text);margin-bottom:8px}
-    .cat-showcase-card p{font-size:12px;color:var(--text-muted);margin-bottom:20px;letter-spacing:.5px}
-    .cat-showcase-card .cat-link{font-size:12px;font-weight:700;color:var(--gold);letter-spacing:1px;display:inline-flex;align-items:center;gap:6px;transition:gap .3s}
-    .cat-showcase-card:hover .cat-link{gap:12px}
-    .cat-showcase-glow{position:absolute;bottom:-60px;right:-60px;width:160px;height:160px;background:radial-gradient(circle,rgba(201,168,76,0.1),transparent 70%);border-radius:50%;transition:transform .5s}
-    .cat-showcase-card:hover .cat-showcase-glow{transform:scale(2)}
-
-    /* ══ HAPPY COUNTER ══ */
-    .happy-section{padding:80px 0;background:linear-gradient(135deg,rgba(201,168,76,0.03) 0%,var(--bg) 100%);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-    .happy-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;max-width:900px;margin:0 auto}
-    .happy-card{text-align:center;padding:32px 16px;background:var(--bg2);border:1px solid var(--border);border-radius:16px;transition:all .4s}
-    .happy-card:hover{transform:translateY(-6px);border-color:var(--gold);box-shadow:0 20px 50px rgba(0,0,0,0.3)}
-    .happy-card .happy-icon{font-size:36px;display:block;margin-bottom:14px}
-    .happy-card .happy-num{font-family:'Cinzel',serif;font-size:clamp(28px,4vw,42px);font-weight:900;color:var(--gold);display:block;margin-bottom:6px}
-    .happy-card .happy-label{font-size:12px;color:var(--text-muted);letter-spacing:1.5px;text-transform:uppercase;font-weight:700}
-
-    /* ══ TRUST BADGES ══ */
-    .trust-section{padding:60px 0;background:var(--bg)}
-    .trust-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:20px;text-align:center}
-    .trust-item .trust-icon{font-size:32px;margin-bottom:10px;display:block}
-    .trust-item h4{font-size:12px;font-weight:700;color:var(--text);letter-spacing:1px;margin-bottom:4px}
-    .trust-item p{font-size:11px;color:var(--text-muted)}
-
-    /* ══ PAYMENT LOGOS ══ */
-    .payment-methods{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;align-items:center}
-    .pay-logo{height:28px;border-radius:4px;object-fit:contain;background:#fff;padding:3px 6px}
-    .pay.cod{font-size:10px;font-weight:800;padding:5px 10px;border-radius:4px;letter-spacing:1px;background:var(--bg4);color:var(--gold);border:1px solid var(--border)}
-
-    /* ══ SOCIAL ICON ══ */
-    .f-social a.fb-icon{background:#1877F2!important;color:#fff!important;border-color:#1877F2!important}
-    .f-social a.fb-icon:hover{background:#145db2!important;border-color:#145db2!important}
-    .f-social a.wa-icon{background:#25D366!important;color:#fff!important;border-color:#25D366!important}
-    .f-social a.wa-icon:hover{background:#1ebe5d!important;border-color:#1ebe5d!important}
-
-    /* ══ THEME TOGGLE — RIGHT SIDE CENTER ══ */
-    .theme-toggle{
-      position:fixed;
-      top:50%;
-      right:0;
-      transform:translateY(-50%);
-      background:rgba(15,15,15,0.9);
-      backdrop-filter:blur(10px);
-      border:1px solid var(--border);
-      border-right:none;
-      border-radius:8px 0 0 8px;
-      padding:10px 12px;
-      cursor:pointer;
-      z-index:998;
-      transition:all .3s;
-    }
-    .theme-toggle:hover{background:rgba(201,168,76,0.1)}
-    .theme-toggle i{color:var(--gold);font-size:18px}
-
-    /* ══ QUICK VIEW ══ */
-    .quickview-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;z-index:2000;padding:20px}
-    .quickview-overlay.open{display:flex}
-    .quickview-modal{background:var(--bg3);border:1px solid var(--border);border-radius:16px;padding:28px;max-width:700px;width:100%;max-height:90vh;overflow-y:auto;display:grid;grid-template-columns:1fr 1fr;gap:28px;position:relative}
-    .qv-close{position:absolute;top:14px;right:14px;width:36px;height:36px;background:var(--bg);border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--text-muted);font-size:16px;cursor:pointer;transition:all .3s;z-index:5}
-    .qv-close:hover{color:var(--gold);border-color:var(--gold)}
-    .qv-img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:12px;border:1px solid var(--border)}
-    .qv-info h3{font-family:'Cinzel',serif;font-size:20px;color:var(--text);margin-bottom:8px}
-    .qv-info .qv-cat{font-size:10px;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;display:block}
-    .qv-info .qv-price{font-family:'Cinzel',serif;font-size:26px;color:var(--gold);font-weight:900;margin-bottom:6px}
-    .qv-info .qv-old{font-size:14px;color:var(--text-muted);text-decoration:line-through;margin-left:8px}
-    .qv-info .qv-desc{font-size:13px;color:var(--text-muted);line-height:1.7;margin:14px 0}
-    .qv-btns{display:flex;gap:10px;margin-top:16px}
-    .qv-btns .btn-primary,.qv-btns .btn-outline{font-size:11px;padding:12px 20px}
-
-    /* ══ RESPONSIVE ══ */
-    @media(max-width:1024px){
-      .cat-showcase-grid{grid-template-columns:repeat(3,1fr)}
-      .trust-grid{grid-template-columns:repeat(3,1fr)}
-      .happy-grid{grid-template-columns:repeat(2,1fr)}
-    }
-    @media(max-width:768px){
-      .hero{height:100svh;min-height:580px;max-height:none}
-      .hero-content{padding:0 16px}
-      .nav-dropdown{display:none!important}
-      .has-dropdown>a .drop-arrow{display:none}
-      .hero-slide-arrow{display:none}
-      .flash-header{flex-direction:column;text-align:center}
-      .flash-timer-wrap{justify-content:center}
-      .cat-showcase-grid{grid-template-columns:1fr}
-      .trust-grid{grid-template-columns:repeat(2,1fr)}
-      .quickview-modal{grid-template-columns:1fr}
-      .happy-grid{grid-template-columns:repeat(2,1fr)}
-      /* theme toggle mobile */
-      .theme-toggle{top:auto;bottom:90px;transform:none}
-      /* hero buttons mobile — compact row */
-      .hero-btns{
-        gap:8px;
-        flex-direction:row;
-        flex-wrap:wrap;
-        justify-content:center;
-      }
-      .hero-btns .btn-primary,
-      .hero-btns .btn-outline,
-      .hero-btns .btn-gift{
-        padding:11px 16px;
-        font-size:10px;
-        letter-spacing:1px;
-      }
-      /* hero search mobile */
-      .hero-search-wrap{max-width:100%;padding:0 16px}
-      .hero-search{padding:5px 5px 5px 16px}
-      .hero-search input{font-size:12px}
-      .hero-search .hs-btn{padding:9px 16px;font-size:10px}
-      /* scroll hint hide on mobile */
-      .hero-scroll-hint{display:none}
-    }
-    @media(max-width:480px){
-      .trust-grid{grid-template-columns:1fr 1fr}
-      .flash-time-box{min-width:54px;padding:8px 10px}
-      .flash-time-box .num{font-size:20px}
-      .happy-grid{grid-template-columns:1fr 1fr}
-      .happy-card{padding:20px 12px}
-      .happy-card .happy-num{font-size:26px}
-    }
-  </style>
+  <meta name="description" content="RS SHOP Purbadhala — Original watches, stylish sunglasses and gifts at the best price. Cash on Delivery, bKash, Nagad, Rocket. Fast delivery all over Bangladesh.">
+  <meta name="theme-color" content="#080808">
+  <script>if(localStorage.getItem('rs_theme')==='light')document.documentElement.setAttribute('data-theme','light')</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body data-page="home">
 
-<!-- ══ LOADER ══ -->
-<div class="loader" id="loader">
-  <div class="loader-inner">
-    <div class="loader-logo"><span class="logo-rs">RS</span><span class="logo-shop">SHOP</span></div>
-    <div class="loader-bar"><div class="loader-fill"></div></div>
-    <div class="loader-text">LOADING EXPERIENCE...</div>
-  </div>
-</div>
+<div id="site-header"></div>
 
-<div class="cursor" id="cursor"></div>
-<div class="cursor-follower" id="cursorFollower"></div>
+<main>
+  <!-- HERO -->
+  <section class="hero-slider" id="hero" aria-label="Offers"></section>
 
-<!-- ══ THEME TOGGLE ══ -->
-<div class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Light/Dark Mode">
-  <i class="fas fa-sun" id="themeIcon"></i>
-</div>
-
-<!-- ══ NAVBAR ══ -->
-<nav class="navbar" id="navbar">
-  <div class="nav-container">
-    <a href="index.html" class="nav-logo">
-      <span class="logo-rs">RS</span><span class="logo-shop">SHOP</span>
-    </a>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="index.html" class="active">Home</a></li>
-      <li class="has-dropdown">
-        <a href="watches.html">Watches <i class="fas fa-chevron-down drop-arrow"></i></a>
-        <div class="nav-dropdown">
-          <a href="watches.html?gender=men"><i class="fas fa-male" style="width:16px;margin-right:6px"></i>Men</a>
-          <a href="watches.html?gender=women"><i class="fas fa-female" style="width:16px;margin-right:6px"></i>Women</a>
-          <a href="watches.html?gender=kids"><i class="fas fa-child" style="width:16px;margin-right:6px"></i>Kids</a>
-          <a href="watches.html"><i class="fas fa-th" style="width:16px;margin-right:6px"></i>All Watches</a>
+  <!-- FLASH SALE (shudhu tokhon dekhabe jokhon admin e Flash Sale active) -->
+  <section class="section flash hidden" id="flashSection">
+    <div class="container">
+      <div class="flash-head">
+        <div class="flash-title"><i class="fas fa-bolt"></i> <span id="flashTitle">Flash Sale!</span></div>
+        <div class="timer" id="flashTimer">
+          <div class="time-box"><b data-u="d">00</b><small>Days</small></div>
+          <div class="time-box"><b data-u="h">00</b><small>Hours</small></div>
+          <div class="time-box"><b data-u="m">00</b><small>Mins</small></div>
+          <div class="time-box"><b data-u="s">00</b><small>Secs</small></div>
         </div>
-      </li>
-      <li class="has-dropdown">
-        <a href="sunglasses.html">Sunglasses <i class="fas fa-chevron-down drop-arrow"></i></a>
-        <div class="nav-dropdown">
-          <a href="sunglasses.html?gender=men"><i class="fas fa-male" style="width:16px;margin-right:6px"></i>Men</a>
-          <a href="sunglasses.html?gender=women"><i class="fas fa-female" style="width:16px;margin-right:6px"></i>Women</a>
-          <a href="sunglasses.html?gender=kids"><i class="fas fa-child" style="width:16px;margin-right:6px"></i>Kids</a>
-          <a href="sunglasses.html"><i class="fas fa-th" style="width:16px;margin-right:6px"></i>All Sunglasses</a>
-        </div>
-      </li>
-      <li><a href="gift.html">🎁 Gift</a></li>
-      <li><a href="track.html">Track Order</a></li>
-      <li><a href="contact.html">Contact</a></li>
-    </ul>
-    <div class="nav-actions">
-      <a href="wishlist.html" class="cart-icon" title="Wishlist" style="margin-right:4px">
-        <i class="fas fa-heart"></i>
-        <span class="cart-badge" id="wishCount" style="background:#ff4757">0</span>
-      </a>
-      <a href="cart.html" class="cart-icon" title="Cart">
-        <i class="fas fa-shopping-bag"></i>
-        <span class="cart-badge" id="cartCount">0</span>
-      </a>
-      <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
-    </div>
-  </div>
-</nav>
-
-<!-- ══ HERO ══ -->
-<section class="hero" id="hero">
-  <div class="hero-slides" id="heroSlides">
-    <div class="hero-slide active" style="background:radial-gradient(ellipse at 20% 50%,rgba(201,168,76,0.12) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(201,168,76,0.07) 0%,transparent 50%),#080808"></div>
-  </div>
-  <button class="hero-slide-arrow hero-arrow-prev" onclick="heroPrev()" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
-  <button class="hero-slide-arrow hero-arrow-next" onclick="heroNext()" aria-label="Next"><i class="fas fa-chevron-right"></i></button>
-  <div class="hero-slide-dots" id="heroSlideDots"><span class="hero-slide-dot active"></span></div>
-  <div class="hero-particles" id="particles"></div>
-  <div class="hero-overlay"></div>
-
-  <div class="hero-content">
-    <span class="hero-eyebrow">✦ New Collection 2026 ✦</span>
-    <h1 class="hero-title">
-      <span class="line1">Define Your</span>
-      <span class="line2">Style</span>
-    </h1>
-    <p class="hero-sub">Premium Watches, Sunglasses & Gift Collection at Best Price</p>
-
-    <!-- Compact 3 buttons in one row -->
-    <div class="hero-btns">
-      <a href="watches.html" class="btn-primary"><span>Shop Watches</span> <i class="fas fa-arrow-right"></i></a>
-      <a href="sunglasses.html" class="btn-outline">Sunglasses</a>
-      <a href="gift.html" class="btn-gift">🎁 Gifts</a>
-    </div>
-
-    <!-- Search bar inside hero -->
-    <div class="hero-search-wrap">
-      <div class="hero-search">
-        <i class="fas fa-search"></i>
-        <input type="text" id="searchInput" placeholder="Search watches, sunglasses, gifts..." oninput="handleSearch(this.value)"/>
-        <button class="hs-btn" onclick="handleSearch(document.getElementById('searchInput').value)">Search</button>
       </div>
-      <div class="search-results" id="searchResults"></div>
+      <div class="product-grid" id="flashGrid"></div>
     </div>
-  </div>
+  </section>
 
-  <div class="hero-scroll-hint">
-    <span>Scroll Down</span>
-    <div class="scroll-line"></div>
-  </div>
-</section>
+  <!-- CATEGORIES -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head reveal"><div><h2>Our Collections</h2><p>Tomar pochhondo moto category bechhe nao</p></div></div>
+      <div class="cat-grid" id="catGrid"></div>
+    </div>
+  </section>
 
-<!-- ══ MARQUEE ══ -->
-<div class="marquee-wrap">
-  <div class="marquee-track">
-    <span>✦ Premium Watches</span><span>✦ Stylish Sunglasses</span><span>✦ Gift Collection</span><span>✦ Fast Delivery</span><span>✦ 100% Original</span><span>✦ Cash on Delivery</span><span>✦ bKash / Nagad / Rocket</span>
-    <span>✦ Premium Watches</span><span>✦ Stylish Sunglasses</span><span>✦ Gift Collection</span><span>✦ Fast Delivery</span><span>✦ 100% Original</span>
-  </div>
-</div>
-
-<!-- ══ FLASH SALE ══ -->
-<section class="flash-sale-section" id="flashSaleSection" style="display:none">
-  <div class="container">
-    <div class="flash-header">
-      <div>
-        <div class="flash-title-wrap">
-          <span class="flash-icon">⚡</span>
-          <h2 class="flash-title" id="flashSaleTitle">Flash Sale!</h2>
-        </div>
-        <p class="flash-sub" id="flashSaleSub">সীমিত সময়ের অফার — মিস করবেন না!</p>
+  <!-- WATCHES -->
+  <section class="section alt">
+    <div class="container">
+      <div class="section-head reveal">
+        <div><h2>Featured Watches</h2><p>Best sellers, original quality</p></div>
+        <a class="view-all" href="watches.html">View All <i class="fas fa-arrow-right"></i></a>
       </div>
-      <div class="flash-timer-wrap" id="flashTimerWrap">
-        <div class="flash-time-box"><span class="num" id="fDays">00</span><span class="lbl">Days</span></div>
-        <div class="flash-time-box"><span class="num" id="fHours">00</span><span class="lbl">Hours</span></div>
-        <div class="flash-time-box"><span class="num" id="fMins">00</span><span class="lbl">Mins</span></div>
-        <div class="flash-time-box"><span class="num" id="fSecs">00</span><span class="lbl">Secs</span></div>
+      <div class="tabs reveal" data-for="watches" style="margin-bottom:24px">
+        <button class="tab active" data-g="">All</button><button class="tab" data-g="men">Men</button><button class="tab" data-g="women">Women</button><button class="tab" data-g="kids">Kids</button>
       </div>
+      <div class="product-grid" id="watchGrid"></div>
     </div>
-    <div class="products-grid" id="flashGrid">
-      <div class="loading-wrap"><div class="spinner"></div><p>Loading flash sale...</p></div>
-    </div>
-  </div>
-</section>
+  </section>
 
-<!-- ══ SHOP BY CATEGORY ══ -->
-<section class="section categories" id="categories">
-  <div class="container">
-    <div class="section-head" style="text-align:center">
-      <span class="section-tag">Shop By Category</span>
-      <h2>Our Collections</h2>
-    </div>
-    <div class="cat-showcase-grid">
-      <a href="watches.html" class="cat-showcase-card" data-aos="left">
-        <span class="cat-showcase-icon">⌚</span>
-        <h3>Premium Watches</h3>
-        <p>Men, Women & Kids Collection</p>
-        <span class="cat-link">Shop Now <i class="fas fa-arrow-right"></i></span>
-        <div class="cat-showcase-glow"></div>
-      </a>
-      <a href="sunglasses.html" class="cat-showcase-card" data-aos="up">
-        <span class="cat-showcase-icon">🕶️</span>
-        <h3>Stylish Sunglasses</h3>
-        <p>Polarized & Premium Shades</p>
-        <span class="cat-link">Shop Now <i class="fas fa-arrow-right"></i></span>
-        <div class="cat-showcase-glow"></div>
-      </a>
-      <a href="gift.html" class="cat-showcase-card" data-aos="right">
-        <span class="cat-showcase-icon">🎁</span>
-        <h3>Gift Collection</h3>
-        <p>Birthday, Anniversary & Special Gifts</p>
-        <span class="cat-link">Shop Now <i class="fas fa-arrow-right"></i></span>
-        <div class="cat-showcase-glow"></div>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- ══ FEATURED WATCHES ══ -->
-<section class="section products-section" id="featuredWatches">
-  <div class="container">
-    <div class="section-head">
-      <div><span class="section-tag">Best Sellers</span><h2>Featured Watches</h2></div>
-      <a href="watches.html" class="view-all" style="position:static;transform:none">View All <i class="fas fa-arrow-right"></i></a>
-    </div>
-    <div class="cat-tabs" id="watchTabs">
-      <button class="cat-tab active" onclick="filterCat('watches','all',this)">All</button>
-      <button class="cat-tab" onclick="filterCat('watches','men',this)">Men</button>
-      <button class="cat-tab" onclick="filterCat('watches','women',this)">Women</button>
-      <button class="cat-tab" onclick="filterCat('watches','kids',this)">Kids</button>
-    </div>
-    <div class="products-grid" id="watchGrid">
-      <div class="loading-wrap"><div class="spinner"></div><p>Loading products...</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- ══ PROMO BANNER ══ -->
-<section class="promo-banner">
-  <div class="promo-inner">
-    <div class="promo-text">
+  <!-- WHATSAPP PROMO -->
+  <section class="promo">
+    <div class="container reveal">
       <h2>Special Offer!</h2>
-      <p>Order directly via WhatsApp for exclusive deals</p>
+      <p>WhatsApp e order korle pabe exclusive deal</p>
+      <a class="btn" id="promoWa" href="#" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> Order on WhatsApp</a>
     </div>
-    <a href="https://wa.me/8801996283245" target="_blank" class="btn-whatsapp">
-      <i class="fab fa-whatsapp"></i> Order on WhatsApp
-    </a>
-  </div>
-</section>
+  </section>
 
-<!-- ══ FEATURED SUNGLASSES ══ -->
-<section class="section products-section" id="featuredSunglasses" style="background:var(--bg2)">
-  <div class="container">
-    <div class="section-head">
-      <div><span class="section-tag">New Arrivals</span><h2>Featured Sunglasses</h2></div>
-      <a href="sunglasses.html" class="view-all" style="position:static;transform:none">View All <i class="fas fa-arrow-right"></i></a>
-    </div>
-    <div class="cat-tabs" id="sunglassTabs">
-      <button class="cat-tab active" onclick="filterCat('sunglasses','all',this)">All</button>
-      <button class="cat-tab" onclick="filterCat('sunglasses','men',this)">Men</button>
-      <button class="cat-tab" onclick="filterCat('sunglasses','women',this)">Women</button>
-      <button class="cat-tab" onclick="filterCat('sunglasses','kids',this)">Kids</button>
-    </div>
-    <div class="products-grid" id="sunglassGrid">
-      <div class="loading-wrap"><div class="spinner"></div><p>Loading products...</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- ══ FEATURED GIFTS ══ -->
-<section class="section products-section" id="featuredGifts">
-  <div class="container">
-    <div class="section-head">
-      <div><span class="section-tag">🎁 Special</span><h2>Gift Collection</h2></div>
-      <a href="gift.html" class="view-all" style="position:static;transform:none">View All <i class="fas fa-arrow-right"></i></a>
-    </div>
-    <div class="products-grid" id="giftGrid">
-      <div class="loading-wrap"><div class="spinner"></div><p>Loading gifts...</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- ══ TRUST BADGES ══ -->
-<section class="trust-section">
-  <div class="container">
-    <div class="trust-grid">
-      <div class="trust-item"><span class="trust-icon">🛡️</span><h4>100% Original</h4><p>Genuine products guaranteed</p></div>
-      <div class="trust-item"><span class="trust-icon">🚚</span><h4>Fast Delivery</h4><p>All over Bangladesh</p></div>
-      <div class="trust-item"><span class="trust-icon">🔄</span><h4>Easy Return</h4><p>3-day return policy</p></div>
-      <div class="trust-item"><span class="trust-icon">💳</span><h4>Secure Payment</h4><p>bKash, Nagad, Rocket, COD</p></div>
-      <div class="trust-item"><span class="trust-icon">🎧</span><h4>24/7 Support</h4><p>Always here to help</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- ══ WHY US ══ -->
-<section class="section why-us">
-  <div class="container">
-    <div class="section-head"><span class="section-tag">Why Choose Us</span><h2>Our Promise</h2></div>
-    <div class="why-grid">
-      <div class="why-card" data-delay="0"><div class="why-icon"><i class="fas fa-shield-alt"></i></div><h3>100% Original</h3><p>All products are 100% genuine and quality assured</p></div>
-      <div class="why-card" data-delay="100"><div class="why-icon"><i class="fas fa-truck"></i></div><h3>Fast Delivery</h3><p>Quick and safe delivery across Bangladesh</p></div>
-      <div class="why-card" data-delay="200"><div class="why-icon"><i class="fas fa-undo"></i></div><h3>Easy Return</h3><p>3-day hassle-free return policy</p></div>
-      <div class="why-card" data-delay="300"><div class="why-icon"><i class="fas fa-headset"></i></div><h3>24/7 Support</h3><p>Always here to help you anytime</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- ══ TESTIMONIALS ══ -->
-<section class="section testimonials">
-  <div class="container">
-    <div class="section-head"><span class="section-tag">Reviews</span><h2>What Customers Say</h2></div>
-    <div class="testimonial-wrap">
-      <div class="testimonial-card active" id="tCard0">
-        <div class="stars">★★★★★</div>
-        <p>"Amazing quality watch at a very affordable price. Love shopping at RS SHOP!"</p>
-        <div class="t-author"><div class="t-avatar">R</div><div><strong>Rakib Hassan</strong><span>Dhaka</span></div></div>
-      </div>
-      <div class="testimonial-card" id="tCard1">
-        <div class="stars">★★★★★</div>
-        <p>"The sunglasses quality is incredible. Never expected this quality at such a price!"</p>
-        <div class="t-author"><div class="t-avatar">S</div><div><strong>Sumaiya Akter</strong><span>Mymensingh</span></div></div>
-      </div>
-      <div class="testimonial-card" id="tCard2">
-        <div class="stars">★★★★★</div>
-        <p>"Super fast delivery and beautiful packaging. Will definitely order again!"</p>
-        <div class="t-author"><div class="t-avatar">M</div><div><strong>Mahmudul Hasan</strong><span>Netrokona</span></div></div>
-      </div>
-      <div class="t-dots">
-        <span class="t-dot active" onclick="goSlide(0)"></span>
-        <span class="t-dot" onclick="goSlide(1)"></span>
-        <span class="t-dot" onclick="goSlide(2)"></span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══ HAPPY COUNTER ══ -->
-<section class="happy-section">
-  <div class="container">
-    <div class="section-head" style="text-align:center;margin-bottom:40px">
-      <span class="section-tag">Our Journey</span>
-      <h2>Happy Customers & Milestones</h2>
-    </div>
-    <div class="happy-grid">
-      <div class="happy-card"><span class="happy-icon">😊</span><span class="happy-num"><span class="count-up" data-target="500">0</span>+</span><span class="happy-label">Happy Customers</span></div>
-      <div class="happy-card"><span class="happy-icon">📦</span><span class="happy-num"><span class="count-up" data-target="100">0</span>+</span><span class="happy-label">Products</span></div>
-      <div class="happy-card"><span class="happy-icon">⭐</span><span class="happy-num"><span class="count-up" data-target="300">0</span>+</span><span class="happy-label">5-Star Reviews</span></div>
-      <div class="happy-card"><span class="happy-icon">🏆</span><span class="happy-num"><span class="count-up" data-target="3">0</span>+</span><span class="happy-label">Years Experience</span></div>
-    </div>
-  </div>
-</section>
-
-<!-- ══ FOOTER ══ -->
-<footer class="footer">
-  <div class="footer-inner">
+  <!-- SUNGLASSES -->
+  <section class="section">
     <div class="container">
-      <div class="footer-grid">
-        <div class="f-brand">
-          <div class="footer-logo"><span class="logo-rs">RS</span><span class="logo-shop">SHOP</span></div>
-          <p>The best premium watch, sunglass & gift shop in Purbadhala. Quality products at the best price.</p>
-          <div class="f-social">
-            <a href="https://web.facebook.com/sojib.islam.739215" target="_blank" class="fb-icon" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-            <a href="https://wa.me/8801996283245" target="_blank" class="wa-icon" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-          </div>
-        </div>
-        <div class="f-links">
-          <h4>Quick Links</h4>
-          <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="watches.html">Watches</a></li>
-            <li><a href="sunglasses.html">Sunglasses</a></li>
-            <li><a href="gift.html">Gift Collection</a></li>
-            <li><a href="track.html">Order Track</a></li>
-          </ul>
-        </div>
-        <div class="f-links">
-          <h4>Support</h4>
-          <ul>
-            <li><a href="#">Delivery Policy</a></li>
-            <li><a href="#">Return Policy</a></li>
-            <li><a href="#">Privacy Policy</a></li>
-            <li><a href="contact.html">Contact Us</a></li>
-          </ul>
-        </div>
-        <div class="f-contact">
-          <h4>Contact Us</h4>
-          <p><i class="fas fa-map-marker-alt"></i> Purbadhala Station Road, Kazi Super Market</p>
-          <p><i class="fas fa-phone"></i> 01996283245</p>
-          <p><i class="fab fa-whatsapp"></i> 01996283245</p>
-          <div class="payment-methods">
-            <img class="pay-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Bkash_Logo.png/320px-Bkash_Logo.png" alt="bKash"/>
-            <img class="pay-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Nagad_Logo.png/320px-Nagad_Logo.png" alt="Nagad"/>
-            <img class="pay-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Rocket_bKash_logo.png/320px-Rocket_bKash_logo.png" alt="Rocket"/>
-            <span class="pay cod">COD</span>
-          </div>
-        </div>
+      <div class="section-head reveal">
+        <div><h2>Featured Sunglasses</h2><p>Polarized & premium shades</p></div>
+        <a class="view-all" href="sunglasses.html">View All <i class="fas fa-arrow-right"></i></a>
       </div>
+      <div class="tabs reveal" data-for="sunglasses" style="margin-bottom:24px">
+        <button class="tab active" data-g="">All</button><button class="tab" data-g="men">Men</button><button class="tab" data-g="women">Women</button><button class="tab" data-g="kids">Kids</button>
+      </div>
+      <div class="product-grid" id="sunGrid"></div>
     </div>
-  </div>
-  <div class="footer-bottom">
+  </section>
+
+  <!-- GIFTS -->
+  <section class="section alt">
     <div class="container">
-      <p>© 2026 RS SHOP. All Rights Reserved | Developed by
-        <a href="https://web.facebook.com/AMIN.SHEIKH.01" target="_blank"
-           style="color:var(--gold);text-decoration:none;font-weight:700;transition:opacity .3s"
-           onmouseover="this.style.opacity='.7'" onmouseout="this.style.opacity='1'">AMIN SHEIKH</a>
-      </p>
+      <div class="section-head reveal">
+        <div><h2>🎁 Gift Collection</h2><p>Birthday, anniversary & special gifts</p></div>
+        <a class="view-all" href="gift.html">View All <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="product-grid" id="giftGrid"></div>
     </div>
-  </div>
-</footer>
+  </section>
 
-<!-- ══ WHATSAPP FLOAT ══ -->
-<a href="https://wa.me/8801996283245" class="wa-float" target="_blank">
-  <i class="fab fa-whatsapp"></i>
-  <span class="wa-tip">Order Now</span>
-</a>
-
-<!-- ══ QUICK VIEW MODAL ══ -->
-<div class="quickview-overlay" id="quickviewOverlay" onclick="if(event.target===this)closeQuickView()">
-  <div class="quickview-modal">
-    <button class="qv-close" onclick="closeQuickView()"><i class="fas fa-times"></i></button>
-    <img class="qv-img" id="qvImg" src="" alt=""/>
-    <div class="qv-info">
-      <span class="qv-cat" id="qvCat"></span>
-      <h3 id="qvName"></h3>
-      <div><span class="qv-price" id="qvPrice"></span><span class="qv-old" id="qvOld" style="display:none"></span></div>
-      <p class="qv-desc" id="qvDesc"></p>
-      <div class="qv-btns">
-        <button class="btn-primary" id="qvCartBtn"><i class="fas fa-shopping-bag"></i> <span>Add to Cart</span></button>
-        <a class="btn-outline" id="qvViewBtn">View Details <i class="fas fa-arrow-right"></i></a>
+  <!-- TRUST -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head reveal"><div><h2>Why Choose Us</h2></div></div>
+      <div class="trust-grid">
+        <div class="trust-card reveal"><i class="fas fa-shield-alt"></i><h4>100% Original</h4><p>Sob product genuine, quality guarantee shoho</p></div>
+        <div class="trust-card reveal"><i class="fas fa-truck-fast"></i><h4>Fast Delivery</h4><p>Bangladesh er sob jaygay druto delivery</p></div>
+        <div class="trust-card reveal"><i class="fas fa-rotate-left"></i><h4>Easy Return</h4><p>3 diner jhamela-mukto return policy</p></div>
+        <div class="trust-card reveal"><i class="fas fa-money-bill-wave"></i><h4>Cash on Delivery</h4><p>Product hate peye taka din. bKash, Nagad, Rocket o ache</p></div>
       </div>
     </div>
-  </div>
-</div>
+  </section>
 
-<!-- ══ FIREBASE ══ -->
+  <!-- REVIEWS -->
+  <section class="section alt">
+    <div class="container">
+      <div class="section-head reveal"><div><h2>What Customers Say</h2></div></div>
+      <div class="review-wrap" id="reviewWrap">
+        <div class="review-track">
+          <div class="review-card"><div class="stars">★★★★★</div><p>"Amazing quality watch at a very affordable price. Love shopping at RS SHOP!"</p><div class="rv-user"><div class="rv-av">R</div><div><b>Rakib Hassan</b><small>Dhaka</small></div></div></div>
+          <div class="review-card"><div class="stars">★★★★★</div><p>"The sunglasses quality is incredible. Never expected this quality at such a price!"</p><div class="rv-user"><div class="rv-av">S</div><div><b>Sumaiya Akter</b><small>Mymensingh</small></div></div></div>
+          <div class="review-card"><div class="stars">★★★★★</div><p>"Super fast delivery and beautiful packaging. Will definitely order again!"</p><div class="rv-user"><div class="rv-av">M</div><div><b>Mahmudul Hasan</b><small>Netrokona</small></div></div></div>
+        </div>
+      </div>
+      <div class="slider-dots" id="reviewDots"></div>
+    </div>
+  </section>
+
+  <!-- COUNTERS -->
+  <section class="section">
+    <div class="container">
+      <div class="count-grid">
+        <div class="count-card reveal"><div class="em">😊</div><b class="count-up" data-target="500" data-suffix="+">0</b><span>Happy Customers</span></div>
+        <div class="count-card reveal"><div class="em">📦</div><b class="count-up" data-target="100" data-suffix="+">0</b><span>Products</span></div>
+        <div class="count-card reveal"><div class="em">⭐</div><b class="count-up" data-target="300" data-suffix="+">0</b><span>5-Star Reviews</span></div>
+        <div class="count-card reveal"><div class="em">🏆</div><b class="count-up" data-target="3" data-suffix="+">0</b><span>Years Experience</span></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+
+<script type="module" src="main.js"></script>
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
-  import { getFirestore, collection, getDocs, query, where, orderBy, limit }
-    from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+  import { getBanners, getProducts, getFlashSale, applyFlash, CATEGORIES, waLink } from "./firebase.js";
+  import { renderHero, productCard, skeletons, startCountdown, initCounters, initSlider } from "./main.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyAerNu3OWe2bCejiGXxnQeXr9yiDR1FysU",
-    authDomain: "sojib-shop.firebaseapp.com",
-    projectId: "sojib-shop",
-    storageBucket: "sojib-shop.firebasestorage.app",
-    messagingSenderId: "1061639520028",
-    appId: "1:1061639520028:web:d164fdf6f3d0bbd79304d9"
-  };
-  const app = initializeApp(firebaseConfig);
-  const db  = getFirestore(app);
+  const $ = s => document.querySelector(s);
+  const emptyBox = msg => `<div class="empty" style="grid-column:1/-1"><i class="fas fa-box-open"></i><h3>${msg}</h3><p>Shigroi notun product ashche.</p></div>`;
 
-  /* ── product stores ── */
-  let allWatches = [], allSunglasses = [], allGifts = [], allProducts = [];
-  let flashEndTime = null;
+  /* static: category card + WhatsApp link + counters + review slider */
+  $("#catGrid").innerHTML = Object.values(CATEGORIES).map(c => `
+    <a class="cat-card reveal" href="${c.path}"><span class="ico">${c.icon}</span><h3>${c.label}</h3><p>${c.desc}</p><span>Shop Now →</span></a>`).join("");
+  $("#promoWa").href = waLink("Assalamu alaikum, ami RS SHOP theke order korte chai");
+  initCounters();
+  initSlider($("#reviewWrap"), $("#reviewDots"));
 
-  /* ════════════ HELPERS ════════════ */
-  function showToast(msg) {
-    let t = document.getElementById('toastBox');
-    if (!t) {
-      t = document.createElement('div');
-      t.id = 'toastBox';
-      t.style.cssText = `position:fixed;bottom:80px;right:20px;background:#111;border:1px solid rgba(201,168,76,0.5);color:#e0e0e0;padding:14px 20px;border-radius:10px;z-index:9999;font-size:.85rem;box-shadow:0 8px 32px rgba(0,0,0,.5);display:none;max-width:320px`;
-      document.body.appendChild(t);
-    }
-    t.innerHTML = '<i class="fas fa-check-circle" style="color:#2ed573;margin-right:8px"></i>' + msg;
-    t.style.display = 'block';
-    setTimeout(() => t.style.display = 'none', 2500);
+  /* loading skeleton */
+  ["#watchGrid", "#sunGrid", "#giftGrid"].forEach(s => $(s).innerHTML = skeletons(4));
+
+  /* data load */
+  const [banners, all, flash] = await Promise.all([
+    getBanners(),
+    getProducts().catch(() => []),
+    getFlashSale()
+  ]);
+
+  renderHero($("#hero"), banners);
+
+  /* flash sale */
+  const flashList = all.filter(p => p.flashSale).slice(0, 8);
+  if (flash.active && flashList.length) {
+    $("#flashSection").classList.remove("hidden");
+    $("#flashTitle").textContent = flash.title;
+    $("#flashGrid").innerHTML = flashList.map(p => productCard(applyFlash(p, flash))).join("");
+    startCountdown($("#flashTimer"), flash.endTime, () => $("#flashSection").classList.add("hidden"));
   }
 
-  window.addToCart = function(id, name, price, image, category) {
-    let cart = JSON.parse(localStorage.getItem('rs_cart') || '[]');
-    const ex = cart.find(i => i.id === id);
-    if (ex) ex.qty++;
-    else cart.push({ id, name, price, image, category, qty: 1 });
-    localStorage.setItem('rs_cart', JSON.stringify(cart));
-    updateCartCount();
-    showToast(name + ' cart এ যোগ হয়েছে!');
+  /* category section + gender tab */
+  const pick = (cat, gender = "") => all
+    .filter(p => p.category === cat && (!gender || p.gender === gender))
+    .sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0))
+    .slice(0, 8);
+  const fill = (grid, cat, gender) => {
+    const list = pick(cat, gender).map(p => applyFlash(p, flash));
+    $(grid).innerHTML = list.length ? list.map(productCard).join("") : emptyBox("Ekhono kono product nei");
   };
+  fill("#watchGrid", "watches"); fill("#sunGrid", "sunglasses"); fill("#giftGrid", "gift");
 
-  window.toggleWishlist = function(id, name, price, image, category) {
-    let wish = JSON.parse(localStorage.getItem('rs_wishlist') || '[]');
-    const idx = wish.findIndex(i => i.id === id);
-    if (idx > -1) { wish.splice(idx, 1); showToast('Wishlist থেকে সরানো হয়েছে'); }
-    else { wish.push({ id, name, price, image, category }); showToast(name + ' Wishlist এ যোগ হয়েছে ❤️'); }
-    localStorage.setItem('rs_wishlist', JSON.stringify(wish));
-    updateWishCount();
-    refreshCards();
-  };
-
-  function isInWishlist(id) {
-    return JSON.parse(localStorage.getItem('rs_wishlist') || '[]').some(i => i.id === id);
-  }
-
-  function createCard(p, id) {
-    const discount = p.oldPrice ? Math.round((p.oldPrice - p.price) / p.oldPrice * 100) : 0;
-    const wished   = isInWishlist(id);
-    const imgSrc   = p.image || `https://via.placeholder.com/400x400/141414/c9a84c?text=${encodeURIComponent(p.name || 'Product')}`;
-    const isOut    = p.stock === 'out_of_stock';
-    const cat      = p.category || 'watch';
-    return `
-      <div class="product-card" data-id="${id}" style="${isOut ? 'opacity:.6' : ''}">
-        <div class="p-img-wrap">
-          <img src="${imgSrc}" alt="${p.name}" loading="lazy"/>
-          ${discount > 0 ? `<span class="p-badge">${discount}% OFF</span>` : ''}
-          ${isOut ? `<span class="p-badge" style="background:#ff4757;left:auto;right:12px">Out of Stock</span>` : ''}
-          <button onclick="event.stopPropagation();toggleWishlist('${id}','${(p.name||'').replace(/'/g,"\\'")}',${p.price},'${imgSrc}','${cat}')"
-            style="position:absolute;top:12px;right:12px;width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.5);color:${wished?'#ff4757':'#fff'};font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:3;transition:all .3s">
-            <i class="fas fa-heart"></i>
-          </button>
-          <div class="p-hover">
-            <button onclick="event.stopPropagation();openQuickView('${id}','${cat}')"><i class="fas fa-eye"></i> Quick View</button>
-          </div>
-        </div>
-        <div class="p-info" onclick="location.href='product.html?id=${id}'">
-          <h3>${p.name}</h3>
-          <div class="p-price">
-            <span class="p-current">৳${Number(p.price).toLocaleString()}</span>
-            ${p.oldPrice ? `<span class="p-old">৳${Number(p.oldPrice).toLocaleString()}</span>` : ''}
-          </div>
-          ${isOut
-            ? `<button class="p-cart-btn" style="opacity:.5;cursor:not-allowed" disabled><i class="fas fa-ban"></i> Out of Stock</button>`
-            : `<button class="p-cart-btn" onclick="event.stopPropagation();addToCart('${id}','${(p.name||'').replace(/'/g,"\\'")}',${p.price},'${imgSrc}','${cat}')"><i class="fas fa-shopping-bag"></i> Add to Cart</button>`
-          }
-        </div>
-      </div>`;
-  }
-
-  /* ── Quick View ── */
-  let _qvProducts = {};
-  window.openQuickView = function(id, cat) {
-    const p = _qvProducts[id];
-    if (!p) return;
-    const imgSrc = p.image || '';
-    document.getElementById('qvImg').src = imgSrc;
-    document.getElementById('qvCat').textContent = cat === 'sunglass' ? '🕶️ SUNGLASSES' : cat === 'gift' ? '🎁 GIFT' : '⌚ WATCH';
-    document.getElementById('qvName').textContent = p.name;
-    document.getElementById('qvPrice').textContent = '৳' + Number(p.price).toLocaleString();
-    const oldEl = document.getElementById('qvOld');
-    if (p.oldPrice) { oldEl.textContent = '৳' + Number(p.oldPrice).toLocaleString(); oldEl.style.display = 'inline'; }
-    else { oldEl.style.display = 'none'; }
-    document.getElementById('qvDesc').textContent = p.description || 'No description available.';
-    document.getElementById('qvCartBtn').onclick = () => { addToCart(id, p.name, p.price, imgSrc, cat); closeQuickView(); };
-    document.getElementById('qvViewBtn').href = 'product.html?id=' + id;
-    document.getElementById('quickviewOverlay').classList.add('open');
-  };
-  window.closeQuickView = function() { document.getElementById('quickviewOverlay').classList.remove('open'); };
-
-  /* ── Render grids ── */
-  function renderGrid(gridId, products) {
-    const el = document.getElementById(gridId);
-    if (!el) return;
-    if (!products.length) {
-      el.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--text-muted)"><i class="fas fa-box-open" style="font-size:40px;display:block;margin-bottom:12px;opacity:.3"></i><p>কোনো পণ্য নেই</p></div>`;
-      return;
-    }
-    el.innerHTML = '';
-    products.forEach(({ id, data }) => {
-      _qvProducts[id] = data;
-      el.innerHTML += createCard(data, id);
+  document.querySelectorAll(".tabs[data-for]").forEach(tabs => {
+    tabs.addEventListener("click", e => {
+      const b = e.target.closest(".tab"); if (!b) return;
+      tabs.querySelectorAll(".tab").forEach(t => t.classList.toggle("active", t === b));
+      fill(tabs.dataset.for === "watches" ? "#watchGrid" : "#sunGrid", tabs.dataset.for, b.dataset.g);
     });
-  }
-
-  function refreshCards() {
-    renderGrid('watchGrid', allWatches.filter(p => p.data.gender === _watchFilter || _watchFilter === 'all'));
-    renderGrid('sunglassGrid', allSunglasses.filter(p => p.data.gender === _sunFilter || _sunFilter === 'all'));
-    renderGrid('giftGrid', allGifts);
-  }
-
-  /* ── Filter tabs ── */
-  let _watchFilter = 'all', _sunFilter = 'all';
-  window.filterCat = function(type, gender, btn) {
-    const tabsId = type === 'watches' ? 'watchTabs' : 'sunglassTabs';
-    document.querySelectorAll(`#${tabsId} .cat-tab`).forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    if (type === 'watches') {
-      _watchFilter = gender;
-      const filtered = gender === 'all' ? allWatches : allWatches.filter(p => p.data.gender === gender);
-      renderGrid('watchGrid', filtered);
-    } else {
-      _sunFilter = gender;
-      const filtered = gender === 'all' ? allSunglasses : allSunglasses.filter(p => p.data.gender === gender);
-      renderGrid('sunglassGrid', filtered);
-    }
-  };
-
-  /* ── Search ── */
-  window.handleSearch = function(val) {
-    val = val.trim().toLowerCase();
-    const resEl = document.getElementById('searchResults');
-    if (!val) { resEl.classList.remove('show'); return; }
-    const matched = allProducts.filter(p =>
-      p.data.name.toLowerCase().includes(val) ||
-      (p.data.description || '').toLowerCase().includes(val)
-    ).slice(0, 8);
-    if (!matched.length) {
-      resEl.innerHTML = `<div class="search-no-result">কোনো পণ্য পাওয়া যায়নি</div>`;
-    } else {
-      resEl.innerHTML = matched.map(({ id, data }) => `
-        <div class="search-item" onclick="location.href='product.html?id=${id}'">
-          <img src="${data.image || ''}" alt="${data.name}" onerror="this.src='https://via.placeholder.com/48x48/141414/c9a84c?text=RS'"/>
-          <div class="search-item-info">
-            <h4>${data.name}</h4>
-            <span>৳${Number(data.price).toLocaleString()}</span>
-          </div>
-        </div>`).join('');
-    }
-    resEl.classList.add('show');
-  };
-  document.addEventListener('click', e => {
-    if (!e.target.closest('.hero-search-wrap')) {
-      document.getElementById('searchResults').classList.remove('show');
-    }
   });
-
-  /* ── Flash sale timer ── */
-  function startFlashTimer(endTime) {
-    function tick() {
-      const now  = Date.now();
-      const diff = endTime - now;
-      if (diff <= 0) { document.getElementById('flashSaleSection').style.display = 'none'; return; }
-      const d = Math.floor(diff / 86400000);
-      const h = Math.floor((diff % 86400000) / 3600000);
-      const m = Math.floor((diff % 3600000) / 60000);
-      const s = Math.floor((diff % 60000) / 1000);
-      document.getElementById('fDays').textContent  = String(d).padStart(2,'0');
-      document.getElementById('fHours').textContent = String(h).padStart(2,'0');
-      document.getElementById('fMins').textContent  = String(m).padStart(2,'0');
-      document.getElementById('fSecs').textContent  = String(s).padStart(2,'0');
-    }
-    tick(); setInterval(tick, 1000);
-  }
-
-  /* ── Hero banner slider from Firebase ── */
-  async function loadBanners() {
-    try {
-      const snap = await getDocs(collection(db, 'banners'));
-      if (snap.empty) return;
-      const slides = document.getElementById('heroSlides');
-      const dots   = document.getElementById('heroSlideDots');
-      slides.innerHTML = ''; dots.innerHTML = '';
-      let idx = 0;
-      snap.forEach(d => {
-        const b = d.data();
-        const div = document.createElement('div');
-        div.className = 'hero-slide' + (idx === 0 ? ' active' : '');
-        div.style.cssText = `background-image:url('${b.image}');background-size:cover;background-position:center`;
-        slides.appendChild(div);
-        const dot = document.createElement('span');
-        dot.className = 'hero-slide-dot' + (idx === 0 ? ' active' : '');
-        dot.onclick = () => goHeroSlide(idx);
-        dots.appendChild(dot);
-        idx++;
-      });
-      startHeroAuto();
-    } catch(e) { console.log('Banners:', e); }
-  }
-
-  /* ── Load all products ── */
-  async function loadAll() {
-    try {
-      const snap = await getDocs(collection(db, 'products'));
-      allWatches = []; allSunglasses = []; allGifts = []; allProducts = [];
-      const flashItems = [];
-      snap.forEach(d => {
-        const data = d.data();
-        const item = { id: d.id, data };
-        allProducts.push(item);
-        _qvProducts[d.id] = data;
-        if (data.category === 'watch')     allWatches.push(item);
-        else if (data.category === 'sunglass') allSunglasses.push(item);
-        else if (data.category === 'gift') allGifts.push(item);
-        if (data.flashSale) flashItems.push(item);
-      });
-
-      renderGrid('watchGrid', allWatches.slice(0, 8));
-      renderGrid('sunglassGrid', allSunglasses.slice(0, 8));
-      renderGrid('giftGrid', allGifts.slice(0, 4));
-
-      /* Flash sale */
-      if (flashItems.length) {
-        document.getElementById('flashSaleSection').style.display = 'block';
-        renderGrid('flashGrid', flashItems);
-        if (flashItems[0].data.flashEndTime) {
-          startFlashTimer(flashItems[0].data.flashEndTime.toDate().getTime());
-        }
-      }
-    } catch(e) {
-      console.error('Load products:', e);
-      ['watchGrid','sunglassGrid','giftGrid'].forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text-muted)">পণ্য লোড হয়নি — Refresh করুন</div>`;
-      });
-    }
-  }
-
-  /* ── Count-up animation ── */
-  function startCountUp() {
-    const elements = document.querySelectorAll('.count-up');
-    if (!elements.length) return;
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting && !entry.target.dataset.done) {
-          entry.target.dataset.done = '1';
-          const target = parseInt(entry.target.dataset.target);
-          const duration = 2000;
-          const step = Math.ceil(target / (duration / 16));
-          let current = 0;
-          const timer = setInterval(() => {
-            current += step;
-            if (current >= target) { current = target; clearInterval(timer); }
-            entry.target.textContent = current;
-          }, 16);
-        }
-      });
-    }, { threshold: 0.3 });
-    elements.forEach(el => observer.observe(el));
-  }
-
-  /* ── Counts ── */
-  function updateCartCount() {
-    const cart = JSON.parse(localStorage.getItem('rs_cart') || '[]');
-    document.querySelectorAll('#cartCount').forEach(el => el.textContent = cart.reduce((s,i) => s + i.qty, 0));
-  }
-  function updateWishCount() {
-    document.querySelectorAll('#wishCount').forEach(el =>
-      el.textContent = JSON.parse(localStorage.getItem('rs_wishlist') || '[]').length);
-  }
-
-  /* ── Theme ── */
-  window.toggleTheme = function() {
-    const isLight = document.body.getAttribute('data-theme') === 'light';
-    if (isLight) {
-      document.body.removeAttribute('data-theme');
-      localStorage.setItem('rs_theme', 'dark');
-      document.getElementById('themeIcon').className = 'fas fa-sun';
-    } else {
-      document.body.setAttribute('data-theme', 'light');
-      localStorage.setItem('rs_theme', 'light');
-      document.getElementById('themeIcon').className = 'fas fa-moon';
-    }
-  };
-  if (localStorage.getItem('rs_theme') === 'light') {
-    document.body.setAttribute('data-theme', 'light');
-    const ti = document.getElementById('themeIcon');
-    if (ti) ti.className = 'fas fa-moon';
-  }
-
-  /* ── Init ── */
-  updateCartCount();
-  updateWishCount();
-  loadBanners();
-  loadAll();
-  startCountUp();
 </script>
-
-<script src="main.js"></script>
 </body>
 </html>

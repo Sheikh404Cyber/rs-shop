@@ -3,7 +3,7 @@
    All Animations & Interactive Effects
 ══════════════════════════════════════ */
 
-/* ══ LOADER — 2.5s থেকে 1.2s করা হয়েছে ══ */
+/* ══ LOADER — 1.2s ══ */
 window.addEventListener('load', () => {
   const loader = document.getElementById('loader');
   setTimeout(() => {
@@ -133,7 +133,6 @@ function createParticles() {
 
 /* ══ SCROLL ANIMATIONS (AOS) ══ */
 function initScrollAnimations() {
-  /* why-card visible class */
   const whyObserver = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -145,7 +144,6 @@ function initScrollAnimations() {
   }, { threshold: 0.15 });
   document.querySelectorAll('.why-card').forEach(el => whyObserver.observe(el));
 
-  /* data-aos elements */
   const aosObserver = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -165,6 +163,33 @@ function initScrollAnimations() {
     else                      el.style.transform = 'translateY(40px)';
     aosObserver.observe(el);
   });
+}
+
+/* ══ COUNT-UP ANIMATION ══ */
+function initCountUp() {
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el     = entry.target;
+        const target = parseInt(el.getAttribute('data-target') || '0');
+        const dur    = 2000;
+        const step   = target / (dur / 16);
+        let current  = 0;
+        const timer  = setInterval(() => {
+          current += step;
+          if (current >= target) {
+            el.textContent = target;
+            clearInterval(timer);
+          } else {
+            el.textContent = Math.floor(current);
+          }
+        }, 16);
+        observer.unobserve(el);
+      }
+    });
+  }, { threshold: 0.4 });
+
+  document.querySelectorAll('.count-up').forEach(el => observer.observe(el));
 }
 
 /* ══ TESTIMONIAL SLIDER ══ */
@@ -204,7 +229,6 @@ function saveCart(cart) {
 function updateCartCount() {
   const cart  = getCart();
   const total = cart.reduce((sum, item) => sum + (item.qty || 1), 0);
-  /* cart badge */
   const badge = document.getElementById('cartCount');
   if (badge) {
     badge.textContent = total;
@@ -213,8 +237,7 @@ function updateCartCount() {
       setTimeout(() => badge.style.transform = 'scale(1)', 300);
     }
   }
-  /* wishlist badge */
-  const wish = JSON.parse(localStorage.getItem('rs_wishlist') || '[]');
+  const wish   = JSON.parse(localStorage.getItem('rs_wishlist') || '[]');
   const wBadge = document.getElementById('wishCount');
   if (wBadge) wBadge.textContent = wish.length;
 }
@@ -228,7 +251,7 @@ window.addToCart = function(id, name, price, image) {
     cart.push({ id, name: name || id, price: price || 0, image: image || '', qty: 1 });
   }
   saveCart(cart);
-  showToast(`🛒 Cart-এ যোগ হয়েছে!`);
+  showToast('🛒 Cart-এ যোগ হয়েছে!');
 };
 
 window.removeFromCart = function(id) {
@@ -296,7 +319,6 @@ function initPageTransitions() {
     overlay.style.cssText = 'position:fixed;inset:0;background:#080808;z-index:9990;opacity:0;pointer-events:none;transition:opacity 0.35s ease';
     document.body.appendChild(overlay);
   }
-  /* fade in on load */
   setTimeout(() => { overlay.style.opacity = '0'; }, 50);
 
   document.querySelectorAll('a[href]').forEach(link => {
@@ -335,21 +357,232 @@ function setActiveNav() {
 /* ══ LOGO COLOR — RS gold, SHOP white ══ */
 function fixLogoColor() {
   document.querySelectorAll('.logo-rs').forEach(el => {
-    el.style.cssText = 'color:#C9A84C;font-family:Cinzel,serif;font-weight:900;font-size:inherit';
+    el.style.color      = '#C9A84C';
+    el.style.fontFamily = 'Cinzel,serif';
+    el.style.fontWeight = '900';
   });
   document.querySelectorAll('.logo-shop').forEach(el => {
-    el.style.cssText = 'color:#ffffff;font-family:Cinzel,serif;font-weight:400;font-size:inherit;letter-spacing:3px';
+    el.style.color       = '#ffffff';
+    el.style.fontFamily  = 'Cinzel,serif';
+    el.style.fontWeight  = '400';
+    el.style.letterSpacing = '3px';
   });
 }
 
+/* ══ THEME TOGGLE ══ */
+window.toggleTheme = function() {
+  const current = document.documentElement.getAttribute('data-theme');
+  const next    = current === 'light' ? 'dark' : 'light';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('rs_theme', next);
+  const icon = document.getElementById('themeIcon');
+  if (icon) icon.className = next === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+};
+
+function loadTheme() {
+  const saved = localStorage.getItem('rs_theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', saved);
+  const icon = document.getElementById('themeIcon');
+  if (icon) icon.className = saved === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+}
+
+/* ══ SEARCH HANDLER ══ */
+window.handleSearch = function(val) {
+  const resultsBox = document.getElementById('searchResults');
+  if (!resultsBox) return;
+  const q = (val || '').trim().toLowerCase();
+  if (!q) { resultsBox.classList.remove('show'); return; }
+
+  /* Firebase থেকে allProducts লোড হলে সেটা দিয়ে filter */
+  const source = window._allProducts || [];
+  const filtered = source.filter(p =>
+    (p.name || '').toLowerCase().includes(q) ||
+    (p.category || '').toLowerCase().includes(q)
+  ).slice(0, 6);
+
+  if (!filtered.length) {
+    resultsBox.innerHTML = `<div class="search-no-result">কোনো পণ্য পাওয়া যায়নি</div>`;
+  } else {
+    resultsBox.innerHTML = filtered.map(p => `
+      <div class="search-item" onclick="window.location.href='product.html?id=${p.id}'">
+        <img src="${p.imageUrl || ''}" alt="${p.name}" onerror="this.src=''">
+        <div class="search-item-info">
+          <h4>${p.name}</h4>
+          <span>৳${p.price}</span>
+        </div>
+      </div>
+    `).join('');
+  }
+  resultsBox.classList.add('show');
+};
+
+/* search close on outside click */
+document.addEventListener('click', e => {
+  const sr = document.getElementById('searchResults');
+  const sw = document.querySelector('.search-wrap');
+  if (sr && sw && !sw.contains(e.target)) sr.classList.remove('show');
+});
+
+/* ══ CATEGORY FILTER (Homepage tabs) ══ */
+window.filterCat = function(type, gender, btn) {
+  /* active tab */
+  const tabsId = type === 'watches' ? 'watchTabs' : type === 'sunglasses' ? 'sunglassTabs' : null;
+  if (tabsId) {
+    document.querySelectorAll(`#${tabsId} .cat-tab`).forEach(b => b.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+  }
+
+  const gridId = type === 'watches' ? 'watchGrid' : type === 'sunglasses' ? 'sunglassGrid' : 'giftGrid';
+  const grid   = document.getElementById(gridId);
+  if (!grid) return;
+
+  const cards = grid.querySelectorAll('.product-card');
+  cards.forEach(card => {
+    const g = card.getAttribute('data-gender') || 'all';
+    card.style.display = (gender === 'all' || g === gender) ? '' : 'none';
+  });
+};
+
+/* ══ QUICK VIEW ══ */
+window.openQuickView = function(id, name, price, oldPrice, image, desc, cat) {
+  const overlay = document.getElementById('quickViewOverlay');
+  if (!overlay) return;
+  document.getElementById('qvImg').src           = image || '';
+  document.getElementById('qvName').textContent  = name  || '';
+  document.getElementById('qvCat').textContent   = cat   || '';
+  document.getElementById('qvPrice').textContent = '৳' + (price || 0);
+  document.getElementById('qvOld').textContent   = oldPrice ? '৳' + oldPrice : '';
+  document.getElementById('qvDesc').textContent  = desc  || '';
+  document.getElementById('qvCartBtn').onclick   = () => {
+    window.addToCart(id, name, price, image);
+    window.closeQuickView();
+  };
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+};
+
+window.closeQuickView = function() {
+  const overlay = document.getElementById('quickViewOverlay');
+  if (overlay) overlay.classList.remove('open');
+  document.body.style.overflow = 'auto';
+};
+
+/* ESC key closes quick view */
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') window.closeQuickView?.();
+});
+
+/* ══ HERO BANNER SLIDER (Homepage) ══ */
+let heroIndex     = 0;
+let heroTimer     = null;
+let heroSlides    = [];
+
+window.heroNext = function() {
+  if (!heroSlides.length) return;
+  setHeroSlide((heroIndex + 1) % heroSlides.length);
+  resetHeroTimer();
+};
+
+window.heroPrev = function() {
+  if (!heroSlides.length) return;
+  setHeroSlide((heroIndex - 1 + heroSlides.length) % heroSlides.length);
+  resetHeroTimer();
+};
+
+function setHeroSlide(index) {
+  const slides = document.querySelectorAll('.hero-slide');
+  const dots   = document.querySelectorAll('.hero-slide-dot');
+  slides.forEach((s, i) => s.classList.toggle('active', i === index));
+  dots.forEach((d, i)   => d.classList.toggle('active', i === index));
+  heroIndex = index;
+}
+
+function resetHeroTimer() {
+  clearInterval(heroTimer);
+  heroTimer = setInterval(() => {
+    const slides = document.querySelectorAll('.hero-slide');
+    if (slides.length > 1) setHeroSlide((heroIndex + 1) % slides.length);
+  }, 5000);
+}
+
+function initHeroSlider() {
+  const slides = document.querySelectorAll('.hero-slide');
+  if (slides.length > 1) resetHeroTimer();
+}
+
+/* ══ FLASH SALE TIMER ══ */
+window.startFlashTimer = function(endDateStr) {
+  function tick() {
+    const now  = Date.now();
+    const end  = new Date(endDateStr).getTime();
+    const diff = Math.max(0, end - now);
+    const d    = Math.floor(diff / 86400000);
+    const h    = Math.floor((diff % 86400000) / 3600000);
+    const m    = Math.floor((diff % 3600000)  / 60000);
+    const s    = Math.floor((diff % 60000)    / 1000);
+    const pad  = n => String(n).padStart(2, '0');
+    const days  = document.getElementById('fDays');
+    const hours = document.getElementById('fHours');
+    const mins  = document.getElementById('fMins');
+    const secs  = document.getElementById('fSecs');
+    if (days)  days.textContent  = pad(d);
+    if (hours) hours.textContent = pad(h);
+    if (mins)  mins.textContent  = pad(m);
+    if (secs)  secs.textContent  = pad(s);
+    if (diff <= 0) {
+      clearInterval(window._flashInterval);
+      const sec = document.getElementById('flashSaleSection');
+      if (sec) sec.style.display = 'none';
+    }
+  }
+  clearInterval(window._flashInterval);
+  tick();
+  window._flashInterval = setInterval(tick, 1000);
+};
+
+/* ══ PRODUCT CARD BUILDER ══ */
+window.buildProductCard = function(p) {
+  const discount = p.oldPrice && p.price
+    ? Math.round((1 - p.price / p.oldPrice) * 100)
+    : null;
+  return `
+    <div class="product-card" data-gender="${p.gender || 'all'}"
+         onclick="window.location.href='product.html?id=${p.id}'">
+      <div class="p-img-wrap">
+        <img src="${p.imageUrl || ''}" alt="${p.name}" loading="lazy"
+             onerror="this.parentElement.style.background='#1a1a1a'">
+        ${discount ? `<div class="p-badge">${discount}% OFF</div>` : ''}
+        <div class="p-hover">
+          <button onclick="event.stopPropagation();window.openQuickView('${p.id}','${(p.name||'').replace(/'/g,'&apos;')}',${p.price||0},${p.oldPrice||0},'${p.imageUrl||''}','${(p.description||'').substring(0,80).replace(/'/g,'&apos;')}','${p.category||''}')">
+            <i class="fas fa-eye"></i> Quick View
+          </button>
+        </div>
+      </div>
+      <div class="p-info">
+        <h3>${p.name || ''}</h3>
+        <div class="p-price">
+          <span class="p-current">৳${p.price || 0}</span>
+          ${p.oldPrice ? `<span class="p-old">৳${p.oldPrice}</span>` : ''}
+        </div>
+        <button class="p-cart-btn" onclick="event.stopPropagation();window.addToCart('${p.id}','${(p.name||'').replace(/'/g,'&apos;')}',${p.price||0},'${p.imageUrl||''}')">
+          <i class="fas fa-shopping-bag"></i> Add to Cart
+        </button>
+      </div>
+    </div>
+  `;
+};
+
 /* ══ INIT ALL ══ */
 function initAnimations() {
+  loadTheme();
   createParticles();
   initScrollAnimations();
+  initCountUp();
   autoSlide();
   initPageTransitions();
   initParallax();
   setActiveNav();
   updateCartCount();
   fixLogoColor();
+  initHeroSlider();
 }

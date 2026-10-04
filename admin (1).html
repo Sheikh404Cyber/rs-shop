@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>অ্যাডমিন প্যানেল — RS SHOP</title>
+  <meta name="robots" content="noindex,nofollow">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body{overflow:auto}
+    #login{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;padding:20px}
+    #login .card{width:100%;max-width:400px;animation:pop .6s var(--ease)}
+    #app{display:none;min-height:100vh}
+    .side{position:fixed;top:0;bottom:0;left:0;width:240px;background:var(--bg2);border-right:1px solid var(--border);padding:18px 12px;overflow:auto;z-index:50;transition:transform .35s var(--ease)}
+    .side .logo{display:block;text-align:center;margin-bottom:18px}
+    .side button{display:flex;gap:12px;align-items:center;width:100%;padding:11px 14px;border-radius:8px;color:var(--muted);text-align:left;border-left:3px solid transparent;transition:background .25s,color .25s,transform .25s,border-color .25s}
+    .side button:hover{background:var(--bg4);color:var(--gold);transform:translateX(5px)}
+    .side button.on{background:var(--bg4);color:var(--gold);border-left-color:var(--gold)}
+    .side button i{width:18px;text-align:center}
+    .side hr{border:none;border-top:1px solid var(--border);margin:10px 0}
+    .top{display:none;position:sticky;top:0;z-index:40;background:var(--bg2);border-bottom:1px solid var(--border);padding:10px 16px;align-items:center;gap:12px}
+    #main{margin-left:240px;padding:28px;max-width:1100px;min-height:calc(100vh - 70px)}
+    #main>*{animation:rise .55s var(--ease) both}
+    #main>*:nth-child(2){animation-delay:.07s}#main>*:nth-child(3){animation-delay:.14s}#main>*:nth-child(4){animation-delay:.21s}
+    #main h2{font-family:'Hind Siliguri',serif;margin-bottom:18px;font-size:1.6rem}
+    .adm-foot{margin-left:240px;padding:18px;text-align:center;color:var(--muted);font-size:.88rem;border-top:1px solid var(--border)}
+    .adm-foot a{color:var(--gold);font-weight:600}
+    #login .adm-foot{margin:0;border:none}
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+    .stat{padding:18px;background:var(--bg3);border:1px solid var(--border);border-radius:12px;animation:rise .6s var(--ease) both;transition:transform .3s var(--ease),border-color .3s}
+    .stat:nth-child(2){animation-delay:.08s}.stat:nth-child(3){animation-delay:.16s}.stat:nth-child(4){animation-delay:.24s}
+    .stat:hover{transform:translateY(-5px);border-color:var(--gold)}
+    .stat b{display:block;font-size:1.7rem;color:var(--gold)}.stat span{color:var(--muted);font-size:.88rem}
+    .row{display:flex;gap:14px;align-items:center;padding:12px 8px;border-bottom:1px solid var(--border);border-radius:8px;transition:background .25s}
+    .row:hover{background:var(--bg4)}
+    .row:last-child{border:none}.row img{width:54px;height:54px;object-fit:cover;border-radius:8px;background:var(--bg4)}
+    .grow{flex:1;min-width:0}.grow small{display:block;color:var(--muted)}
+    .acts{display:flex;gap:6px;flex-wrap:wrap}
+    .pill{padding:3px 12px;border-radius:50px;font-size:.78rem;background:rgba(201,168,76,.15);color:var(--gold);white-space:nowrap}
+    .pill.delivered,.pill.ok{background:rgba(37,211,102,.15);color:var(--green)}.pill.cancelled,.pill.bad{background:rgba(230,57,70,.15);color:var(--red)}
+    .g2{display:grid;grid-template-columns:1fr 1fr;gap:0 16px}
+    .chk{display:flex;align-items:center;gap:10px;margin:0 0 14px;cursor:pointer}.chk input{accent-color:var(--gold);width:18px;height:18px}
+    details{border:1px solid var(--border);border-radius:12px;background:var(--bg3);margin-bottom:12px;padding:0 16px;transition:border-color .3s}
+    details:hover,details[open]{border-color:var(--gold)}
+    summary{cursor:pointer;padding:14px 0;display:flex;gap:12px;align-items:center;flex-wrap:wrap;list-style:none}
+    summary::-webkit-details-marker{display:none}
+    .det{padding:12px 0 16px;border-top:1px solid var(--border);color:var(--muted);font-size:.92rem}
+    details[open] .det{animation:rise .4s var(--ease)}
+    #toast{position:fixed;bottom:22px;left:50%;transform:translate(-50%,20px);background:var(--bg3);border:1px solid var(--gold);padding:11px 22px;border-radius:50px;z-index:99;opacity:0;pointer-events:none;transition:.35s var(--ease);max-width:92vw;text-align:center}
+    #toast.show{opacity:1;transform:translate(-50%,0)}
+    .drop{position:relative;margin-top:10px;padding:22px 14px;border:2px dashed var(--border);border-radius:12px;text-align:center;cursor:pointer;background:var(--bg2);transition:border-color .3s,background .3s,transform .3s;overflow:hidden}
+    .drop i{display:block;font-size:2rem;color:var(--gold);margin-bottom:6px;transition:transform .4s var(--ease)}
+    .drop small{display:block;color:var(--muted)}
+    .drop:hover{border-color:var(--gold);background:var(--bg3)}
+    .drop:hover i{transform:translateY(-4px)}
+    .drop.over{border-color:var(--gold);background:rgba(201,168,76,.12);transform:scale(1.015);animation:glowb 1s ease-in-out infinite}
+    @keyframes glowb{50%{box-shadow:0 0 0 6px rgba(201,168,76,.18)}}
+    .drop .bar{position:absolute;left:0;bottom:0;height:4px;width:0;background:linear-gradient(90deg,var(--gold),var(--gold-light));transition:width .2s}
+    .drop.busy{pointer-events:none;opacity:.8}
+    .prev{display:none;width:150px;max-width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;margin-top:12px;border:1px solid var(--border)}
+    .prev.on{display:block;animation:pop .4s var(--ease)}
+    .prev.wide{width:300px;aspect-ratio:21/8}
+    .tip{background:rgba(201,168,76,.08);border-left:3px solid var(--gold);padding:12px 16px;border-radius:0 10px 10px 0;color:var(--muted);font-size:.9rem;margin-bottom:16px;line-height:1.7}
+    .tip b{color:var(--text)}
+    @media(max-width:860px){.side{transform:translateX(-100%)}.side.open{transform:none}.top{display:flex}#main,.adm-foot{margin-left:0}#main{padding:18px}.stats{grid-template-columns:1fr 1fr}.g2{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+
+<div id="login">
+  <div class="card">
+    <div class="logo" style="text-align:center;font-size:2rem;margin-bottom:6px">RS<small>SHOP</small></div>
+    <p style="text-align:center;color:var(--muted);margin-bottom:20px">অ্যাডমিন লগইন</p>
+    <div class="form-group"><label>ইমেইল</label><input class="input" id="lEmail" type="email" autocomplete="username"></div>
+    <div class="form-group"><label>পাসওয়ার্ড</label><input class="input" id="lPass" type="password" autocomplete="current-password"></div>
+    <p class="error-text" id="lErr"></p>
+    <button class="btn btn-primary btn-block" id="lBtn"><i class="fas fa-sign-in-alt"></i> লগইন করুন</button>
+  </div>
+  <div class="adm-foot" id="loginFoot"></div>
+</div>
+
+<div id="app">
+  <div class="top"><button class="icon-btn" id="burger" aria-label="মেনু"><i class="fas fa-bars"></i></button><b class="logo" style="font-size:1.2rem">RS অ্যাডমিন</b></div>
+  <aside class="side" id="side">
+    <a class="logo" href="index.html" target="_blank">RS<small>ADMIN</small></a>
+    <button data-go="dashboard"><i class="fas fa-chart-pie"></i> ড্যাশবোর্ড</button>
+    <button data-go="orders"><i class="fas fa-receipt"></i> অর্ডার</button>
+    <button data-go="product"><i class="fas fa-plus-circle"></i> নতুন পণ্য যোগ</button>
+    <button data-go="products"><i class="fas fa-box"></i> সব পণ্য</button>
+    <button data-go="flash"><i class="fas fa-bolt"></i> ফ্ল্যাশ সেল</button>
+    <button data-go="messages"><i class="fas fa-envelope"></i> মেসেজ</button>
+    <button data-go="banners"><i class="fas fa-image"></i> ব্যানার</button>
+    <hr>
+    <button data-go="shop"><i class="fas fa-store"></i> শপ সেটিং</button>
+    <button data-go="payment"><i class="fas fa-wallet"></i> পেমেন্ট সেটিং</button>
+    <button data-go="delivery"><i class="fas fa-truck"></i> ডেলিভারি চার্জ</button>
+    <button data-go="upload"><i class="fas fa-cloud-upload-alt"></i> ছবি আপলোড সেটিং</button>
+    <button data-go="password"><i class="fas fa-key"></i> পাসওয়ার্ড বদলান</button>
+    <hr>
+    <button id="logout"><i class="fas fa-sign-out-alt"></i> লগআউট</button>
+  </aside>
+  <main id="main"></main>
+  <div class="adm-foot" id="appFoot"></div>
+</div>
+<div id="toast"></div>
+
+<script type="module">
+import { db, collection, doc, getDocs, getDoc, addDoc, setDoc, updateDoc, deleteDoc, serverTimestamp,
+         adminLogin, adminLogout, onAdmin, changeAdminPassword, clearCache,
+         CATEGORIES, STATUS, PLACEHOLDER_IMG, taka, esc } from "./firebase.js";
+
+const $ = (s, r = document) => r.querySelector(s);
+const main = $("#main");
+const say = m => { const t = $("#toast"); t.textContent = m; t.classList.add("show"); clearTimeout(say.t); say.t = setTimeout(() => t.classList.remove("show"), 3200); };
+const all = async c => (await getDocs(collection(db, c))).docs.map(d => ({ id: d.id, ...d.data() }));
+const ms = x => x?.toMillis ? x.toMillis() : 0;
+const dt = x => x?.toDate ? x.toDate().toLocaleString("bn-BD", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" }) : "";
+const val = id => $("#" + id).value.trim();
+const opts = (obj, sel) => Object.entries(obj).map(([k, v]) => `<option value="${k}" ${k === sel ? "selected" : ""}>${typeof v === "string" ? v : v.label}</option>`).join("");
+const fld = (l, id, v = "", type = "text", ph = "") => `<div class="form-group"><label>${l}</label><input class="input" id="${id}" type="${type}" value="${esc(v)}" placeholder="${ph}"></div>`;
+const chk = (l, id, on) => `<label class="chk"><input type="checkbox" id="${id}" ${on ? "checked" : ""}> ${l}</label>`;
+
+/* বাংলা নামের তালিকা */
+const BN = {
+  cat: Object.fromEntries(Object.entries(CATEGORIES).map(([k, v]) => [k, v.bn])),
+  gender: { men: "পুরুষ", women: "মহিলা", kids: "বাচ্চা", unisex: "ইউনিসেক্স" },
+  sub: { analog: "অ্যানালগ", digital: "ডিজিটাল", sport: "স্পোর্টস", luxury: "লাক্সারি", gift_item: "গিফট আইটেম", birthday: "জন্মদিন" },
+  stock: { in_stock: "স্টকে আছে", limited: "সীমিত স্টক", out_of_stock: "স্টক শেষ" },
+  pay: { cod: "ক্যাশ অন ডেলিভারি", bkash: "বিকাশ", nagad: "নগদ", rocket: "রকেট" }
+};
+const foot = `© ${new Date().getFullYear()} RS SHOP. All Rights Reserved | Developed by <a href="https://web.facebook.com/AMIN.SHEIKH.01" target="_blank" rel="noopener">AMIN SHEIKH</a>`;
+$("#loginFoot").innerHTML = foot; $("#appFoot").innerHTML = foot;
+
+const countUp = el => {
+  const to = +el.dataset.n, money = el.dataset.m, t0 = performance.now();
+  (function f(t) { const k = Math.min((t - t0) / 900, 1), v = Math.round(to * (1 - Math.pow(1 - k, 3)));
+    el.textContent = money ? taka(v) : v.toLocaleString("en-IN"); if (k < 1) requestAnimationFrame(f); })(t0);
+};
+
+/* ══ ছবি আপলোড (ড্র্যাগ ও ড্রপ → Cloudinary) ══ */
+let UP = null;
+const upCfg = async () => { if (!UP) { const s = await getDoc(doc(db, "settings", "upload")); UP = s.exists() ? s.data() : {}; } return UP; };
+const shrink = async (file, maxW) => {
+  if (!/^image\/(jpeg|png|webp)$/.test(file.type)) return file;
+  try {
+    const bmp = await createImageBitmap(file), sc = Math.min(1, maxW / bmp.width);
+    const c = document.createElement("canvas"); c.width = Math.round(bmp.width * sc); c.height = Math.round(bmp.height * sc);
+    const x = c.getContext("2d"); x.fillStyle = "#fff"; x.fillRect(0, 0, c.width, c.height); x.drawImage(bmp, 0, 0, c.width, c.height);
+    const b = await new Promise(r => c.toBlob(r, "image/jpeg", .86));
+    return b && b.size < file.size ? b : file;
+  } catch { return file; }
+};
+const sendImg = (file, cfg, onP) => new Promise((res, rej) => {
+  const fd = new FormData(); fd.append("file", file); fd.append("upload_preset", cfg.preset);
+  const x = new XMLHttpRequest();
+  x.open("POST", `https://api.cloudinary.com/v1_1/${encodeURIComponent(cfg.cloudName)}/image/upload`);
+  x.upload.onprogress = e => e.lengthComputable && onP(e.loaded / e.total);
+  x.onload = () => { let j = {}; try { j = JSON.parse(x.responseText); } catch {} x.status === 200 && j.secure_url ? res(j.secure_url) : rej(new Error(j.error?.message || "আপলোড হয়নি")); };
+  x.onerror = () => rej(new Error("ইন্টারনেট সমস্যা, আবার চেষ্টা করুন"));
+  x.send(fd);
+});
+/* লিংক বক্স + ড্রপ বক্স + প্রিভিউ */
+const imgBox = (id, url, label, wide) => `<div class="form-group"><label>${label}</label>
+  <input class="input" id="${id}" type="url" value="${esc(url || "")}" placeholder="ছবির লিংক এখানে বসান (https://...)">
+  <div class="drop" id="${id}_drop" tabindex="0"><i class="fas fa-cloud-upload-alt"></i><b>অথবা ছবি এখানে টেনে এনে ছেড়ে দিন</b><small>বা ক্লিক করে ফাইল বাছাই করুন (JPG, PNG, WEBP)</small><div class="bar" id="${id}_bar"></div></div>
+  <input type="file" id="${id}_file" accept="image/*" hidden>
+  <img id="${id}_prev" class="prev ${wide ? "wide" : ""} ${url ? "on" : ""}" src="${esc(url || PLACEHOLDER_IMG)}" alt="প্রিভিউ" onerror="this.src='${PLACEHOLDER_IMG}'"></div>`;
+const bindImg = (id, tf, maxW) => {
+  const inp = $("#" + id), drop = $("#" + id + "_drop"), file = $("#" + id + "_file"), prev = $("#" + id + "_prev"), bar = $("#" + id + "_bar");
+  const show = () => { prev.src = inp.value || PLACEHOLDER_IMG; prev.classList.toggle("on", !!inp.value); };
+  inp.addEventListener("input", show);
+  const run = async f => {
+    if (!f.type.startsWith("image/")) return say("শুধু ছবির ফাইল দিন।");
+    if (f.size > 15 * 1024 * 1024) return say("ছবিটি অনেক বড় (সর্বোচ্চ ১৫ MB)।");
+    const cfg = await upCfg();
+    if (!cfg.cloudName || !cfg.preset) return say("আগে বাম মেনুর ‘ছবি আপলোড সেটিং’ থেকে Cloudinary-র তথ্য দিন।");
+    drop.classList.add("busy"); bar.style.width = "4%";
+    try {
+      const url = await sendImg(await shrink(f, maxW), cfg, p => bar.style.width = Math.max(4, p * 100) + "%");
+      inp.value = url.includes("/upload/") ? url.replace("/upload/", "/upload/" + tf + "/") : url;
+      show(); say("ছবি আপলোড হয়েছে ✓");
+    } catch (e) { say("আপলোড হয়নি: " + e.message); }
+    bar.style.width = "0"; drop.classList.remove("busy"); file.value = "";
+  };
+  drop.onclick = () => file.click();
+  drop.onkeydown = e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); file.click(); } };
+  file.onchange = () => file.files[0] && run(file.files[0]);
+  ["dragenter", "dragover"].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add("over"); }));
+  ["dragleave", "drop"].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove("over"); }));
+  drop.addEventListener("drop", e => { const f = e.dataTransfer.files[0]; if (f) run(f); });
+};
+const TF_PRODUCT = "c_fill,ar_1:1,g_auto,w_900,f_auto,q_auto";
+const TF_BANNER = "c_fill,ar_21:8,g_auto,w_1600,f_auto,q_auto";
+
+/* ══ লগইন ══ */
+$("#lBtn").onclick = async () => {
+  $("#lErr").textContent = "";
+  try { await adminLogin($("#lEmail").value, $("#lPass").value); }
+  catch (e) {
+    const M = { "not-admin": "এই ইমেইল অ্যাডমিন নয়। ইমেইল হতে হবে admin@rsshop.com",
+      "auth/invalid-credential": "ইমেইল বা পাসওয়ার্ড ঠিক নয়, অথবা Firebase-এ এই ইউজার বানানো হয়নি।",
+      "auth/invalid-email": "ইমেইলের ফরম্যাট ঠিক নয়।",
+      "auth/operation-not-allowed": "Firebase-এ Email/Password সাইন-ইন চালু করা নেই।",
+      "auth/unauthorized-domain": "এই সাইটের ডোমেইন Firebase-এ অনুমোদিত নয়।",
+      "auth/too-many-requests": "অনেকবার চেষ্টা হয়েছে, কিছুক্ষণ পরে আবার করুন।",
+      "auth/network-request-failed": "ইন্টারনেট সমস্যা, আবার চেষ্টা করুন।" };
+    $("#lErr").textContent = M[e.code] || M[e.message] || ("লগইন হয়নি: " + (e.code || e.message));
+  }
+};
+$("#lPass").addEventListener("keydown", e => { if (e.key === "Enter") $("#lBtn").click(); });
+$("#logout").onclick = () => adminLogout();
+$("#burger").onclick = () => $("#side").classList.toggle("open");
+onAdmin(u => { $("#login").style.display = u ? "none" : "flex"; $("#app").style.display = u ? "block" : "none"; if (u) go("dashboard"); });
+
+/* ══ মেনু ══ */
+const P = {};
+async function go(name, arg) {
+  document.querySelectorAll(".side [data-go]").forEach(b => b.classList.toggle("on", b.dataset.go === (name === "editproduct" ? "product" : name)));
+  $("#side").classList.remove("open");
+  main.innerHTML = '<p style="color:var(--muted)"><i class="fas fa-spinner fa-spin"></i> লোড হচ্ছে...</p>';
+  try { await P[name](arg); } catch (e) { console.error(e); main.innerHTML = `<div class="card"><h3>সমস্যা হয়েছে</h3><p class="error-text">${esc(e.code || e.message)}</p><p style="color:var(--muted)">লগইন আছে কিনা এবং Firestore Rules ঠিক আছে কিনা দেখুন।</p></div>`; }
+  scrollTo({ top: 0, behavior: "smooth" });
+}
+document.querySelector(".side").addEventListener("click", e => { const b = e.target.closest("[data-go]"); if (b) go(b.dataset.go); });
+
+/* ══ ড্যাশবোর্ড ══ */
+P.dashboard = async () => {
+  const [o, p, m] = await Promise.all([all("orders"), all("products"), all("messages")]);
+  o.sort((a, b) => ms(b.createdAt) - ms(a.createdAt));
+  const rev = o.filter(x => x.status === "delivered").reduce((s, x) => s + (x.total || 0), 0), unread = m.filter(x => x.status === "unread").length;
+  main.innerHTML = `<h2>ড্যাশবোর্ড</h2>
+  <div class="stats"><div class="stat"><b data-n="${o.length}">0</b><span>মোট অর্ডার</span></div><div class="stat"><b data-n="${o.filter(x => x.status === "pending").length}">0</b><span>নতুন অর্ডার</span></div>
+  <div class="stat"><b data-n="${rev}" data-m="1">0</b><span>ডেলিভারি হওয়া বিক্রি</span></div><div class="stat"><b data-n="${p.length}">0</b><span>মোট পণ্য</span></div></div>
+  <div class="card"><h3>সাম্প্রতিক অর্ডার ${unread ? `<span class="pill bad">${unread} টি নতুন মেসেজ</span>` : ""}</h3>
+  ${o.slice(0, 6).map(x => `<div class="row"><div class="grow"><b>${esc(x.orderId || x.id)}</b><small>${esc(x.customer?.name)} · ${dt(x.createdAt)}</small></div><b style="color:var(--gold)">${taka(x.total)}</b><span class="pill ${esc(x.status)}">${STATUS[x.status]?.label || esc(x.status)}</span></div>`).join("") || '<p style="color:var(--muted)">এখনো কোনো অর্ডার আসেনি।</p>'}</div>`;
+  main.querySelectorAll("[data-n]").forEach(countUp);
+};
+
+/* ══ অর্ডার ══ */
+P.orders = async (filter = "") => {
+  let o = await all("orders"); o.sort((a, b) => ms(b.createdAt) - ms(a.createdAt));
+  if (filter) o = o.filter(x => x.status === filter);
+  main.innerHTML = `<h2>অর্ডার (${o.length})</h2>
+  <select class="select" id="of" style="max-width:240px;margin-bottom:16px"><option value="">সব অবস্থা</option>${opts(STATUS, filter)}</select>
+  ${o.map(x => `<details><summary><b>${esc(x.orderId || x.id)}</b><span class="grow">${esc(x.customer?.name)} · ${esc(x.customer?.phone)}</span><b style="color:var(--gold)">${taka(x.total)}</b><span class="pill ${esc(x.status)}">${STATUS[x.status]?.label || esc(x.status)}</span></summary>
+    <div class="det"><p>${dt(x.createdAt)} · ${esc(BN.pay[x.payment] || x.paymentLabel || "")}${x.transactionId ? " · ট্রানজেকশন আইডি: " + esc(x.transactionId) : ""}${x.coupon ? " · কুপন: " + esc(x.coupon) : ""}</p>
+    <p><i class="fas fa-map-marker-alt"></i> ${esc(x.customer?.address)} (${esc(x.customer?.area)})</p>${x.note ? `<p>নোট: ${esc(x.note)}</p>` : ""}
+    ${(x.items || []).map(i => `<div class="row"><img src="${esc(i.image || PLACEHOLDER_IMG)}" alt="" onerror="this.src='${PLACEHOLDER_IMG}'"><div class="grow">${esc(i.name)}<small>${taka(i.price)} × ${i.qty}</small></div><b>${taka(i.price * i.qty)}</b></div>`).join("")}
+    <p style="margin-top:10px">সাবটোটাল ${taka(x.subtotal)} · ডেলিভারি ${taka(x.delivery)} · ছাড় ${taka(x.discount || 0)} · <b style="color:var(--gold)">মোট ${taka(x.total)}</b></p>
+    <div class="acts" style="margin-top:10px"><select class="select" style="width:auto" data-st="${x.id}">${opts(STATUS, x.status)}</select>
+    <a class="btn btn-wa btn-sm" target="_blank" rel="noopener" href="https://wa.me/88${esc(x.customer?.phone)}"><i class="fab fa-whatsapp"></i> হোয়াটসঅ্যাপ</a>
+    <button class="btn btn-dark btn-sm" data-del="${x.id}"><i class="fas fa-trash"></i> মুছুন</button></div></div></details>`).join("") || '<div class="empty"><i class="fas fa-receipt"></i><h3>কোনো অর্ডার নেই</h3></div>'}`;
+  $("#of").onchange = e => P.orders(e.target.value);
+  main.querySelectorAll("[data-st]").forEach(s => s.onchange = async () => { await updateDoc(doc(db, "orders", s.dataset.st), { status: s.value }); say("অর্ডারের অবস্থা বদলানো হয়েছে ✓"); });
+  main.querySelectorAll("[data-del]").forEach(b => b.onclick = async () => { if (confirm("এই অর্ডারটি মুছে ফেলবেন?")) { await deleteDoc(doc(db, "orders", b.dataset.del)); P.orders(filter); } });
+};
+
+/* ══ পণ্য যোগ / এডিট ══ */
+P.product = async () => P.editproduct(null);
+P.editproduct = async id => {
+  const p = id ? (await getDoc(doc(db, "products", id))).data() || {} : {};
+  main.innerHTML = `<h2>${id ? "পণ্য এডিট করুন" : "নতুন পণ্য যোগ করুন"}</h2><div class="card">
+  ${fld("পণ্যের নাম *", "pName", p.name)}
+  <div class="g2"><div class="form-group"><label>ক্যাটাগরি *</label><select class="select" id="pCat">${opts(BN.cat, p.category)}</select></div>
+  <div class="form-group"><label>কাদের জন্য</label><select class="select" id="pGen">${opts(BN.gender, p.gender)}</select></div>
+  <div class="form-group"><label>ধরন</label><select class="select" id="pSub"><option value="">— নেই —</option>${opts(BN.sub, p.subCategory)}</select></div>
+  <div class="form-group"><label>স্টকের অবস্থা</label><select class="select" id="pStock">${opts(BN.stock, p.stock || "in_stock")}</select></div>
+  ${fld("দাম (৳) *", "pPrice", p.price, "number")}${fld("আগের দাম (৳) — কাটা দাম দেখাতে", "pOld", p.oldPrice || "", "number")}${fld("স্টকের পরিমাণ", "pQty", p.stockQty ?? "", "number")}</div>
+  ${imgBox("pImg", p.imageUrl, "পণ্যের ছবি *")}
+  <div class="form-group"><label>বিবরণ</label><textarea class="input" id="pDesc" rows="4">${esc(p.description || "")}</textarea></div>
+  ${chk("⭐ ফিচার্ড (হোম পেজে আগে দেখাবে)", "pFeat", p.featured)}${chk("⚡ ফ্ল্যাশ সেলে রাখুন", "pFlash", p.flashSale)}
+  <button class="btn btn-primary" id="pSave"><i class="fas fa-save"></i> ${id ? "আপডেট করুন" : "পণ্য সংরক্ষণ করুন"}</button></div>`;
+  bindImg("pImg", TF_PRODUCT, 1200);
+  $("#pSave").onclick = async () => {
+    const d = { name: val("pName"), category: val("pCat"), gender: val("pGen"), subCategory: val("pSub"), stock: val("pStock"),
+      price: +val("pPrice"), oldPrice: +val("pOld") || 0, stockQty: +val("pQty") || 0, imageUrl: val("pImg"), description: val("pDesc"),
+      featured: $("#pFeat").checked, flashSale: $("#pFlash").checked };
+    if (!d.name || !(d.price > 0) || !d.imageUrl) return say("পণ্যের নাম, দাম ও ছবি দিন।");
+    $("#pSave").disabled = true;
+    try {
+      if (id) await updateDoc(doc(db, "products", id), d); else await addDoc(collection(db, "products"), { ...d, createdAt: serverTimestamp() });
+      clearCache(); say("পণ্য সংরক্ষণ হয়েছে ✓"); go("products");
+    } catch (e) { $("#pSave").disabled = false; say("সংরক্ষণ হয়নি: " + (e.code || e.message)); }
+  };
+};
+
+/* ══ সব পণ্য ══ */
+P.products = async () => {
+  const l = (await all("products")).sort((a, b) => ms(b.createdAt) - ms(a.createdAt));
+  main.innerHTML = `<h2>সব পণ্য (${l.length})</h2><div class="card">${l.map(p => `
+  <div class="row"><img src="${esc(p.imageUrl || PLACEHOLDER_IMG)}" alt="" onerror="this.src='${PLACEHOLDER_IMG}'"><div class="grow"><b>${esc(p.name)}</b><small>${esc(BN.cat[p.category] || p.category)} · ${esc(BN.gender[p.gender] || "")} · ${taka(p.price)} ${p.featured ? "· ⭐" : ""} ${p.flashSale ? "· ⚡" : ""}</small></div>
+  <span class="pill ${p.stock === "out_of_stock" ? "bad" : "ok"}">${BN.stock[p.stock] || BN.stock.in_stock}</span>
+  <div class="acts"><button class="btn btn-dark btn-sm" data-e="${p.id}"><i class="fas fa-pen"></i> এডিট</button><button class="btn btn-dark btn-sm" data-d="${p.id}"><i class="fas fa-trash"></i></button></div></div>`).join("") || '<div class="empty"><i class="fas fa-box"></i><h3>এখনো কোনো পণ্য নেই</h3><p>বাম মেনু থেকে “নতুন পণ্য যোগ” চেপে প্রথম পণ্য দিন।</p></div>'}</div>`;
+  main.querySelectorAll("[data-e]").forEach(b => b.onclick = () => go("editproduct", b.dataset.e));
+  main.querySelectorAll("[data-d]").forEach(b => b.onclick = async () => { if (confirm("এই পণ্যটি মুছে ফেলবেন?")) { await deleteDoc(doc(db, "products", b.dataset.d)); clearCache(); P.products(); } });
+};
+
+/* ══ মেসেজ ══ */
+P.messages = async () => {
+  const l = (await all("messages")).sort((a, b) => ms(b.createdAt) - ms(a.createdAt));
+  main.innerHTML = `<h2>মেসেজ (${l.length})</h2>${l.map(m => `<details ${m.status === "unread" ? "open" : ""}><summary><b>${esc(m.name)}</b><span class="grow">${esc(m.subject)} · ${dt(m.createdAt)}</span>${m.status === "unread" ? '<span class="pill bad">নতুন</span>' : ""}</summary>
+  <div class="det"><p style="color:var(--text);white-space:pre-line">${esc(m.message)}</p><p>${esc(m.phone)} ${m.email ? "· " + esc(m.email) : ""} ${m.orderId ? "· অর্ডার: " + esc(m.orderId) : ""}</p>
+  <div class="acts"><a class="btn btn-wa btn-sm" target="_blank" rel="noopener" href="https://wa.me/88${esc(m.phone)}"><i class="fab fa-whatsapp"></i> উত্তর দিন</a>
+  <button class="btn btn-dark btn-sm" data-r="${m.id}">পড়া হয়েছে</button><button class="btn btn-dark btn-sm" data-d="${m.id}"><i class="fas fa-trash"></i></button></div></div></details>`).join("") || '<div class="empty"><i class="fas fa-envelope"></i><h3>কোনো মেসেজ নেই</h3></div>'}`;
+  main.querySelectorAll("[data-r]").forEach(b => b.onclick = async () => { await updateDoc(doc(db, "messages", b.dataset.r), { status: "read" }); P.messages(); });
+  main.querySelectorAll("[data-d]").forEach(b => b.onclick = async () => { if (confirm("মেসেজটি মুছবেন?")) { await deleteDoc(doc(db, "messages", b.dataset.d)); P.messages(); } });
+};
+
+/* ══ ব্যানার ══ */
+P.banners = async () => {
+  const l = (await all("banners")).sort((a, b) => (a.order || 0) - (b.order || 0));
+  main.innerHTML = `<h2>ব্যানার</h2>
+  <div class="card" style="margin-bottom:20px"><h3>নতুন ব্যানার যোগ করুন</h3>
+  <div class="tip">📐 <b>সঠিক মাপ:</b> ১৬০০ × ৬১০ পিক্সেল (চওড়া ছবি)। ছবি আপলোড করলে সিস্টেম নিজেই এই মাপে কেটে দেবে, তাই সব ব্যানার একই সাইজে দেখাবে। জরুরি লেখা ছবির <b>মাঝখানে</b> রাখুন।</div>
+  ${imgBox("bImg", "", "ব্যানারের ছবি *", true)}
+  <div class="g2">${fld("ক্রম নম্বর (১, ২, ৩...)", "bOrd", l.length + 1, "number")}
+  <label class="chk" style="align-self:end"><input type="checkbox" id="bAct" checked> চালু রাখুন</label></div>
+  <button class="btn btn-primary" id="bSave"><i class="fas fa-plus"></i> ব্যানার যোগ করুন</button></div>
+  <div class="card"><h3>বর্তমান ব্যানার (${l.length})</h3>${l.map(b => `<div class="row"><img src="${esc(b.imageUrl)}" style="width:130px;height:50px" alt="" onerror="this.src='${PLACEHOLDER_IMG}'"><div class="grow">ক্রম: ${b.order || 0}<small>${b.active === false ? "বন্ধ আছে" : "চালু আছে"}</small></div>
+  <div class="acts"><button class="btn btn-dark btn-sm" data-t="${b.id}" data-a="${b.active === false}">${b.active === false ? "চালু করুন" : "বন্ধ করুন"}</button><button class="btn btn-dark btn-sm" data-d="${b.id}"><i class="fas fa-trash"></i></button></div></div>`).join("") || '<p style="color:var(--muted)">কোনো ব্যানার নেই, তাই সাইটে ডিফল্ট স্লাইড দেখাচ্ছে।</p>'}</div>`;
+  bindImg("bImg", TF_BANNER, 1920);
+  $("#bSave").onclick = async () => {
+    if (!val("bImg")) return say("ব্যানারের ছবি দিন।");
+    await addDoc(collection(db, "banners"), { imageUrl: val("bImg"), order: +val("bOrd") || 1, active: $("#bAct").checked, createdAt: serverTimestamp() });
+    clearCache(); say("ব্যানার যোগ হয়েছে ✓"); P.banners();
+  };
+  main.querySelectorAll("[data-t]").forEach(b => b.onclick = async () => { await updateDoc(doc(db, "banners", b.dataset.t), { active: b.dataset.a === "true" }); clearCache(); P.banners(); });
+  main.querySelectorAll("[data-d]").forEach(b => b.onclick = async () => { if (confirm("ব্যানারটি মুছবেন?")) { await deleteDoc(doc(db, "banners", b.dataset.d)); clearCache(); P.banners(); } });
+};
+
+/* ══ সেটিং পেজ (শপ / ফ্ল্যাশ সেল / পেমেন্ট / ডেলিভারি / ছবি আপলোড) ══ */
+const SET = {
+  shop: ["শপ সেটিং", [["name", "দোকানের নাম"], ["phone", "ফোন নম্বর"], ["whatsapp", "হোয়াটসঅ্যাপ নম্বর (৮৮ দিয়ে, যেমন 8801XXXXXXXXX)"], ["facebook", "ফেসবুক পেজের লিংক", "url"], ["address", "দোকানের ঠিকানা"]]],
+  flash: ["ফ্ল্যাশ সেল", [["title", "টাইটেল (যেমন: ঈদ ফ্ল্যাশ সেল)"], ["discount", "ছাড় কত % (পণ্যের দাম এই হারে কমবে)", "number"], ["startDate", "শুরুর সময়", "datetime-local"], ["endDate", "শেষের সময়", "datetime-local"], ["active", "ফ্ল্যাশ সেল এখন চালু", "check"]]],
+  payment: ["পেমেন্ট সেটিং", [["payCOD", "ক্যাশ অন ডেলিভারি চালু", "check"], ["codArea", "ক্যাশ অন ডেলিভারির নোট"], ["payBkash", "বিকাশ চালু", "check"], ["bkashNum", "বিকাশ নম্বর"], ["payNagad", "নগদ চালু", "check"], ["nagadNum", "নগদ নম্বর"], ["payRocket", "রকেট চালু", "check"], ["rocketNum", "রকেট নম্বর"]]],
+  delivery: ["ডেলিভারি চার্জ", [["dhaka", "পূর্বধলা / ঢাকা (৳)", "number"], ["outside", "অন্য জেলা (৳)", "number"], ["freeAt", "এত টাকার উপরে ডেলিভারি ফ্রি (৳, ০ মানে বন্ধ)", "number"]]],
+  upload: ["ছবি আপলোড সেটিং", [["cloudName", "Cloudinary Cloud name"], ["preset", "Unsigned Upload preset এর নাম"]]]
+};
+const SET_HELP = { upload: `<div class="tip"><b>ছবি সরাসরি আপলোড করতে (একবারই করতে হবে, ফ্রি):</b><br>
+  ১. <b>cloudinary.com</b> এ ফ্রি অ্যাকাউন্ট খুলুন।<br>
+  ২. Dashboard থেকে <b>Cloud name</b> কপি করে নিচে বসান।<br>
+  ৩. <b>Settings → Upload → Upload presets → Add upload preset</b> এ গিয়ে <b>Signing mode</b> = <b>Unsigned</b> করুন, সেভ করুন।<br>
+  ৪. প্রিসেটের নাম নিচে বসিয়ে “সংরক্ষণ করুন” চাপুন।<br>
+  নিরাপত্তার জন্য প্রিসেটে শুধু jpg, png, webp এবং সর্বোচ্চ ১০ MB সীমা দিন। মেনুর নাম একটু আলাদা হতে পারে।</div>` };
+Object.entries(SET).forEach(([key, [title, fields]]) => P[key] = async () => {
+  const s = (await getDoc(doc(db, "settings", key))).data() || {};
+  main.innerHTML = `<h2>${title}</h2>${SET_HELP[key] || ""}<div class="card">${fields.map(([k, l, t]) => t === "check" ? chk(l, "s_" + k, s[k] ?? (key === "payment")) : fld(l, "s_" + k, s[k] ?? "", t || "text")).join("")}
+  <button class="btn btn-primary" id="sSave"><i class="fas fa-save"></i> সংরক্ষণ করুন</button></div>`;
+  $("#sSave").onclick = async () => {
+    const d = {}; fields.forEach(([k, , t]) => d[k] = t === "check" ? $("#s_" + k).checked : t === "number" ? +val("s_" + k) || 0 : val("s_" + k));
+    try { await setDoc(doc(db, "settings", key), d, { merge: true }); clearCache(); if (key === "upload") UP = null; say("সংরক্ষণ হয়েছে ✓"); }
+    catch (e) { say("সংরক্ষণ হয়নি: " + (e.code || e.message)); }
+  };
+});
+
+/* ══ পাসওয়ার্ড ══ */
+P.password = async () => {
+  main.innerHTML = `<h2>পাসওয়ার্ড বদলান</h2><div class="card" style="max-width:460px">${fld("আগের পাসওয়ার্ড", "pw0", "", "password")}${fld("নতুন পাসওয়ার্ড (কমপক্ষে ৮ অক্ষর)", "pw1", "", "password")}${fld("নতুন পাসওয়ার্ড আবার", "pw2", "", "password")}<p class="error-text" id="pwErr"></p><button class="btn btn-primary" id="pwBtn"><i class="fas fa-key"></i> পাসওয়ার্ড বদলান</button></div>`;
+  $("#pwBtn").onclick = async () => {
+    const e = $("#pwErr"); e.textContent = "";
+    if (val("pw1").length < 8) return e.textContent = "নতুন পাসওয়ার্ড কমপক্ষে ৮ অক্ষরের দিন।";
+    if (val("pw1") !== val("pw2")) return e.textContent = "দুটি পাসওয়ার্ড মেলেনি।";
+    try { await changeAdminPassword($("#pw0").value, $("#pw1").value); say("পাসওয়ার্ড বদলানো হয়েছে ✓"); ["pw0", "pw1", "pw2"].forEach(i => $("#" + i).value = ""); }
+    catch { e.textContent = "আগের পাসওয়ার্ড ঠিক নয়।"; }
+  };
+};
+</script>
+</body>
+</html>

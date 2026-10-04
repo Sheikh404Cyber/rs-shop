@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Track Your Order — RS SHOP</title>
+  <meta name="description" content="অর্ডার আইডি দিয়ে RS SHOP-এর অর্ডারের অবস্থা দেখুন।">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#080808">
+  <script>if(localStorage.getItem('rs_theme')==='light')document.documentElement.setAttribute('data-theme','light')</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .wrap{max-width:760px;margin:0 auto}
+    .t-item{display:flex;gap:14px;align-items:center;padding:12px 0;border-bottom:1px solid var(--border)}
+    .t-item:last-child{border:none}
+    .t-item img{width:60px;height:60px;border-radius:8px;object-fit:cover;background:var(--bg4)}
+    .t-item div{flex:1;min-width:0}
+    .t-item b{display:block;line-height:1.3}
+    .t-item span{color:var(--muted);font-size:.88rem}
+    .st-badge{display:inline-block;padding:4px 16px;border-radius:50px;font-weight:600;font-size:.9rem;background:rgba(201,168,76,.15);color:var(--gold)}
+    .st-badge.delivered{background:rgba(37,211,102,.15);color:var(--green)}
+    .st-badge.cancelled{background:rgba(230,57,70,.15);color:var(--red)}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+    .kv small{display:block;color:var(--muted)}
+    @media(max-width:600px){.grid2{grid-template-columns:1fr}}
+  </style>
+</head>
+<body data-page="track">
+
+<div id="site-header"></div>
+
+<main>
+  <section class="page-hero">
+    <div class="container">
+      <div class="crumbs"><a href="index.html">Home</a> / <span>Track Order</span></div>
+      <h1>📦 Track Your Order</h1>
+      <p>অর্ডার আইডি ও মোবাইল নম্বর দিয়ে অর্ডারের অবস্থা দেখুন</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:36px">
+    <div class="container wrap">
+      <div class="card">
+        <div class="form-row">
+          <div class="form-group"><label>Order ID</label><input class="input" id="oid" placeholder="RSXXXXXXXXX" autocomplete="off" style="text-transform:uppercase"></div>
+          <div class="form-group"><label>মোবাইল নম্বর (অর্ডারে দেওয়া)</label><input class="input" id="phone" placeholder="01XXXXXXXXX" inputmode="numeric" maxlength="11"></div>
+        </div>
+        <button class="btn btn-primary btn-block" id="goBtn"><i class="fas fa-search"></i> Track Order</button>
+        <p class="error-text" id="err"></p>
+      </div>
+      <div id="result" style="margin-top:24px"></div>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+
+<script type="module" src="main.js"></script>
+<script type="module">
+  import { findOrder, STATUS, PAYMENT_LABELS, PLACEHOLDER_IMG, taka, esc, waLink } from "./firebase.js";
+
+  const $ = s => document.querySelector(s);
+  const STEPS = [["fa-receipt", "Order Placed"], ["fa-box", "Processing"], ["fa-truck", "Shipped"], ["fa-circle-check", "Delivered"]];
+  const stepOf = s => (STATUS[s]?.step) ?? (s === "confirmed" ? 2 : 1);
+
+  const params = new URLSearchParams(location.search);
+  let saved = {}; try { saved = JSON.parse(localStorage.getItem("rs_customer")) || {}; } catch {}
+  $("#oid").value = (params.get("id") || "").toUpperCase();
+  $("#phone").value = saved.phone || "";
+
+  async function track() {
+    const id = $("#oid").value.trim().toUpperCase(), phone = $("#phone").value.trim();
+    const err = $("#err"), out = $("#result"); err.textContent = ""; out.innerHTML = "";
+    if (!id) return err.textContent = "অর্ডার আইডি লিখুন";
+    if (phone.replace(/\D/g, "").length < 4) return err.textContent = "অর্ডারে দেওয়া মোবাইল নম্বর লিখুন";
+    const btn = $("#goBtn"); btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> খুঁজছি...';
+    try {
+      const o = await findOrder(id, phone);
+      if (!o) { err.textContent = "অর্ডার পাওয়া যায়নি। অর্ডার আইডি ও মোবাইল নম্বর ঠিক আছে কিনা দেখুন।"; return; }
+      show(o);
+    } catch (e) { console.error(e); err.textContent = "কিছু একটা সমস্যা হয়েছে, আবার চেষ্টা করুন।"; }
+    finally { btn.disabled = false; btn.innerHTML = '<i class="fas fa-search"></i> Track Order'; }
+  }
+
+  function show(o) {
+    const step = stepOf(o.status), cancelled = o.status === "cancelled";
+    const date = o.createdAt?.toDate ? o.createdAt.toDate().toLocaleString("en-GB", { day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" }) : "";
+    const label = STATUS[o.status]?.label || "অর্ডার গৃহীত";
+    $("#result").innerHTML = `
+    <div class="card" style="animation:pop .5s var(--ease)">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+        <div><small style="color:var(--muted)">Order ID</small><div style="font-weight:700;color:var(--gold);font-size:1.3rem;letter-spacing:1px">${esc(o.orderId || o.id)}</div>${date ? `<small style="color:var(--muted)">${date}</small>` : ""}</div>
+        <span class="st-badge ${esc(o.status)}">${label}</span>
+      </div>
+      ${cancelled
+        ? `<p style="margin:24px 0 8px;color:var(--red)"><i class="fas fa-circle-xmark"></i> এই অর্ডারটি বাতিল করা হয়েছে। প্রয়োজনে আমাদের WhatsApp-এ যোগাযোগ করুন।</p>`
+        : `<div class="steps">${STEPS.map(([ic, l], i) => `<div class="step ${i + 1 <= step ? "done" : ""}"><i class="fas ${ic}"></i>${l}</div>`).join("")}</div>`}
+    </div>
+
+    <div class="card" style="margin-top:20px"><h3>অর্ডারের প্রোডাক্ট</h3>
+      ${(o.items || []).map(i => `<div class="t-item"><img src="${esc(i.image || PLACEHOLDER_IMG)}" alt="" onerror="this.src='${PLACEHOLDER_IMG}'"><div><b>${esc(i.name)}</b><span>${taka(i.price)} × ${i.qty}</span></div><b style="color:var(--gold)">${taka(i.price * i.qty)}</b></div>`).join("")}
+      <div style="margin-top:12px">
+        <div class="sum-row"><span>Subtotal</span><span>${taka(o.subtotal)}</span></div>
+        <div class="sum-row"><span>Delivery</span><span>${o.delivery ? taka(o.delivery) : "Free"}</span></div>
+        ${o.discount ? `<div class="sum-row" style="color:var(--green)"><span>Discount</span><span>− ${taka(o.discount)}</span></div>` : ""}
+        <div class="sum-row total"><span>Total</span><span>${taka(o.total)}</span></div>
+      </div>
+    </div>
+
+    <div class="card grid2" style="margin-top:20px">
+      <div class="kv"><h3 style="margin-bottom:10px">Delivery Info</h3><b>${esc(o.customer?.name)}</b><small>${esc(o.customer?.phone)}</small><small>${esc(o.customer?.address)}</small></div>
+      <div class="kv"><h3 style="margin-bottom:10px">Payment</h3><b>${esc(o.paymentLabel || PAYMENT_LABELS[o.payment] || "Cash on Delivery")}</b>${o.transactionId ? `<small>Txn ID: ${esc(o.transactionId)}</small>` : ""}</div>
+    </div>
+
+    <div style="text-align:center;margin-top:22px"><a class="btn btn-wa" target="_blank" rel="noopener" href="${waLink(`আসসালামু আলাইকুম, আমার অর্ডার আইডি: ${o.orderId || o.id}। একটা জিজ্ঞাসা ছিল।`)}"><i class="fab fa-whatsapp"></i> অর্ডার নিয়ে WhatsApp-এ জিজ্ঞাসা করুন</a></div>`;
+    $("#result").scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  $("#goBtn").addEventListener("click", track);
+  ["#oid", "#phone"].forEach(s => $(s).addEventListener("keydown", e => e.key === "Enter" && track()));
+  if ($("#oid").value && $("#phone").value) track();
+</script>
+</body>
+</html>

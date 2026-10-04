@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Policies — RS SHOP</title>
+  <meta name="description" content="RS SHOP Delivery & Return Policy, Refund Policy, Privacy Policy, Terms & Conditions ও How to Buy।">
+  <meta name="theme-color" content="#080808">
+  <script>if(localStorage.getItem('rs_theme')==='light')document.documentElement.setAttribute('data-theme','light')</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .prose .box{padding:14px 18px;margin:14px 0;border-left:3px solid var(--gold);background:rgba(201,168,76,.07);border-radius:0 var(--radius) var(--radius) 0;color:var(--text)}
+    .prose ol{padding-left:22px;margin-bottom:10px}
+    .prose ol li{list-style:decimal;margin-bottom:12px}
+    .prose a{color:var(--gold)}
+    .prose table{width:100%;border-collapse:collapse;margin:12px 0}
+    .prose td,.prose th{padding:10px 14px;border:1px solid var(--border);text-align:left;color:var(--muted)}
+    .prose th{color:var(--gold);background:var(--bg3)}
+    #doc{animation:pop .4s var(--ease)}
+  </style>
+</head>
+<body data-page="policy">
+
+<div id="site-header"></div>
+
+<main>
+  <section class="page-hero">
+    <div class="container">
+      <div class="crumbs"><a href="index.html">Home</a> / <span>Policies</span></div>
+      <h1 id="h1">Policies</h1>
+      <p id="sub"></p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:36px">
+    <div class="container">
+      <div class="policy-nav tabs" id="nav"></div>
+      <div class="prose" id="doc"></div>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+
+<script type="module" src="main.js"></script>
+<script type="module">
+  import { SHOP, getShopInfo, getDeliverySettings, getPaymentSettings, PAYMENT_LABELS, taka, waLink } from "./firebase.js";
+
+  const $ = s => document.querySelector(s);
+  const [info, del, pay] = await Promise.all([getShopInfo().catch(() => SHOP), getDeliverySettings(), getPaymentSettings()]);
+  const payList = Object.entries(pay).filter(([, v]) => v.on).map(([k]) => PAYMENT_LABELS[k]).join(", ") || "Cash on Delivery";
+  const contact = `<div class="box"><b>যোগাযোগ:</b> ${info.address}<br>Phone / WhatsApp: <a href="tel:${info.phone}">${info.phone}</a> · <a href="${waLink()}" target="_blank" rel="noopener">WhatsApp-এ মেসেজ করুন</a></div>`;
+
+  const DOCS = {
+    "delivery-return": { title: "Delivery & Return Policy", sub: "কীভাবে প্রোডাক্ট পাবেন আর কীভাবে রিটার্ন করবেন", html: `
+      <h2>ডেলিভারি</h2>
+      <p>আমরা সারা বাংলাদেশে ডেলিভারি দিই। অর্ডার কনফার্ম হলে আমাদের টিম আপনাকে কল করে ঠিকানা নিশ্চিত করবে।</p>
+      <table><tr><th>এলাকা</th><th>ডেলিভারি চার্জ</th></tr>
+        <tr><td>পূর্বধলা / ঢাকা</td><td>${taka(del.dhaka)}</td></tr>
+        <tr><td>অন্য জেলা</td><td>${taka(del.outside)}</td></tr>
+        ${del.freeAt ? `<tr><td>${taka(del.freeAt)} বা তার বেশি অর্ডারে</td><td>ফ্রি ডেলিভারি</td></tr>` : ""}</table>
+      <ul><li>ডেলিভারির সময় সাধারণত অর্ডার কনফার্মের পর কয়েক দিনের মধ্যে। এলাকাভেদে সময় কিছুটা বেশি লাগতে পারে।</li>
+      <li>পেমেন্ট মাধ্যম: ${payList}।</li>
+      <li>প্রোডাক্ট হাতে নিয়ে চেক করে নিন। কোনো সমস্যা থাকলে ডেলিভারি ম্যানের সামনেই জানান।</li></ul>
+      <h2>রিটার্ন</h2>
+      <p>প্রোডাক্ট পাওয়ার <b>৩ দিনের মধ্যে</b> রিটার্নের অনুরোধ করা যাবে, নিচের শর্তে:</p>
+      <ul><li>ভুল প্রোডাক্ট পাঠানো হলে, অথবা প্রোডাক্টে ম্যানুফ্যাকচারিং ত্রুটি বা সমস্যা থাকলে।</li>
+      <li>প্রোডাক্ট আগের অবস্থায় থাকতে হবে: ব্যবহার করা বা ক্ষতি করা হলে রিটার্ন হবে না।</li>
+      <li>অরিজিনাল বক্স, প্যাকেজিং ও এক্সেসরিজ থাকতে হবে।</li></ul>
+      <h2>রিটার্নের নিয়ম</h2>
+      <ol><li>৩ দিনের মধ্যে আমাদের WhatsApp-এ অর্ডার আইডি ও প্রোডাক্টের ছবিসহ জানান।</li>
+      <li>আমাদের টিম প্রোডাক্ট চেক করে রিটার্ন অনুমোদন করবে।</li>
+      <li>অনুমোদন হলে প্রোডাক্ট পাঠাতে হবে, তারপর রিপ্লেসমেন্ট বা রিফান্ড প্রসেস হবে।</li></ol>${contact}` },
+
+    "refund": { title: "Refund Policy", sub: "কখন এবং কীভাবে টাকা ফেরত পাবেন", html: `
+      <h2>কখন রিফান্ড পাবেন</h2>
+      <ul><li>আপনি ভুল বা নষ্ট প্রোডাক্ট পেয়েছেন এবং আমরা সেটি রিপ্লেস করতে পারছি না।</li>
+      <li>আপনার অর্ডার ভুলক্রমে বাতিল হয়েছে বা স্টকে প্রোডাক্ট নেই।</li>
+      <li>অগ্রিম (bKash / Nagad / Rocket) পেমেন্ট করার পর অর্ডার বাতিল হলে।</li></ul>
+      <h2>রিফান্ড কীভাবে হবে</h2>
+      <p>রিফান্ড আপনার পেমেন্টের মাধ্যমে (bKash, Nagad, Rocket) পাঠানো হয়। Cash on Delivery অর্ডারে প্রোডাক্ট হাতে পাওয়ার আগে টাকা দিতে হয় না, তাই রিফান্ডের প্রয়োজন হয় না।</p>
+      <h2>সময়</h2>
+      <p>রিটার্ন অনুমোদনের পর রিফান্ড প্রসেস করতে কিছু কার্যদিবস লাগতে পারে। কোনো দেরি হলে WhatsApp-এ জানাবেন।</p>
+      <div class="box">ডেলিভারি চার্জ সাধারণত রিফান্ডযোগ্য নয়, তবে আমাদের ভুল হলে সেটি ফেরত দেওয়া হবে।</div>${contact}` },
+
+    "privacy": { title: "Privacy Policy", sub: "আপনার তথ্য আমরা কীভাবে ব্যবহার করি", html: `
+      <h2>কী তথ্য নিই</h2>
+      <p>অর্ডার দেওয়ার সময় আমরা আপনার নাম, মোবাইল নম্বর, ঠিকানা, অর্ডারের তথ্য এবং (মোবাইল পেমেন্ট হলে) ট্রানজেকশন আইডি নিই। যোগাযোগ ফর্মে দিলে ইমেইলও নিই।</p>
+      <h2>কেন নিই</h2>
+      <ul><li>অর্ডার প্রসেস, কনফার্ম ও ডেলিভারি করার জন্য।</li>
+      <li>অর্ডার ট্র্যাক করতে ও আপনার সাথে যোগাযোগ করতে।</li>
+      <li>সমস্যা বা প্রশ্নের উত্তর দিতে।</li></ul>
+      <h2>সুরক্ষা</h2>
+      <p>আপনার তথ্য আমরা কারও কাছে বিক্রি করি না। শুধু অর্ডার ডেলিভারি বা পেমেন্ট নিশ্চিত করার প্রয়োজনে প্রয়োজনীয় তথ্য সেই কাজে যুক্ত ব্যক্তিকে দেওয়া হয়। আমরা আপনার bKash/Nagad/Rocket পিন বা কার্ডের তথ্য কখনো চাই না বা সংগ্রহ করি না।</p>
+      <h2>কার্ট ও উইশলিস্ট</h2>
+      <p>আপনার কার্ট, উইশলিস্ট ও পছন্দ (ডার্ক/লাইট মোড) আপনার নিজের ব্রাউজারে (লোকাল স্টোরেজে) সেভ থাকে। ব্রাউজারের ডেটা মুছলে এগুলো চলে যাবে।</p>
+      <h2>আপনার অধিকার</h2>
+      <p>আপনার তথ্য দেখতে, ঠিক করতে বা মুছে দিতে চাইলে আমাদের জানান।</p>${contact}` },
+
+    "terms": { title: "Terms & Conditions", sub: "আমাদের সাথে কেনাকাটার নিয়ম", html: `
+      <h2>অর্ডার</h2>
+      <ul><li>ওয়েবসাইটে অর্ডার দিলে সেটি একটি অর্ডারের অনুরোধ। আমাদের টিম ফোন বা WhatsApp-এ কনফার্ম করলে অর্ডার নিশ্চিত হয়।</li>
+      <li>স্টক না থাকলে বা তথ্য ভুল হলে আমরা অর্ডার বাতিল করার অধিকার রাখি, এবং আপনাকে জানিয়ে দেব।</li>
+      <li>ভুয়া বা ভুল তথ্য দিলে অর্ডার বাতিল হতে পারে।</li></ul>
+      <h2>দাম</h2>
+      <p>প্রোডাক্টের দাম, অফার, ফ্ল্যাশ সেল ও ডেলিভারি চার্জ পরিবর্তন হতে পারে। অর্ডার কনফার্মের সময় যে দাম দেখানো হয়, সেই দামেই অর্ডার হবে। কুপন কোড শুধু নির্দিষ্ট শর্তে ব্যবহার করা যাবে।</p>
+      <h2>প্রোডাক্টের ছবি</h2>
+      <p>ছবি ও আসল প্রোডাক্টের রং, স্ক্রিন বা আলোর কারণে সামান্য আলাদা দেখাতে পারে।</p>
+      <h2>পেমেন্ট</h2>
+      <p>আমরা ${payList} গ্রহণ করি। মোবাইল পেমেন্টে সঠিক নম্বরে সেন্ড মানি করে সঠিক ট্রানজেকশন আইডি দিতে হবে।</p>
+      <h2>রিটার্ন ও রিফান্ড</h2>
+      <p>রিটার্ন ও রিফান্ডের নিয়ম <a href="policy.html?type=delivery-return">Delivery & Return</a> এবং <a href="policy.html?type=refund">Refund Policy</a>-তে দেওয়া আছে।</p>
+      <h2>পরিবর্তন</h2>
+      <p>প্রয়োজনে আমরা এই নিয়ম পরিবর্তন করতে পারি। নতুন নিয়ম এই পেজেই দেওয়া হবে।</p>${contact}` },
+
+    "how-to-buy": { title: "How to Buy", sub: "অর্ডার করতে মাত্র ৫টি ধাপ", html: `
+      <ol><li><b>প্রোডাক্ট বেছে নিন।</b> Watches, Sunglasses বা Gift থেকে পছন্দমতো প্রোডাক্ট খুঁজুন। সার্চ বক্সও ব্যবহার করতে পারেন।</li>
+      <li><b>কার্টে যোগ করুন।</b> "Add"-এ ক্লিক করলে কার্টে যাবে। সাথে সাথে কিনতে চাইলে "Order Now"-এ ক্লিক করুন।</li>
+      <li><b>কার্ট দেখুন।</b> কার্ট আইকনে ক্লিক করে পরিমাণ ঠিক করুন। কুপন থাকলে কোডটি দিন।</li>
+      <li><b>ঠিকানা দিন।</b> নাম, ১১ ডিজিটের মোবাইল নম্বর ও পুরো ঠিকানা লিখুন। ডেলিভারি এলাকা বেছে নিন।</li>
+      <li><b>পেমেন্ট বেছে অর্ডার করুন।</b> <b>Cash on Delivery</b> নিলে প্রোডাক্ট হাতে পেয়ে টাকা দিন। মোবাইল পেমেন্ট (${payList.replace("Cash on Delivery, ", "")}) নিলে সেন্ড মানি করে ট্রানজেকশন আইডি দিন। তারপর "Place Order"-এ ক্লিক করুন।</li></ol>
+      <div class="box">অর্ডারের পর আপনি একটি <b>অর্ডার আইডি</b> পাবেন। <a href="track.html">Track Order</a> পেজে অর্ডার আইডি ও মোবাইল নম্বর দিয়ে অর্ডারের অবস্থা দেখতে পারবেন।</div>
+      <p>কোনো সমস্যা হলে WhatsApp-এ জানান, আমরা সাহায্য করব।</p>${contact}` }
+  };
+
+  const keys = Object.keys(DOCS);
+  const show = k => {
+    if (!DOCS[k]) k = keys[0];
+    const d = DOCS[k];
+    $("#nav").innerHTML = keys.map(x => `<a class="tab ${x === k ? "active" : ""}" href="policy.html?type=${x}" data-k="${x}">${DOCS[x].title}</a>`).join("");
+    $("#h1").textContent = d.title; $("#sub").textContent = d.sub;
+    const doc = $("#doc"); doc.innerHTML = d.html; doc.style.animation = "none"; void doc.offsetWidth; doc.style.animation = "";
+    document.title = d.title + " — RS SHOP";
+  };
+  $("#nav").addEventListener("click", e => {
+    const a = e.target.closest("a[data-k]"); if (!a) return;
+    e.preventDefault(); history.replaceState(null, "", a.href); show(a.dataset.k); scrollTo({ top: 0, behavior: "smooth" });
+  });
+  $("#doc").addEventListener("click", e => {
+    const a = e.target.closest("a[href^='policy.html?type=']"); if (!a) return;
+    e.preventDefault(); history.replaceState(null, "", a.href); show(new URL(a.href).searchParams.get("type")); scrollTo({ top: 0, behavior: "smooth" });
+  });
+  show(new URLSearchParams(location.search).get("type"));
+</script>
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RS SHOP — Premium Watch, Sunglass & Gift Collection</title>
+  <meta name="description" content="RS SHOP Purbadhala — Original watches, stylish sunglasses and gifts at the best price. Cash on Delivery, bKash, Nagad, Rocket. Fast delivery all over Bangladesh.">
+  <meta name="theme-color" content="#080808">
+  <script>if(localStorage.getItem('rs_theme')==='light')document.documentElement.setAttribute('data-theme','light')</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="home">
+
+<div id="site-header"></div>
+
+<main>
+  <!-- HERO -->
+  <section class="hero-slider" id="hero" aria-label="Offers"></section>
+
+  <!-- FLASH SALE (shudhu tokhon dekhabe jokhon admin e Flash Sale active) -->
+  <section class="section flash hidden" id="flashSection">
+    <div class="container">
+      <div class="flash-head">
+        <div class="flash-title"><i class="fas fa-bolt"></i> <span id="flashTitle">Flash Sale!</span></div>
+        <div class="timer" id="flashTimer">
+          <div class="time-box"><b data-u="d">00</b><small>Days</small></div>
+          <div class="time-box"><b data-u="h">00</b><small>Hours</small></div>
+          <div class="time-box"><b data-u="m">00</b><small>Mins</small></div>
+          <div class="time-box"><b data-u="s">00</b><small>Secs</small></div>
+        </div>
+      </div>
+      <div class="product-grid" id="flashGrid"></div>
+    </div>
+  </section>
+
+  <!-- CATEGORIES -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head reveal"><div><h2>Our Collections</h2><p>পছন্দমতো ক্যাটেগরি বেছে নিন</p></div></div>
+      <div class="cat-grid" id="catGrid"></div>
+    </div>
+  </section>
+
+  <!-- WATCHES -->
+  <section class="section alt">
+    <div class="container">
+      <div class="section-head reveal">
+        <div><h2>Featured Watches</h2><p>Best sellers, original quality</p></div>
+        <a class="view-all" href="watches.html">View All <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="tabs reveal" data-for="watches" style="margin-bottom:24px">
+        <button class="tab active" data-g="">All</button><button class="tab" data-g="men">Men</button><button class="tab" data-g="women">Women</button><button class="tab" data-g="kids">Kids</button>
+      </div>
+      <div class="product-grid" id="watchGrid"></div>
+    </div>
+  </section>
+
+  <!-- WHATSAPP PROMO -->
+  <section class="promo">
+    <div class="container reveal">
+      <h2>Special Offer!</h2>
+      <p>WhatsApp-এ অর্ডার করলে পাবেন এক্সক্লুসিভ ডিল</p>
+      <a class="btn" id="promoWa" href="#" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> Order on WhatsApp</a>
+    </div>
+  </section>
+
+  <!-- SUNGLASSES -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head reveal">
+        <div><h2>Featured Sunglasses</h2><p>Polarized & premium shades</p></div>
+        <a class="view-all" href="sunglasses.html">View All <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="tabs reveal" data-for="sunglasses" style="margin-bottom:24px">
+        <button class="tab active" data-g="">All</button><button class="tab" data-g="men">Men</button><button class="tab" data-g="women">Women</button><button class="tab" data-g="kids">Kids</button>
+      </div>
+      <div class="product-grid" id="sunGrid"></div>
+    </div>
+  </section>
+
+  <!-- GIFTS -->
+  <section class="section alt">
+    <div class="container">
+      <div class="section-head reveal">
+        <div><h2>🎁 Gift Collection</h2><p>Birthday, anniversary & special gifts</p></div>
+        <a class="view-all" href="gift.html">View All <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="product-grid" id="giftGrid"></div>
+    </div>
+  </section>
+
+  <!-- TRUST -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head reveal"><div><h2>Why Choose Us</h2></div></div>
+      <div class="trust-grid">
+        <div class="trust-card reveal"><i class="fas fa-shield-alt"></i><h4>100% Original</h4><p>সব প্রোডাক্ট জেনুইন, কোয়ালিটি গ্যারান্টিসহ</p></div>
+        <div class="trust-card reveal"><i class="fas fa-truck-fast"></i><h4>Fast Delivery</h4><p>সারা বাংলাদেশে দ্রুত ডেলিভারি</p></div>
+        <div class="trust-card reveal"><i class="fas fa-rotate-left"></i><h4>Easy Return</h4><p>৩ দিনের ঝামেলাহীন রিটার্ন পলিসি</p></div>
+        <div class="trust-card reveal"><i class="fas fa-money-bill-wave"></i><h4>Cash on Delivery</h4><p>প্রোডাক্ট হাতে পেয়ে টাকা দিন। bKash, Nagad, Rocket-ও আছে</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="section alt">
+    <div class="container">
+      <div class="section-head reveal"><div><h2>What Customers Say</h2></div></div>
+      <div class="review-wrap" id="reviewWrap">
+        <div class="review-track">
+          <div class="review-card"><div class="stars">★★★★★</div><p>"Amazing quality watch at a very affordable price. Love shopping at RS SHOP!"</p><div class="rv-user"><div class="rv-av">R</div><div><b>Rakib Hassan</b><small>Dhaka</small></div></div></div>
+          <div class="review-card"><div class="stars">★★★★★</div><p>"The sunglasses quality is incredible. Never expected this quality at such a price!"</p><div class="rv-user"><div class="rv-av">S</div><div><b>Sumaiya Akter</b><small>Mymensingh</small></div></div></div>
+          <div class="review-card"><div class="stars">★★★★★</div><p>"Super fast delivery and beautiful packaging. Will definitely order again!"</p><div class="rv-user"><div class="rv-av">M</div><div><b>Mahmudul Hasan</b><small>Netrokona</small></div></div></div>
+        </div>
+      </div>
+      <div class="slider-dots" id="reviewDots"></div>
+    </div>
+  </section>
+
+  <!-- COUNTERS -->
+  <section class="section">
+    <div class="container">
+      <div class="count-grid">
+        <div class="count-card reveal"><div class="em">😊</div><b class="count-up" data-target="500" data-suffix="+">0</b><span>Happy Customers</span></div>
+        <div class="count-card reveal"><div class="em">📦</div><b class="count-up" data-target="100" data-suffix="+">0</b><span>Products</span></div>
+        <div class="count-card reveal"><div class="em">⭐</div><b class="count-up" data-target="300" data-suffix="+">0</b><span>5-Star Reviews</span></div>
+        <div class="count-card reveal"><div class="em">🏆</div><b class="count-up" data-target="3" data-suffix="+">0</b><span>Years Experience</span></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+
+<script type="module" src="main.js"></script>
+<script type="module">
+  import { getBanners, getProducts, getFlashSale, applyFlash, CATEGORIES, waLink } from "./firebase.js";
+  import { renderHero, productCard, skeletons, startCountdown, initCounters, initSlider } from "./main.js";
+
+  const $ = s => document.querySelector(s);
+  const emptyBox = msg => `<div class="empty" style="grid-column:1/-1"><i class="fas fa-box-open"></i><h3>${msg}</h3><p>শীঘ্রই নতুন প্রোডাক্ট আসছে।</p></div>`;
+
+  /* static: category card + WhatsApp link + counters + review slider */
+  $("#catGrid").innerHTML = Object.values(CATEGORIES).map(c => `
+    <a class="cat-card reveal" href="${c.path}"><span class="ico">${c.icon}</span><h3>${c.label}</h3><p>${c.desc}</p><span>Shop Now →</span></a>`).join("");
+  $("#promoWa").href = waLink("আসসালামু আলাইকুম, আমি RS SHOP থেকে অর্ডার করতে চাই");
+  initCounters();
+  initSlider($("#reviewWrap"), $("#reviewDots"));
+
+  /* loading skeleton */
+  ["#watchGrid", "#sunGrid", "#giftGrid"].forEach(s => $(s).innerHTML = skeletons(4));
+
+  /* data load */
+  const [banners, all, flash] = await Promise.all([
+    getBanners(),
+    getProducts().catch(() => []),
+    getFlashSale()
+  ]);
+
+  renderHero($("#hero"), banners);
+
+  /* flash sale */
+  const flashList = all.filter(p => p.flashSale).slice(0, 8);
+  if (flash.active && flashList.length) {
+    $("#flashSection").classList.remove("hidden");
+    $("#flashTitle").textContent = flash.title;
+    $("#flashGrid").innerHTML = flashList.map(p => productCard(applyFlash(p, flash))).join("");
+    startCountdown($("#flashTimer"), flash.endTime, () => $("#flashSection").classList.add("hidden"));
+  }
+
+  /* category section + gender tab */
+  const pick = (cat, gender = "") => all
+    .filter(p => p.category === cat && (!gender || p.gender === gender))
+    .sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0))
+    .slice(0, 8);
+  const fill = (grid, cat, gender) => {
+    const list = pick(cat, gender).map(p => applyFlash(p, flash));
+    $(grid).innerHTML = list.length ? list.map(productCard).join("") : emptyBox("এখনো কোনো প্রোডাক্ট নেই");
+  };
+  fill("#watchGrid", "watches"); fill("#sunGrid", "sunglasses"); fill("#giftGrid", "gift");
+
+  document.querySelectorAll(".tabs[data-for]").forEach(tabs => {
+    tabs.addEventListener("click", e => {
+      const b = e.target.closest(".tab"); if (!b) return;
+      tabs.querySelectorAll(".tab").forEach(t => t.classList.toggle("active", t === b));
+      fill(tabs.dataset.for === "watches" ? "#watchGrid" : "#sunGrid", tabs.dataset.for, b.dataset.g);
+    });
+  });
+</script>
+</body>
+</html>

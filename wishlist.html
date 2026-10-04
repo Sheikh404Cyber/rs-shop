@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Wishlist — RS SHOP</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#080808">
+  <script>if(localStorage.getItem('rs_theme')==='light')document.documentElement.setAttribute('data-theme','light')</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="wishlist">
+
+<div id="site-header"></div>
+
+<main>
+  <section class="page-hero">
+    <div class="container">
+      <div class="crumbs"><a href="index.html">Home</a> / <span>Wishlist</span></div>
+      <h1>❤️ My Wishlist</h1>
+      <p>আপনার পছন্দ করা প্রোডাক্টগুলো</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:36px">
+    <div class="container">
+      <div class="filter-bar hidden" id="bar">
+        <p class="result-count" id="count"></p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button class="btn btn-primary btn-sm" id="addAll"><i class="fas fa-cart-plus"></i> সব কার্টে যোগ করুন</button>
+          <button class="btn btn-dark btn-sm" id="clearAll"><i class="fas fa-trash"></i> সব মুছুন</button>
+        </div>
+      </div>
+      <div class="product-grid" id="grid"></div>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+
+<script type="module" src="main.js"></script>
+<script type="module">
+  import { getAllProducts, getFlashSale, applyFlash } from "./firebase.js";
+  import { Wish, Cart, toast, productCard, skeletons } from "./main.js";
+
+  const $ = s => document.querySelector(s);
+  $("#grid").innerHTML = skeletons(4);
+
+  const [all, flash] = await Promise.all([getAllProducts().catch(() => []), getFlashSale()]);
+  let shown = [];
+
+  function render() {
+    const ids = Wish.ids();
+    shown = all.filter(p => ids.includes(p.id)).map(p => applyFlash(p, flash));
+    $("#bar").classList.toggle("hidden", !shown.length);
+    $("#count").textContent = `${shown.length} টি প্রোডাক্ট`;
+    $("#grid").innerHTML = shown.length ? shown.map(productCard).join("") : `
+      <div class="empty" style="grid-column:1/-1"><i class="fas fa-heart"></i><h3>উইশলিস্ট খালি</h3>
+        <p>প্রোডাক্টের ❤️ এ ক্লিক করে পছন্দের তালিকায় রাখুন।</p>
+        <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:16px"><a class="btn btn-primary" href="watches.html">Watches</a><a class="btn btn-outline" href="sunglasses.html">Sunglasses</a><a class="btn btn-outline" href="gift.html">Gifts</a></div></div>`;
+  }
+
+  $("#addAll").addEventListener("click", () => {
+    const list = shown.filter(p => p.stock !== "out_of_stock");
+    list.forEach(p => Cart.add(p));
+    toast(list.length ? `${list.length} টি প্রোডাক্ট কার্টে যোগ হয়েছে ✓` : "স্টকে কোনো প্রোডাক্ট নেই");
+  });
+  $("#clearAll").addEventListener("click", () => { Wish.ids().forEach(id => Wish.toggle(id)); toast("উইশলিস্ট খালি করা হয়েছে"); });
+  addEventListener("rs:wish", render);
+  render();
+</script>
+</body>
+</html>

@@ -421,3 +421,8 @@ body.lock{overflow:hidden}
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
   .reveal{opacity:1;transform:none}
 }
+
+/* ══ PAYMENT LOGOS ══ */
+.pay-logo{display:inline-flex;align-items:center;justify-content:center;gap:4px;min-width:60px;padding:4px 10px;border-radius:8px;background:#fff;color:#222;font-size:.78rem;font-weight:700;border:1px solid rgba(0,0,0,.1);white-space:nowrap}
+.pay-logo img{height:100%;width:auto;max-width:78px;object-fit:contain;display:block}
+.pay-logo.cod{background:var(--green);color:#fff;border-color:transparent}

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Policies — RS SHOP</title>
+  <meta name="description" content="RS SHOP Delivery & Return Policy, Refund Policy, Privacy Policy, Terms & Conditions ar How to Buy.">
+  <meta name="theme-color" content="#080808">
+  <script>if(localStorage.getItem('rs_theme')==='light')document.documentElement.setAttribute('data-theme','light')</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .prose .box{padding:14px 18px;margin:14px 0;border-left:3px solid var(--gold);background:rgba(201,168,76,.07);border-radius:0 var(--radius) var(--radius) 0;color:var(--text)}
+    .prose ol{padding-left:22px;margin-bottom:10px}
+    .prose ol li{list-style:decimal;margin-bottom:12px}
+    .prose a{color:var(--gold)}
+    .prose table{width:100%;border-collapse:collapse;margin:12px 0}
+    .prose td,.prose th{padding:10px 14px;border:1px solid var(--border);text-align:left;color:var(--muted)}
+    .prose th{color:var(--gold);background:var(--bg3)}
+    #doc{animation:pop .4s var(--ease)}
+  </style>
+</head>
+<body data-page="policy">
+
+<div id="site-header"></div>
+
+<main>
+  <section class="page-hero">
+    <div class="container">
+      <div class="crumbs"><a href="index.html">Home</a> / <span>Policies</span></div>
+      <h1 id="h1">Policies</h1>
+      <p id="sub"></p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:36px">
+    <div class="container">
+      <div class="policy-nav tabs" id="nav"></div>
+      <div class="prose" id="doc"></div>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+
+<script type="module" src="main.js"></script>
+<script type="module">
+  import { SHOP, getShopInfo, getDeliverySettings, getPaymentSettings, PAYMENT_LABELS, taka, waLink } from "./firebase.js";
+
+  const $ = s => document.querySelector(s);
+  const [info, del, pay] = await Promise.all([getShopInfo().catch(() => SHOP), getDeliverySettings(), getPaymentSettings()]);
+  const payList = Object.entries(pay).filter(([, v]) => v.on).map(([k]) => PAYMENT_LABELS[k]).join(", ") || "Cash on Delivery";
+  const contact = `<div class="box"><b>Jogajog:</b> ${info.address}<br>Phone / WhatsApp: <a href="tel:${info.phone}">${info.phone}</a> · <a href="${waLink()}" target="_blank" rel="noopener">WhatsApp e message koro</a></div>`;
+
+  const DOCS = {
+    "delivery-return": { title: "Delivery & Return Policy", sub: "Kivabe product pabe ar kivabe return korbe", html: `
+      <h2>Delivery</h2>
+      <p>Amra Bangladesh er sob jaygay delivery dei. Order confirm hole amader team apnake call kore thikana nishchit korbe.</p>
+      <table><tr><th>Area</th><th>Delivery charge</th></tr>
+        <tr><td>Purbadhala / Dhaka</td><td>${taka(del.dhaka)}</td></tr>
+        <tr><td>Onno jela</td><td>${taka(del.outside)}</td></tr>
+        ${del.freeAt ? `<tr><td>${taka(del.freeAt)} ba tar beshi order</td><td>Free delivery</td></tr>` : ""}</table>
+      <ul><li>Delivery somoy shadharonoto order confirm er por kichu diner moddhe. Area bhede somoy komboshi hote pare.</li>
+      <li>Payment method: ${payList}.</li>
+      <li>Product hate niye check kore nin. Kono somossa thakle delivery man er shamne-i janan.</li></ul>
+      <h2>Return</h2>
+      <p>Product pawar <b>3 diner moddhe</b> return request kora jabe, nicher shortgulo-te:</p>
+      <ul><li>Vul product pathano hole, ba product e manufacturing defect / kharap thakle.</li>
+      <li>Product ager obosthay thakte hobe: use kora ba khoti kora hole return hobe na.</li>
+      <li>Original box, packaging ar accessories thakte hobe.</li></ul>
+      <h2>Return korar niyom</h2>
+      <ol><li>3 diner moddhe amader WhatsApp e Order ID ar product er chobi shoho jaano.</li>
+      <li>Amader team product check kore return approve korbe.</li>
+      <li>Approve hole product pathate hobe, tarpor replacement ba refund process hobe.</li></ol>${contact}` },
+
+    "refund": { title: "Refund Policy", sub: "Kokhon ar kivabe taka ferot pabe", html: `
+      <h2>Refund kokhon pabe</h2>
+      <ul><li>Apni vul ba kharap product peyechen ar amra ota replace korte parchi na.</li>
+      <li>Apnar order bhul kore cancel hoyechhe ba stock e product nei.</li>
+      <li>Advance (bKash / Nagad / Rocket) payment kore pore order cancel hole.</li></ul>
+      <h2>Refund kivabe hobe</h2>
+      <p>Refund apnar payment er method e (bKash, Nagad, Rocket) pathano hoy. Cash on Delivery order e product hate pawar age taka dite hoy na, tai refund er proyojon hoy na.</p>
+      <h2>Shomoy</h2>
+      <p>Return approve hobar por refund process korte kichu karjodibosh lagte pare. Kono deri hole WhatsApp e jaanaben.</p>
+      <div class="box">Delivery charge shadharonoto refund-yogyo noy, tobe amader bhul hole sheta ferot dewa hobe.</div>${contact}` },
+
+    "privacy": { title: "Privacy Policy", sub: "Apnar tothyo amra kivabe byabohar kori", html: `
+      <h2>Ki tothyo nei</h2>
+      <p>Order dewar somoy amra apnar nam, mobile number, thikana, order er tothyo ar (mobile payment hole) Transaction ID nei. Contact form e dile email o nei.</p>
+      <h2>Keno nei</h2>
+      <ul><li>Order process, confirm ar delivery korar jonno.</li>
+      <li>Order track korte ar apnar shathe jogajog korte.</li>
+      <li>Shomossa ba proshner uttor dite.</li></ul>
+      <h2>Surakkha</h2>
+      <p>Apnar tothyo amra keu-ke bikri kori na. Shudhu order delivery ba payment nishchit korar proyojone proyojonio tothyo shei kaje jukto byakti-ke dewa hoy. Amra apnar bKash/Nagad/Rocket PIN ba card er tothyo kokhono chai na ba shongroho kori na.</p>
+      <h2>Cart ar Wishlist</h2>
+      <p>Apnar cart, wishlist ar pochhondo (dark/light mode) apnar nijer browser e (local storage) save thake. Browser data muchle ei gulo chole jabe.</p>
+      <h2>Apnar odhikar</h2>
+      <p>Apnar tothyo dekhte, thik korte ba muche dite chaile amader jaanan.</p>${contact}` },
+
+    "terms": { title: "Terms & Conditions", sub: "Amader shathe kenakata korar niyom", html: `
+      <h2>Order</h2>
+      <ul><li>Website e order dile ota ekta order request. Amader team phone/WhatsApp e confirm korle order nishchit hoy.</li>
+      <li>Stock na thakle ba tothyo bhul hole amra order cancel korar odhikar rakhi, ar apnake janiye dibo.</li>
+      <li>Fake ba bhul tothyo dile order batil hote pare.</li></ul>
+      <h2>Dam</h2>
+      <p>Product er dam, offer, flash sale ar delivery charge poriborton hote pare. Order confirm hobar shomoy je dam dekhano hoy, shei dam e order hobe. Coupon code shudhu nirdisto shorte byabohar kora jabe.</p>
+      <h2>Product er chobi</h2>
+      <p>Chobi ar asol product er rong, screen ba lighting er karone shamanno alada dekhate pare.</p>
+      <h2>Payment</h2>
+      <p>Amra ${payList} grohon kori. Mobile payment e shothik number e Send Money kore shothik Transaction ID dite hobe.</p>
+      <h2>Return ar Refund</h2>
+      <p>Return o refund er niyom <a href="policy.html?type=delivery-return">Delivery & Return</a> ar <a href="policy.html?type=refund">Refund Policy</a> te deya ache.</p>
+      <h2>Poriborton</h2>
+      <p>Amra ei niyom prayojone poriborton korte pari. Notun niyom ei page e dewa hobe.</p>${contact}` },
+
+    "how-to-buy": { title: "How to Buy", sub: "Order korte shudhu 5 ti dhap", html: `
+      <ol><li><b>Product bechhe nao.</b> Watches, Sunglasses ba Gift theke pochhondo moto product khujo. Search box o byabohar korte paro.</li>
+      <li><b>Cart e add koro.</b> "Add" e click korle cart e jabe. Sathe-i kinte chaile "Order Now" e click koro.</li>
+      <li><b>Cart dekho.</b> Cart icon e click kore quantity thik koro. Coupon thakle code ta dao.</li>
+      <li><b>Thikana dao.</b> Nam, 11 digit mobile number ar puro thikana likho. Delivery area select koro.</li>
+      <li><b>Payment bechhe order koro.</b> <b>Cash on Delivery</b> nile product hate peye taka dao. Mobile payment (${payList.replace("Cash on Delivery, ", "")}) nile Send Money kore Transaction ID dao. Tarpor "Place Order" e click koro.</li></ol>
+      <div class="box">Order er por tumi ekta <b>Order ID</b> pabe. <a href="track.html">Track Order</a> page e Order ID ar mobile number diye order er obostha dekhte parbe.</div>
+      <p>Kono shomossa hole WhatsApp e jaano, amra shahajjo korbo.</p>${contact}` }
+  };
+
+  const keys = Object.keys(DOCS);
+  const show = k => {
+    if (!DOCS[k]) k = keys[0];
+    const d = DOCS[k];
+    $("#nav").innerHTML = keys.map(x => `<a class="tab ${x === k ? "active" : ""}" href="policy.html?type=${x}" data-k="${x}">${DOCS[x].title}</a>`).join("");
+    $("#h1").textContent = d.title; $("#sub").textContent = d.sub;
+    const doc = $("#doc"); doc.innerHTML = d.html; doc.style.animation = "none"; void doc.offsetWidth; doc.style.animation = "";
+    document.title = d.title + " — RS SHOP";
+  };
+  $("#nav").addEventListener("click", e => {
+    const a = e.target.closest("a[data-k]"); if (!a) return;
+    e.preventDefault(); history.replaceState(null, "", a.href); show(a.dataset.k); scrollTo({ top: 0, behavior: "smooth" });
+  });
+  $("#doc").addEventListener("click", e => {
+    const a = e.target.closest("a[href^='policy.html?type=']"); if (!a) return;
+    e.preventDefault(); history.replaceState(null, "", a.href); show(new URL(a.href).searchParams.get("type")); scrollTo({ top: 0, behavior: "smooth" });
+  });
+  show(new URLSearchParams(location.search).get("type"));
+</script>
+</body>
+</html>
